@@ -4,10 +4,11 @@
   "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
   "main": "index.js",
   "dependencies": {
+    "@types/node": "^20.11.19",
     "cross-spawn": "^7.0.3",
     "duplexer": "^0.1.2",
+    "ejs": "^3.1.9",
     "event-stream": "^3.3.4",
-    "express": "^4.18.2",
     "from": "^0.1.7",
     "isexe": "^2.0.0",
     "map-stream": "^0.1.0",
@@ -21,15 +22,21 @@
     "stream-combiner": "^0.0.4",
     "string-argv": "^0.3.2",
     "through": "^2.3.8",
+    "vue": "^3.4.19",
     "which": "^2.0.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "express": "^4.18.2",
+    "http-server": "^14.1.1",
+    "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node app.ts",
+    "dev": "nodemon app.ts",
+    "build": "tsc -p ."
   },
   "keywords": [],
   "author": "",
