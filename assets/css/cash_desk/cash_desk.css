@@ -5,7 +5,7 @@
     margin-bottom: 10px;
 }
 
-#search-product, #products-list{
+#search-product-box, #products-list-box{
     width: 35%;
     height: 400px;
     padding: 10px;
@@ -118,4 +118,29 @@
 .button-calculator:hover, #button-ok:hover {
     background-color: #105408;
     cursor: pointer;
+}
+
+
+#search-product-scrollable {
+    overflow-y: auto;
+    height: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#products-list-scrollable {
+    overflow-y: auto;
+    height: 180px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#pumps-station-scrollable{
+    overflow-y: auto;
+    height: 160px;
+    margin-bottom: 10px;
+}
+
+div {
+    margin: 20px;
 }

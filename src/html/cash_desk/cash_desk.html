@@ -11,8 +11,46 @@
 </head>
 <body>
     <div id="cash-desk-top">
-        <div id="search-product"></div>
-        <div id="products-list"></div>
+        <div id="search-product-box">
+            <input type="text" id="search-product-input" placeholder="Rechercher un produit">
+            <button id="search-product-button">Rechercher</button>
+            <div id="search-product-scrollable">
+                <p id="search-product-result">1</p>
+                <p id="search-product-result">2</p>
+                <p id="search-product-result">3</p>
+                <p id="search-product-result">4</p>
+                <p id="search-product-result">5</p>
+                <p id="search-product-result">6</p>
+                <p id="search-product-result">7</p>
+                <p id="search-product-result">8</p>
+                <p id="search-product-result">9</p>
+                <p id="search-product-result">10</p>
+                <p id="search-product-result">11</p>
+                <p id="search-product-result">12</p>
+                <p id="search-product-result">13</p>
+                <p id="search-product-result">14</p>
+            </div>
+        </div>
+        <div id="products-list-box">
+            <p id="products-list-result">Liste des produits :</p>
+            <div id="products-list-scrollable">
+                <p id="products-list-result">1</p>
+                <p id="products-list-result">2</p>
+                <p id="products-list-result">3</p>
+                <p id="products-list-result">4</p>
+                <p id="products-list-result">5</p>
+                <p id="products-list-result">6</p>
+                <p id="products-list-result">7</p>
+                <p id="products-list-result">8</p>
+                <p id="products-list-result">9</p>
+                <p id="products-list-result">10</p>
+                <p id="products-list-result">11</p>
+                <p id="products-list-result">12</p>
+                <p id="products-list-result">13</p>
+                <p id="products-list-result">14</p>
+            </div>
+            <p id="products-list-result">Montant Total : 0€</p>
+        </div>
         <div id="calculator">
             <div id="calculator-screen">
                 <input type="text" id="calculator-screen-input" disabled>
@@ -36,8 +74,32 @@
     </div>
 
     <div id="cash-desk-mid">
-        <div id="pumps-station"></div>
-        <div id="member-card-client"></div>
+        <div id="pumps-station">
+            <p>Station de pompe</p>
+            <div id="pumps-station-scrollable">
+                <p id="pumps-station-result">1</p>
+                <p id="pumps-station-result">2</p>
+                <p id="pumps-station-result">3</p>
+                <p id="pumps-station-result">4</p>
+                <p id="pumps-station-result">5</p>
+                <p id="pumps-station-result">6</p>
+                <p id="pumps-station-result">7</p>
+                <p id="pumps-station-result">8</p>
+                <p id="pumps-station-result">9</p>
+                <p id="pumps-station-result">10</p>
+                <p id="pumps-station-result">11</p>
+                <p id="pumps-station-result">12</p>
+                <p id="pumps-station-result">13</p>
+                <p id="pumps-station-result">14</p>
+            </div>
+        </div>
+        <div id="member-card-client">
+            <p>Carte membre :</p>
+            <p id="member-card-client-id">Client :</p>
+            <p id="member-card-client-usedDate">Dernière util :</p>
+            <p id="member-card-client-points">Points de fidel:</p>
+            <button id="member-card-client-add">Ajouter</button>
+        </div>
     </div>
 
     <div id="cash-desk-bottom">
@@ -67,7 +129,12 @@
             </div>
 
         </div>
-        <div id="energy-card-client"></div>
+        <div id="energy-card-client">
+            <p>CCE :</p>
+            <p id="member-card-client-id">Client :</p>
+            <p id="member-card-client-wallet">Montant restant:</p>
+            <button id="member-card-client-add">Ajouter</button>
+        </div>
         <button id="validate">Valider</button>
     </div>
 
