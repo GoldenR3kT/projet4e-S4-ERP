@@ -1,0 +1,77 @@
+#home{
+    margin-top: 10%;
+
+}
+
+h2{
+    font-size: 5.5em;
+    font-family: Arial, sans-serif;
+    font-weight: lighter;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.E-title{
+    color: #5acb47;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+
+#label-login{
+    margin-bottom: 10px;
+    font-size: 20px;
+    margin-right: 13%;
+    color: #5acb47;
+
+}
+
+#label-password{
+    margin-bottom: 10px;
+    font-size: 20px;
+    margin-right: 14%;
+    color: #5acb47;
+
+}
+
+form > input{
+    width: 20%;
+    height: 45px;
+    margin-bottom: 35px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: left;
+    border: 1px solid #000000;
+}
+
+form > a{
+    color: #5acb47;
+    font-size: 17px;
+}
+
+form > a:hover{
+    color: #105408;
+}
+
+form > input[type="submit"]{
+    width: 10%;
+    background-color: #5acb47;
+    color: #ffffff;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    margin-top: 1%;
+    border-radius: 10px;
+}
+
+form > input[type="submit"]:hover{
+    background-color: #105408;
+}
