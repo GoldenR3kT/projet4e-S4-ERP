@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stoks</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/storage/storage.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/style.css"> -->
+ </head>
+ <body>
+ <h1>Stocks</h1>
+
+ <label for="choixStock">Choisir un stock :</label>
+ <select id="choixStock">
+     <option value="stock1">Stock 1</option>
+     <option value="stock2">Stock 2</option>
+     <option value="stock3">Stock 3</option>
+     <!-- Ajoutez d'autres options selon vos besoins -->
+</select>
+
+<br>
+
+<label for="rechercheStock">Rechercher un stock :</label>
+<input type="text" id="rechercheStock" placeholder="Entrez le nom du stock">
+
+<br>
+
+<div class="menu-container">
+    <h2>Menu</h2>
+    <ul class="menu">
+        <li><a href="#onglet1">Energie</a>
+        </li>
+        <li><a href="#onglet2">Boutique</a>
+        </li>
+        <li><a href="#onglet3">Atelier</a>
+        </li>
+        <li><a href="#onglet4">Restaurant</a>
+
+        </li>
+    </ul>
+
+    <table class="table-stocks">
+        <tr>
+            <th>Nom</th>
+            <th>Prix HT</th>
+            <th>Prix TTC</th>
+            <th>Quantité</th>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td><button>Réapprovisionner</button></td>
+        </tr>
+    </table>
+
+</div>
+
+
+
+</body>
+</html>
