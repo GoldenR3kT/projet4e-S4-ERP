@@ -61,6 +61,14 @@ app.get('/storage', (req, res) => {
     res.sendFile(path.join(htmlPath, 'storage', 'storage.html'));
 });
 
+app.get('/topbar', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'top-bar.html'));
+});
+
+app.get('/navigation', (req, res) =>{
+    res.sendFile(path.join(htmlPath, 'navigation.html'))
+});
+
 // On lance le serveur sur le port 3000
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
