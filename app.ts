@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
+import { exec } from 'child_process';
 
 const app = express();
 const port = 3000;
@@ -13,6 +15,28 @@ const cssPath = path.join(__dirname, 'assets', 'css');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use('/css', express.static(cssPath));
+
+
+// Serve TypeScript files from the 'ts' directory
+const tsPath = path.join(__dirname, 'assets', 'ts');
+app.use('/ts', express.static(tsPath));
+
+  
+  // Route to handle JavaScript file requests
+  app.get('/ts/:dir/:file', (req, res) => {
+    const { dir, file } = req.params;
+    const jsFilePath = path.join(__dirname, 'assets', 'js', dir, `${file}.js`);
+  
+    // Check if the JavaScript file exists
+    fs.access(jsFilePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        res.status(404).send('File not found');
+        return;
+      }
+      // Serve the compiled JavaScript file
+      res.sendFile(jsFilePath);
+    });
+  });
 
 
 //dossier des vues à utiliser

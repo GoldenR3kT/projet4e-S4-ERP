@@ -140,7 +140,7 @@ body{
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 10px;
+    margin: 1vh;
     background-color: #ffffff;
 }
 
@@ -191,4 +191,17 @@ div > button{
     margin-bottom: 10px;
     background-color: #5acb47;
     cursor: pointer;
+}
+
+#erp{
+    display: flex;
+    justify-content: space-between;
+    height: 100vh; 
+}
+
+#cash-desk{
+    width: 80%;
+    align-items: center;
+    padding: 10px;
+    background-color: #409a35;
 }

@@ -4,17 +4,22 @@ var buttons = document.getElementsByClassName('button-calculator');
 var _loop_1 = function (i) {
     var button = buttons[i];
     // Ajout d'un écouteur d'événements à chaque bouton
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
         // Si le bouton est le bouton 'C', on réinitialise l'input
         if (button.id === 'button-clear') {
             input.value = '';
+            // Stop the propagation of the click event
+            event.stopPropagation();
         }
         // Si le bouton est le bouton 'OK', on évalue l'expression dans l'input
         else if (button.id === 'button-ok') {
             try {
-                input.value = eval(input.value);
+                var result = eval(input.value);
+                console.log('Result:', result);
+                input.value = result;
             }
-            catch (e) {
+            catch (error) {
+                console.error('Evaluation Error:', error);
                 input.value = 'Erreur';
             }
         }
