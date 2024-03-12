@@ -7,37 +7,40 @@
     <link rel="stylesheet" type="text/css" href="/css/storage/storage.css">
 
     <!-- <link rel="stylesheet" type="text/css" href="/assets/css/style.css"> -->
- </head>
- <body>
- <div class="top">
- <h1>Stocks - Réapprovisionnements</h1>
- <ul class="menu">
-     <li><a href="#energie">Energie</a>
-     </li>
-     <li><a href="#boutique">Boutique</a>
-     </li>
-     <li><a href="#atelier">Atelier</a>
-     </li>
-     <li><a href="#restaurant">Restaurant</a>
+</head>
+<body>
+<div class="top">
+    <h1>Stocks - Réapprovisionnements</h1>
+    <ul class="menu">
+        <li><a href="#energie">Energie</a>
+        </li>
+        <li><a href="#boutique">Boutique</a>
+        </li>
+        <li><a href="#atelier">Atelier</a>
+        </li>
+        <li><a href="#restaurant">Restaurant</a>
 
-     </li>
- </ul>
- </div>
-
- <label for="filtre">Trier par :</label>
- <select id="filtre">
-     <option value="filtre1">filtre 1</option>
-     <option value="filtre2">filtre 2</option>
-     <option value="filtre3">filtre 3</option>
-     <!-- Ajoutez d'autres options selon vos besoins -->
+        </li>
+    </ul>
+</div>
+<h2 id="categorie_title">Energie</h2>
+<label for="filtre">Trier par :</label>
+<select id="filtre">
+    <option value="filtre1">filtre 1</option>
+    <option value="filtre2">filtre 2</option>
+    <option value="filtre3">filtre 3</option>
+    <!-- Ajoutez d'autres options selon vos besoins -->
 </select>
-
 <br>
+<div class="search-bar">
+    <label for="rechercheProduit">Rechercher un produit :</label>
+    <input type="text" id="rechercheProduit" placeholder="Entrez le nom du stock">
+</div>
 
-<label for="rechercheProduit">Rechercher un produit :</label>
-<input type="text" id="rechercheProduit" placeholder="Entrez le nom du stock">
-
-<br>
+<div class="search-bar">
+    <label for="rechercheProduit2">Rechercher une réappro :</label>
+    <input type="text" id="rechercheProduit2" placeholder="Entrez le nom de la réappro">
+</div>
 
 <div class="menu-container">
 
@@ -59,16 +62,10 @@
             <th>Prix</th>
         </tr>
         <tr>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td class="no_border"><button>Annuler</button> <button>Enregistrer</button></td>
         </tr>
     </table>
 </div>
 
- <script src="/assets/ts/storage/storage.js"></script>
+<script src="/assets/ts/storage/storage.js"></script>
 </body>
 </html>
