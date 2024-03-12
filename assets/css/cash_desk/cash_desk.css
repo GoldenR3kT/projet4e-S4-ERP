@@ -1,6 +1,4 @@
-body{
-    margin: 10px;
-}
+
 
 #cash-desk-top, #cash-desk-mid, #cash-desk-bottom{
     display: flex;
@@ -20,7 +18,7 @@ body{
 }
 
 #search-product-input{
-    width: 70%;
+    width: 65%;
     height: 4vh;
     font-size: 20px;
     border-radius: 10px;
@@ -28,9 +26,9 @@ body{
 }
 
 #search-product-button{
-    width: 16%;
+    width: 17%;
     height: 5vh;
-    font-size: 16px;
+    font-size: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -101,17 +99,18 @@ body{
 }
 
 #validate{
-    width: 15%;
-    height: 5vh;
-    font-size: 20px;
+    width: 30%;
+    height: 15vh;
+    font-size: 25px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    margin-right: 3vw;
+    background-color: #038d0c;
 }
 
 #validate:hover{
-    background-color: #409a35;
+    background-color: #0f4408;
     border: #409a35;
     cursor: pointer;
 }
@@ -152,7 +151,7 @@ body{
 
 #search-product-scrollable {
     overflow-y: auto;
-    height: 30vh;
+    height: 27vh;
     padding: 10px;
     margin-bottom: 10px;
 }
@@ -183,25 +182,35 @@ input[type="checkbox"]{
 }
 
 div > button{
-    width: 100%;
-    height: 50px;
+    width: 70%;
+    height: 4.5vh;
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
     background-color: #5acb47;
+    margin-left: 15%;
     cursor: pointer;
 }
 
 #erp{
     display: flex;
     justify-content: space-between;
-    height: 100vh; 
+    width: 99%;
+    height: 90vh;
+    position: fixed;
+    
 }
 
-#cash-desk{
-    width: 80%;
-    align-items: center;
-    padding: 10px;
-    background-color: #409a35;
+#navigation-div{
+    margin-top:-0.6%;
 }
+
+#cashdesk{
+    width:80%;
+    height: 90%;
+}
+
+
+
+
+

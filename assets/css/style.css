@@ -5,6 +5,7 @@
 }
 
 
+
 body{
     background-color: #ffffff;
     font-family: Arial, sans-serif;
@@ -52,13 +53,13 @@ svg:hover{
 /* Navbar */
 
 #navigation{
-    display: block;
-    align-items: center;
     justify-content: center;
     background-color: #108d25;
     padding: 20px;
-    width: 18%;
+    width: 95%;
     height: 100vh;
+    
+
 }
 
 li{
