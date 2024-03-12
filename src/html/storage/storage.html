@@ -2,63 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Stoks</title>
+    <title>Stocks</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/storage/storage.css">
     <link rel="stylesheet" type="text/css" href="/css/storage/storage.css">
 
     <!-- <link rel="stylesheet" type="text/css" href="/assets/css/style.css"> -->
  </head>
  <body>
- <h1>Stocks</h1>
+ <div class="top">
+ <h1>Stocks - Réapprovisionnements</h1>
+ <ul class="menu">
+     <li><a href="#energie">Energie</a>
+     </li>
+     <li><a href="#boutique">Boutique</a>
+     </li>
+     <li><a href="#atelier">Atelier</a>
+     </li>
+     <li><a href="#restaurant">Restaurant</a>
 
- <label for="choixStock">Choisir un stock :</label>
- <select id="choixStock">
-     <option value="stock1">Stock 1</option>
-     <option value="stock2">Stock 2</option>
-     <option value="stock3">Stock 3</option>
+     </li>
+ </ul>
+ </div>
+
+ <label for="filtre">Trier par :</label>
+ <select id="filtre">
+     <option value="filtre1">filtre 1</option>
+     <option value="filtre2">filtre 2</option>
+     <option value="filtre3">filtre 3</option>
      <!-- Ajoutez d'autres options selon vos besoins -->
 </select>
 
 <br>
 
-<label for="rechercheStock">Rechercher un stock :</label>
-<input type="text" id="rechercheStock" placeholder="Entrez le nom du stock">
+<label for="rechercheProduit">Rechercher un produit :</label>
+<input type="text" id="rechercheProduit" placeholder="Entrez le nom du stock">
 
 <br>
 
 <div class="menu-container">
-    <h2>Menu</h2>
-    <ul class="menu">
-        <li><a href="#onglet1">Energie</a>
-        </li>
-        <li><a href="#onglet2">Boutique</a>
-        </li>
-        <li><a href="#onglet3">Atelier</a>
-        </li>
-        <li><a href="#onglet4">Restaurant</a>
 
-        </li>
-    </ul>
-
-    <table class="table-stocks">
+    <table class="table-stocks" id="table-stocks">
         <tr>
             <th>Nom</th>
             <th>Prix HT</th>
             <th>Prix TTC</th>
             <th>Quantité</th>
         </tr>
+    </table>
+
+    <table class="table-reappro">
+        <tr>
+            <th>N°</th>
+            <th>Date commande</th>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+        </tr>
         <tr>
             <td>0</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
-            <td><button>Réapprovisionner</button></td>
+            <td>0</td>
+            <td class="no_border"><button>Annuler</button> <button>Enregistrer</button></td>
         </tr>
     </table>
-
 </div>
 
-
-
+ <script src="/assets/ts/storage/storage.js"></script>
 </body>
 </html>
