@@ -4,12 +4,14 @@ body {
 
 .menu-container {
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .menu {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin-right: 20px;
 }
 
 .menu > li {
@@ -70,32 +72,30 @@ th {
     background-color: #f5f5f5;
 }
 
-.table-stocks {
+table {
     max-width: 1000px; /* Remplacez 600px par la largeur maximale souhaitée */
     width: 100%; /* Pour s'assurer que la table est responsive */
 }
 
-.table-stocks th, .table-stocks td {
+table th, table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-.table-stocks th {
+table th {
     background-color: #f2f2f2;
 }
 
-.table-stocks td:last-child {
+table .no_border{
     border: none; /* Supprime la bordure pour la dernière colonne */
 }
 
-.table-stocks .action-button {
-    border: none; /* Supprime la bordure pour le bouton */
-    background: none; /* Supprime l'arrière-plan par défaut */
-    cursor: pointer;
-    color: blue; /* Couleur du texte du bouton, personnalisez selon vos besoins */
-}
 
-.table-stocks .action-button:hover {
-    text-decoration: underline; /* Souligne le texte du bouton au survol, personnalisez selon vos besoins */
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2fa243;
 }
