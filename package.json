@@ -22,7 +22,7 @@
     "stream-combiner": "^0.0.4",
     "string-argv": "^0.3.2",
     "through": "^2.3.8",
-    "vue": "^3.4.19",
+    "typescript": "^4.6.2",
     "which": "^2.0.2"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "http-server": "^14.1.1",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "scripts": {
     "start": "ts-node app.ts",
