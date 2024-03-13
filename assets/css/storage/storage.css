@@ -3,9 +3,13 @@ body {
 }
 
 .menu-container {
-    margin-top: 20px;
+    margin-left: 2%;
+    margin-right:2%;
     display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    flex-wrap: wrap; /* Permet le retour à la ligne des éléments si nécessaire */
     justify-content: space-between;
+
 }
 
 .menu {
@@ -92,11 +96,30 @@ table .no_border{
 }
 
 
-
 .top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #2fa243;
+}
+
+.stocks-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.stocks-container,
+.reappro-container {
+    width: 45%; /* Ajoutez la largeur appropriée pour chaque conteneur */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.table-reappro,
+.table-stocks {
+    width: 100%;
 }
 
