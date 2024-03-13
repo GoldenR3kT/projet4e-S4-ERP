@@ -10,15 +10,26 @@
 <body>
     <div id="navigation">
         <ul>
-            <li><a href="/management">Direction</a></li>
-            <li><a href="/cash_desk">Caisse</a></li>
-            <li><a href="/storage">Stock</a></li>
-            <li><a href="/human_resources">RH</a></li>
-            <li><a href="/customer_cards">Client/Carte</a></li>
-            <li><a href="/schedule">Calendrier</a></li>
+            <li data-route="/management">Direction</li>
+            <li data-route="/cash_desk">Caisse</li>
+            <li data-route="/storage">Stock</li>
+            <li data-route="/human_resources">RH</li>
+            <li data-route="/customer_cards">Client/Carte</li>
+            <li data-route="/schedule">Calendrier</li>
         </ul>
-        
-        
     </div>
+
+    <script>
+        // Interception des clics sur les éléments de la liste de navigation
+        document.querySelectorAll('#navigation li').forEach(function(link) {
+            link.addEventListener('click', function() {
+                var route = this.getAttribute('data-route');
+                if (route) {
+                    // Changer l'URL sans recharger la page
+                    window.history.pushState(null, '', route);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

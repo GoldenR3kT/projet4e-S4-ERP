@@ -65,16 +65,34 @@ svg:hover{
 li{
     list-style: none;
     margin: 10px;
-}
-
-li>a{
+    list-style: none;
+    margin: 10px;
     text-decoration: none;
     color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
 
-li>a:hover{
+li:hover{
     color: hsl(61, 100%, 50%);
     cursor: pointer;
+}
+
+
+#erp{
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+    height: 90vh;
+    position: fixed;
+    
+}
+
+#navigation-div{
+    min-height: 100vh;
+}
+
+#main{
+    width:80%;
+    height: 90%;
 }

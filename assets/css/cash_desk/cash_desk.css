@@ -202,7 +202,7 @@ div > button{
 }
 
 #navigation-div{
-    margin-top:-0.6%;
+    min-height: 100vh;
 }
 
 #cashdesk{
