@@ -19,6 +19,7 @@ body{
     justify-content: space-between;
     align-items: center;
     background-color: #2fa243;
+    height: 100vh;
 }
 
 #top-right-bar{
@@ -34,7 +35,7 @@ body{
     border-radius: 10px;
     background-color: #0d5103;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
     text-decoration: none;
 }
@@ -44,9 +45,14 @@ body{
     cursor: pointer;
 }
 
+
 svg:hover{
     cursor: pointer;
     stroke: #5bb052;
+}
+
+#menu{
+    margin-left: 10px;
 }
 
 
@@ -93,6 +99,7 @@ li:hover{
 }
 
 #main{
-    width:80%;
+    margin: 1%;
+    width:100%;
     height: 90%;
 }

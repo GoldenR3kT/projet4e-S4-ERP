@@ -154,6 +154,9 @@
     height: 27vh;
     padding: 10px;
     margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+
 }
 
 #products-list-scrollable {
@@ -161,12 +164,18 @@
     height: 18vh;
     padding: 10px;
     margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+
 }
 
 #pumps-station-scrollable{
     overflow-y: auto;
     height: 16vh;
     margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+
 }
 
 label{
@@ -187,28 +196,11 @@ div > button{
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #5acb47;
+    background-color: #45c631;
     margin-left: 15%;
     cursor: pointer;
 }
 
-#erp{
-    display: flex;
-    justify-content: space-between;
-    width: 99%;
-    height: 90vh;
-    position: fixed;
-    
-}
-
-#navigation-div{
-    min-height: 100vh;
-}
-
-#cashdesk{
-    width:80%;
-    height: 90%;
-}
 
 
 
