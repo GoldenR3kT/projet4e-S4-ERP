@@ -5,67 +5,86 @@
     <title>Stocks</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/storage/storage.css">
     <link rel="stylesheet" type="text/css" href="/css/storage/storage.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <!-- <link rel="stylesheet" type="text/css" href="/assets/css/style.css"> -->
+    <header>
+        <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+    </header>
 </head>
 <body>
-<div class="top">
-    <h1>Stocks - Réapprovisionnements</h1>
-    <ul class="menu">
-        <li><a href="#energie">Energie</a>
-        </li>
-        <li><a href="#boutique">Boutique</a>
-        </li>
-        <li><a href="#atelier">Atelier</a>
-        </li>
-        <li><a href="#restaurant">Restaurant</a>
 
-        </li>
-    </ul>
+<div id="erp">
+    <div id="navigation-div">
+        <iframe src="/navigation" frameborder="0" width="100%" height="101%"></iframe>
+    </div>
+
+    <div id="main">
+        <div class="top">
+            <h1>Stocks - Réapprovisionnements</h1>
+            <ul class="menu">
+                <li><a href="#energie">Energie</a>
+                </li>
+                <li><a href="#boutique">Boutique</a>
+                </li>
+                <li><a href="#atelier">Atelier</a>
+                </li>
+                <li><a href="#restaurant">Restaurant</a>
+
+                </li>
+            </ul>
+        </div>
+        <h2 id="categorie_title">Energie</h2>
+
+
+        <div class="menu-container">
+            <div class="stocks-container">
+                <div class="stocks-filter">
+                    <label for="filtre">Trier par :</label>
+                    <select id="filtre">
+                        <option value="filtre1">filtre 1</option>
+                        <option value="filtre2">filtre 2</option>
+                        <option value="filtre3">filtre 3</option>
+                        <!-- Ajoutez d'autres options selon vos besoins -->
+                    </select>
+                    <br>
+                    <div class="search-bar">
+                        <label for="recherche">Rechercher un produit :</label>
+                        <input type="text" id="recherche" placeholder="Entrez le nom du stock">
+                    </div>
+                </div>
+                <table class="table-reappro">
+                    <tr>
+                        <th>N°</th>
+                        <th>Date commande</th>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="reappro-container">
+                <div class="search-bar">
+                    <label for="recherche">Rechercher une réappro :</label>
+                    <input type="text" id="recherche2" placeholder="Entrez le nom de la réappro">
+                </div>
+                <table class="table-stocks" id="table-stocks">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prix HT</th>
+                        <th>Prix TTC</th>
+                        <th>Quantité</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-<h2 id="categorie_title">Energie</h2>
-<label for="filtre">Trier par :</label>
-<select id="filtre">
-    <option value="filtre1">filtre 1</option>
-    <option value="filtre2">filtre 2</option>
-    <option value="filtre3">filtre 3</option>
-    <!-- Ajoutez d'autres options selon vos besoins -->
-</select>
-<br>
-<div class="search-bar">
-    <label for="rechercheProduit">Rechercher un produit :</label>
-    <input type="text" id="rechercheProduit" placeholder="Entrez le nom du stock">
-</div>
-
-<div class="search-bar">
-    <label for="rechercheProduit2">Rechercher une réappro :</label>
-    <input type="text" id="rechercheProduit2" placeholder="Entrez le nom de la réappro">
-</div>
-
-<div class="menu-container">
-
-    <table class="table-stocks" id="table-stocks">
-        <tr>
-            <th>Nom</th>
-            <th>Prix HT</th>
-            <th>Prix TTC</th>
-            <th>Quantité</th>
-        </tr>
-    </table>
-
-    <table class="table-reappro">
-        <tr>
-            <th>N°</th>
-            <th>Date commande</th>
-            <th>Produit</th>
-            <th>Quantité</th>
-            <th>Prix</th>
-        </tr>
-        <tr>
-        </tr>
-    </table>
-</div>
-
+<script src="/ts/storage/storage.js"></script>
 <script src="/assets/ts/storage/storage.js"></script>
 </body>
 </html>

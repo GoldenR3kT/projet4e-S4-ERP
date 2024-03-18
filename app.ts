@@ -85,6 +85,10 @@ app.get('/storage', (req, res) => {
     res.sendFile(path.join(htmlPath, 'storage', 'storage.html'));
 });
 
+app.get('/storage/fournisseurs', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'storage', 'fournisseurs.html'));
+});
+
 app.get('/topbar', (req, res) => {
     res.sendFile(path.join(htmlPath, 'top-bar.html'));
 });
