@@ -148,37 +148,7 @@
     </div>
     <script src="/ts/cash_desk/calculator.js"></script>
 
-    <script>
-        var navigationOpened = false;
-        function openNavigation() {
-            if (!navigationOpened) {
-                var scriptElement = document.createElement('script');
-                scriptElement.src = '/ts/navigation.js';
-                document.body.appendChild(scriptElement);
-                navigationOpened = true;
-            }
-            else {
-                document.getElementById('navigation-div').remove();
-                navigationOpened = false;
-            }
-        }
-
-        window.addEventListener('message', function(event) {
-            if (event.data === 'openNavigation') {
-                openNavigation();
-            }
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
+    <script src="/ts/nav-call.js"></script>
 
 </body>
 </html>
