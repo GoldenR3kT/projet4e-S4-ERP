@@ -71,6 +71,10 @@ svg:hover{
 
 }
 
+#navigation-div{
+    margin-top:-0.25%;
+}
+
 li {
     list-style: none;
     margin: 10px;
