@@ -73,6 +73,14 @@ app.get('/incidents', (req, res) => {
     res.sendFile(path.join(htmlPath, 'incidents', 'incidents.html'));
 });
 
+app.get('/incidents/announce', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'incidents', 'announce_incident.html'));
+});
+
+app.get('/incidents/adjust', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'incidents', 'adjust_incident.html'));
+});
+
 app.get('/management', (req, res) => {
     res.sendFile(path.join(htmlPath, 'management', 'management.html'));
 });
