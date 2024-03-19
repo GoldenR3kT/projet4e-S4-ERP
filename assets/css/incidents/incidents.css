@@ -1,0 +1,42 @@
+#announce-button {
+    width: 13%;
+    height: 6.5vh;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #5acb47;
+    cursor: pointer;
+}
+
+#announce-button:hover {
+    background-color: #8cfd7f;
+}
+
+#left-div {
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+#incident-scrollable{
+    overflow-y: auto;
+    height: 16vh;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    width: 90%;
+}
+
+#left-div .horizontal-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#left-div p {
+    margin-top: 0;
+}
