@@ -1,0 +1,18 @@
+#btn_ajouter {
+    width: 20%;
+    height: 4.5vh;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #5acb47;
+    cursor: pointer;
+    margin-left: 50px;
+}
+#btn_ajouter:hover {
+    background-color: #8cfd7f;
+}
+
+#title-button {
+    margin-top: 20px;
+    display: flex;
+}

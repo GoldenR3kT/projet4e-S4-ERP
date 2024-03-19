@@ -5,7 +5,7 @@
     var iframe = document.createElement('iframe');
     iframe.src = '/navigation';
     iframe.width = '18%';
-    iframe.height = '101%';
+    iframe.height = '100%';
     iframe.style.position = 'fixed';
     iframe.style.zIndex = '1000';
     navigationDiv.appendChild(iframe);
