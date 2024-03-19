@@ -1,4 +1,5 @@
-#btn_ajouter {
+
+    #btn_ajouter {
     width: 20%;
     height: 4.5vh;
     font-size: 20px;
@@ -16,3 +17,75 @@
     margin-top: 20px;
     display: flex;
 }
+
+table {
+    max-width: 1000px;
+    width: 80%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    background-color: #8cfd7f;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+table .no_border{
+    border: none;
+}
+
+#table-and-profile {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#table-and-profil {
+    margin-left: 5%;
+    margin-right:5%;
+    display: flex;
+    align-items: center; /* Centre les éléments verticalement */
+    flex-wrap: wrap; /* Permet le retour à la ligne des éléments si nécessaire */
+    justify-content: space-between;
+    z-index: 999;
+}
+
+.table-fournisseurs {
+    width: 50%; /* Définissez une largeur fixe pour le tableau */
+    max-width: 800px;
+
+}
+.table-fournisseurs td th{
+    max-height: 10px;
+
+}
+#profil-fournisseur {
+    width: 50%;
+    max-width: 700px;
+    max-height: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#profil-fournisseur input {
+    width: 40%; /* Ajustez la largeur des inputs pour remplir la div */
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
