@@ -1,0 +1,37 @@
+#invoice-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#invoice-list-left, #invoice-list-right {
+    width: 40vw;
+    height: 40vh;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #0FD274;
+}
+
+
+.invoice-list-scrollable {
+    overflow-y: auto;
+    height: 30vh;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 0.5em;
+
+}
+
+body > div > div > div > div > p{
+    font-size: 18px;
+    text-align: left;
+font-weight: bold;
+}
+
+#ask-choose-invoice{
+    margin-top: 10%;
+    text-align: center;
+    font-size: 25px;
+}

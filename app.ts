@@ -49,6 +49,9 @@ app.get('/', (req, res) => {
 });
 
 // Gérer les requêtes GET pour chaque page
+
+
+//CASHDESK
 app.get('/cash_desk', (req, res) => {
     res.sendFile(path.join(htmlPath, 'cash_desk', 'cash_desk.html'));
 });
@@ -57,18 +60,31 @@ app.get('/cash_desk/overview', (req, res) => {
     res.sendFile(path.join(htmlPath, 'cash_desk', 'overview.html'));
 });
 
+app.get('/cash_desk/invoicelist', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'cash_desk', 'invoice-list.html'));
+});
+
+
+
+//CUSTOMER/CARDS
 app.get('/customer_cards', (req, res) => {
     res.sendFile(path.join(htmlPath, 'customer_cards', 'customer_cards.html'));
 });
 
+
+//HELP
 app.get('/help', (req, res) => {
     res.sendFile(path.join(htmlPath, 'help', 'help.html'));
 });
 
+
+//HUMAN RESOURCES
 app.get('/human_resources', (req, res) => {
     res.sendFile(path.join(htmlPath, 'human_resources', 'human_resources.html'));
 });
 
+
+//INCIDENTS
 app.get('/incidents', (req, res) => {
     res.sendFile(path.join(htmlPath, 'incidents', 'incidents.html'));
 });
@@ -81,18 +97,26 @@ app.get('/incidents/adjust', (req, res) => {
     res.sendFile(path.join(htmlPath, 'incidents', 'adjust_incident.html'));
 });
 
+
+//MANAGEMENT
 app.get('/management', (req, res) => {
     res.sendFile(path.join(htmlPath, 'management', 'management.html'));
 });
 
+
+//PROFILE
 app.get('/profile', (req, res) => {
     res.sendFile(path.join(htmlPath, 'profile', 'profile.html'));
 });
 
+
+//SCEDULE
 app.get('/schedule', (req, res) => {
     res.sendFile(path.join(htmlPath, 'schedule', 'schedule.html'));
 });
 
+
+//STORAGE
 app.get('/storage', (req, res) => {
     res.sendFile(path.join(htmlPath, 'storage', 'storage.html'));
 });
@@ -101,6 +125,9 @@ app.get('/storage/fournisseurs', (req, res) => {
     res.sendFile(path.join(htmlPath, 'storage', 'fournisseurs.html'));
 });
 
+
+
+//TEMPORARY
 app.get('/topbar', (req, res) => {
     res.sendFile(path.join(htmlPath, 'top-bar.html'));
 });
