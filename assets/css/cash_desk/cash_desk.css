@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    z-index: 1;
 }
 
 #search-product-box, #products-list-box{
@@ -90,8 +91,8 @@
 
 
 #energy-card-client{
-    width: 25%;
-    height: 19.2vh;
+    width: 45%;
+    height: 15vh;
     padding: 10px;
     font-size: 20px;
     border-radius: 10px;
@@ -99,13 +100,12 @@
 }
 
 #validate{
-    width: 30%;
+    width: 43%;
     height: 15vh;
     font-size: 25px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    margin-right: 3vw;
     background-color: #038d0c;
 }
 
@@ -117,20 +117,31 @@
 
 
 
-#calculator-screen-input ,#button-ok{
-    width: 100%;
+#calculator-screen-input{
+    width: 80%;
     height: 5vh;
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-left: 9.5%;
+    background-color: #ffffff;
+    text-align: end;
+}
+
+#button-ok{
+    width: 80%;
+    height: 5vh;
+    font-size: 20px;
+    margin-top: -0.5%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     background-color: #ffffff;
 }
 
 #calculator-buttons{
     align-items: center;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .button-calculator {
@@ -201,6 +212,25 @@ div > button{
     cursor: pointer;
 }
 
+#erp{
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+    height: 90vh;
+    position: fixed;
+    
+}
+
+
+
+#main{
+    position: absolute;
+    z-index: 2;
+    width:85%;
+    height: 90%;
+    margin-left: 7.5%;
+
+}
 
 
 

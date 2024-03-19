@@ -18,14 +18,14 @@ app.use('/css', express.static(cssPath));
 
 
 // Serve TypeScript files from the 'ts' directory
-const tsPath = path.join(__dirname, 'assets', 'ts');
+const tsPath = path.join(__dirname, 'src', 'ts');
 app.use('/ts', express.static(tsPath));
 
   
   // Route to handle JavaScript file requests
   app.get('/ts/:dir/:file', (req, res) => {
     const { dir, file } = req.params;
-    const jsFilePath = path.join(__dirname, 'assets', 'js', dir, `${file}.js`);
+    const jsFilePath = path.join(__dirname, 'src', 'js', dir, `${file}.js`);
   
     // Check if the JavaScript file exists
     fs.access(jsFilePath, fs.constants.F_OK, (err) => {
@@ -51,6 +51,10 @@ app.get('/', (req, res) => {
 // Gérer les requêtes GET pour chaque page
 app.get('/cash_desk', (req, res) => {
     res.sendFile(path.join(htmlPath, 'cash_desk', 'cash_desk.html'));
+});
+
+app.get('/cash_desk/overview', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'cash_desk', 'overview.html'));
 });
 
 app.get('/customer_cards', (req, res) => {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/login.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/css/human_resources/human_resources.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+
+    <title>InfoEmployee-Modif</title>
+
+    <header>
+        <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+    </header>
+</head>
+<body>    
+    <div class="info-employee">
+        <form action="#" method="POST">
+            <fieldset>
+                <legend>INFORMATIONS</legend>
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required><br><br>
+
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required><br><br>
+
+                <label for="tel">Numéro de téléphone :</label>
+                <input type="tel" id="tel" name="tel" required><br><br>
+
+                <label for="email">Adresse email :</label>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="adresse">Adresse :</label>
+                <textarea id="adresse" name="adresse" rows="4" required></textarea><br><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>POSTE</legend>
+                <label for="poste">Poste :</label>
+                <input type="text" id="poste" name="poste" required><br><br>
+
+                <label for="rang">Rang :</label>
+                <input type="text" id="rang" name="rang" required><br><br>
+            </fieldset>
+
+            <input type="submit" value="Enregistrer">
+        </form>
+    </div>
+</body>
+</html>

@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+
     <title>Planergy</title>
 </head>
 <body>
     <div id="top-bar">
-        <svg id="menu" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>     
+        <svg id="svg-topbar" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         <div id="top-right-bar">
             <button id="button-help" class="button-top-bar">Aide</button>
             <button id="button-incidents" class="button-top-bar">Incidents</button>
@@ -17,32 +18,16 @@
             stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
             <circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/></svg>
         </div>
-        
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const menuButton = document.getElementById('menu');
-        const navigationDiv = document.getElementById('navigation-div');
+        var svgTopbar = document.getElementById('svg-topbar');
 
-        if (menuButton && navigationDiv) {
-            menuButton.addEventListener('click', function() {
-                // Vérifier si la navigation est actuellement affichée
-                const navigationVisible = navigationDiv.style.display === 'block';
-                
-                // Afficher ou masquer la navigation en fonction de son état actuel
-                if (navigationVisible) {
-                    navigationDiv.style.display = 'none';
-                } else {
-                    navigationDiv.style.display = 'block';
-                }
-            });
-        }
+        svgTopbar.addEventListener('click', function() {
+            window.parent.postMessage('openNavigation', '*');
         });
-
     </script>
 
-    
 
 
 </body>
