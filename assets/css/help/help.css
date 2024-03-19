@@ -1,0 +1,96 @@
+#navigation-help{
+    display : flex;
+    flex-direction: column;
+    border-right: 2px solid black;
+    padding-right: 10px;
+    }
+
+#navigation-help button {
+     background-color: green;
+     padding: 20px 70px;
+     margin: 5px;
+     cursor: pointer;
+     }
+
+#navigation-help button:hover{
+    background-color: Cornsilk;
+    }
+
+ #help-menu{
+     display : flex;
+     flex-direction: column;
+     margin: 5px;
+     margin-left: auto;
+     margin-right: auto;
+     }
+
+#help-menu button{
+     background-color: DarkSeaGreen;
+     padding: 20px 70px;
+     margin: 5px;
+     cursor: pointer;
+     flex-shrink: 0;
+     border: none;
+     }
+
+#help-menu > #button_add_help{
+     background-color: Green;
+     border: solid;
+    }
+
+#help-menu > #button_add_help:hover{
+     background-color: Cornsilk;
+    }
+
+#help-menu div {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 5px;
+     position: relative;
+     }
+
+#help-menu a{
+      background-color: DarkSeaGreen;
+      padding: 20px 70px;
+      margin: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      flex: 1;
+      }
+
+#help-menu button:hover{
+     background-color: Cornsilk;
+     }
+
+#help-menu a:hover{
+      background-color: Cornsilk;
+      }
+
+
+div.items p:not(:target) {
+     display: none
+     }
+
+div.items p:target {
+     display: block
+     }
+
+.items p {
+    background-color: DarkSeaGreen;
+    padding: 20px 70px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+#item1:target, #item2:target, #item3:target, #item4:target {
+    display: block;
+}
+
+
+
+
+
+
