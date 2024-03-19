@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/cash_desk/cash_desk.css">
+    <link rel="stylesheet" href="/css/cash_desk/overview.css">
+
     <title>Récapitulatif</title>
     <header>
         <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
@@ -37,10 +38,21 @@
                 </div>
                 <p id="products-list-price">Montant Total : 0€</p>
             </div>
-
+            <p>Choisissez votre moyen de paiement :</p>
+            <div id="ask-payment-method">
+                <button id="cash-payment-button">Carte Bancaire</button>
+                <button id="card-payment-button">Carte Crédit énergie</button>
+                <button id="check-payment-button">Espèces</button>
+            </div>
         </div>
-        <div id="overview-right">
 
+
+        <div id="overview-right">
+            <p>Souhaitez vous imprimer le ticker ?</p>
+            <div id="ask-print-ticket">
+                <button id="print-ticket-button">Imprimer</button>
+                <button id="no-print-ticket-button">Non</button>
+            </div>
         </div>
 
         </div>

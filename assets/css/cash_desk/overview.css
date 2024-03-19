@@ -1,0 +1,58 @@
+
+
+#overview-left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    z-index: 1;
+}
+
+#overview-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#ask-payment-method{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 3%;
+}
+
+#overview-left > p{
+    font-size: 18px;
+    text-align: center;
+}
+
+#ask-payment-method > button{
+    width: 8vw;
+    height: 6vh;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #409a35;
+    text-align: center;
+}
+
+
+#products-list-box{
+    width: 35%;
+    height: 40vh;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #409a35;
+}
+
+
+#products-list-scrollable {
+    overflow-y: auto;
+    height: 18vh;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+
+}
