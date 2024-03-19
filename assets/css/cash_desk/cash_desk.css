@@ -15,7 +15,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #search-product-input{
@@ -33,7 +33,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #search-product-button:hover{
@@ -49,7 +49,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 
 }
 
@@ -60,7 +60,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #member-card-client{
@@ -70,7 +70,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #payment-checkbox{
@@ -84,7 +84,7 @@
     height: 4vh;
     font-size: 20px;
     border-radius: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 
 
 }
@@ -96,7 +96,7 @@
     padding: 10px;
     font-size: 20px;
     border-radius: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #validate{
@@ -106,12 +106,12 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #038d0c;
+    background-color: #0FD274;
 }
 
 #validate:hover{
     background-color: #0f4408;
-    border: #409a35;
+    border: #0FD274;
     cursor: pointer;
 }
 
@@ -165,7 +165,7 @@
     height: 27vh;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #0FD274;
     border-radius: 0.5em;
 
 }
@@ -175,7 +175,7 @@
     height: 18vh;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #0FD274;
     border-radius: 0.5em;
 
 }
@@ -184,7 +184,7 @@
     overflow-y: auto;
     height: 16vh;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     border-radius: 0.5em;
 
 }
@@ -207,7 +207,7 @@ div > button{
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #45c631;
+    background-color: #0FD274;
     margin-left: 15%;
     cursor: pointer;
 }
