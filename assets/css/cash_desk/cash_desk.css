@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    z-index: 1;
 }
 
 #search-product-box, #products-list-box{
@@ -206,8 +207,11 @@ div > button{
 }
 
 #cashdesk{
-    width:80%;
+    position: absolute;
+    z-index: 2;
+    width:95%;
     height: 90%;
+    margin-left: 2%;
 }
 
 

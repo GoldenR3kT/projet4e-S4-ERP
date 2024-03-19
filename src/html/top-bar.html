@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+
     <title>Planergy</title>
 </head>
 <body>
     <div id="top-bar">
-        <button id="button-back" class="button-top-bar">Retour</button>
-     
+        <svg id="svg-topbar" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+
         <div id="top-right-bar">
             <button id="button-help" class="button-top-bar">Aide</button>
             <button id="button-incidents" class="button-top-bar">Incidents</button>
@@ -20,5 +21,15 @@
         </div>
         
     </div>
+
+    <script>
+        var svgTopbar = document.getElementById('svg-topbar');
+
+        svgTopbar.addEventListener('click', function() {
+            window.parent.postMessage('openNavigation', '*');
+        });
+    </script>
+
+
 </body>
 </html>
