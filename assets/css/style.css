@@ -113,3 +113,50 @@ li > a:hover{
     margin-left: 7.5%;
 }
 
+#navigation ul ul {
+    display: none; /* Cache les sous-listes par défaut */
+}
+#navigation ul li {
+    position: relative;
+}
+#navigation ul ul.visible {
+    display: block; /* Affiche la sous-liste lorsqu'elle a la classe "visible" */
+}
+#navigation ul ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #0FD274;
+    padding: 0;
+}
+#navigation ul ul li {
+    border-bottom: 1px solid #ccc;
+}
+#navigation ul ul li:last-child {
+    border-bottom: none;
+}
+
+#navigation ul ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+    content: none;
+}
+
+
+
+/* Flèche stylisée pour les éléments de niveau principal */
+#navigation > ul > li > a:after {
+    content: '\25B6';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Change la flèche pour indiquer les sous-listes ouvertes */
+#navigation > ul > li.open > a:after {
+    content: '\25BC';
+}

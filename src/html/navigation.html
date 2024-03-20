@@ -10,8 +10,22 @@
 <body>
     <div id="navigation">
         <ul>
-            <li><a href="/management" target="_top">Direction</a></li>
-            <li><a href="/cash_desk" target="_top">Caisse</a></li>
+            <li>
+                <a href="/management" target="_top">Direction</a>
+
+            </li>
+            <li>
+                <a href="#" target="_top">Caisse</a>
+                <ul>
+                    <li><a href="/cash_desk" target="_top">Caisse</a></li>
+                    <li><a href="/cash_desk/overview" target="_top">Récapitulatif</a></li>
+                    <li><a href="/cash_desk/invoicelist" target="_top">Factures</a></li>
+                    <li><a href="/cash_desk/transaction" target="_top">Historique des transactions</a></li>
+
+
+
+                </ul>
+            </li>
             <li><a href="/storage" target="_top">Stock</a></li>
             <li><a href="/human_resources" target="_top">RH</a></li>
             <li><a href="/customer_cards" target="_top">Client/Carte</a></li>
@@ -20,3 +34,7 @@
     </div>
 </body>
 </html>
+
+<script src="/ts/nav/nav-submenu.js"></script>
+
+
