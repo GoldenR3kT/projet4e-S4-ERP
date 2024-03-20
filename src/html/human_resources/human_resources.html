@@ -8,7 +8,8 @@
 
 
     <link rel="stylesheet" type="text/css" href="/css/human_resources/human_resources.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/human_resources/info_employee.css">
+
 
 
     <title>Liste Employés</title>
@@ -30,6 +31,9 @@
                 <h1>RH - Liste des employés</h1>
             </div>
             <div class="search-container">
+                <button id="add-employee-button">Ajouter un employé</button>
+            </div>
+            <div class="search-container">
                 <h2>Rechercher par :</h2>
                 <input type="text" id="search-by-name" placeholder="Prenom || Nom de l'employé">
                 <input type="text" id="search-by-id" placeholder="ID de l'employé">
@@ -49,106 +53,72 @@
         <div id="main">
             <div class="list-employees">
 
+                <!-- Liste peuplée via un script  -->
 
-                <!-- Partie un peu chiante mais en gros je simule une liste pour qu'on puisse voir qu'on peut scroll  -->
-
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 1</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 2</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 3</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 4</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 5</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 6</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 7</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 8</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 9</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
-                <div class="employee">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
-                    <span>Nom de l'Employé 10</span>
-                    <div class="employee-buttons">
-                        <button>Voir l'EDT</button>
-                        <button>Modifier l'employé</button>
-                        <button>Supprimer l'employé</button>
-                    </div>
-                </div>
             </div>
-            
             
             <div class="info-employee">
                 
+                <!-- Pour l'instant gros carré gris  -->
+
+                <form action="#" method="POST">
+                <fieldset>
+                    <legend>INFORMATIONS</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="nom">Nom :</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="prenom">Prénom :</label>
+                            <input type="text" id="prenom" name="prenom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="tel">Numéro de téléphone :</label>
+                            <input type="tel" id="tel" name="tel" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="email">Adresse email :</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="adresse">Adresse :</label>
+                            <textarea id="adresse" name="adresse" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    
+                    <br><br>
+                </fieldset>
+
+                <fieldset>
+                    <legend>POSTE</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="poste">Poste :</label>
+                            <input type="text" id="poste" name="poste" required><br><br>
+                        </div>
+                        <div class="input-container">
+                            <label for="rang">Rang :</label>
+                            <input type="text" id="rang" name="rang" required><br><br>
+                        </div>
+                    </div>
+                </fieldset>
+                <input type="submit" value="Confirmer les modifications">
+                </form>
+
             </div>
         </div>
     </div>
+
+<script src="/ts/human_resources/generate_employees.js"></script>
+<script src="/ts/nav/nav-call.js"></script>
 </body>
 </html>

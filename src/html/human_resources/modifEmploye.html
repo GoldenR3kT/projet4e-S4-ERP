@@ -8,7 +8,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="/css/human_resources/human_resources.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/human_resources/info_employee.css">
 
 
     <title>InfoEmployee-Modif</title>
@@ -22,32 +22,54 @@
         <form action="#" method="POST">
             <fieldset>
                 <legend>INFORMATIONS</legend>
-                <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" required><br><br>
-
-                <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" required><br><br>
-
-                <label for="tel">Numéro de téléphone :</label>
-                <input type="tel" id="tel" name="tel" required><br><br>
-
-                <label for="email">Adresse email :</label>
-                <input type="email" id="email" name="email" required><br><br>
-
-                <label for="adresse">Adresse :</label>
-                <textarea id="adresse" name="adresse" rows="4" required></textarea><br><br>
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                
+                    <div class="input-container">
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" id="prenom" name="prenom" required>
+                    </div>
+                </div>
+                
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="tel">Numéro de téléphone :</label>
+                        <input type="tel" id="tel" name="tel" required>
+                    </div>
+                
+                    <div class="input-container">
+                        <label for="email">Adresse email :</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="adresse">Adresse :</label>
+                        <textarea id="adresse" name="adresse" rows="4" required></textarea>
+                    </div>
+                </div>
+                
+                <br><br>
             </fieldset>
 
             <fieldset>
                 <legend>POSTE</legend>
-                <label for="poste">Poste :</label>
-                <input type="text" id="poste" name="poste" required><br><br>
-
-                <label for="rang">Rang :</label>
-                <input type="text" id="rang" name="rang" required><br><br>
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="poste">Poste :</label>
+                        <input type="text" id="poste" name="poste" required><br><br>
+                    </div>
+                    <div class="input-container">
+                        <label for="rang">Rang :</label>
+                        <input type="text" id="rang" name="rang" required><br><br>
+                    </div>
+                </div>
             </fieldset>
-
-            <input type="submit" value="Enregistrer">
+            <input type="submit" value="Confirmer les modifications">
         </form>
     </div>
 </body>
