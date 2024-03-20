@@ -1,3 +1,8 @@
+#help{
+   display: flex;
+   justify-content: space-between;
+}
+
 #navigation-help{
     display : flex;
     flex-direction: column;
@@ -6,17 +11,18 @@
     }
 
 #navigation-help button {
-     background-color: green;
+     background-color: #0FD274;
      padding: 20px 70px;
      margin: 5px;
      cursor: pointer;
      }
 
 #navigation-help button:hover{
-    background-color: Cornsilk;
+    background-color: #F9EEAC;
     }
 
- #help-menu{
+
+#help-menus{
      display : flex;
      flex-direction: column;
      margin: 5px;
@@ -24,25 +30,35 @@
      margin-right: auto;
      }
 
-#help-menu button{
-     background-color: DarkSeaGreen;
+.help-menu {
+    display: none;
+}
+
+#help-menus .help-menu {
+    display: none;
+}
+
+#help-menus .help-menu.active {
+    display: block;
+}
+
+#help-menus button{
+     background-color: #98E3AD;
      padding: 20px 70px;
      margin: 5px;
      cursor: pointer;
-     flex-shrink: 0;
-     border: none;
      }
 
-#help-menu > #button_add_help{
-     background-color: Green;
+#help-menus > #button_add_help{
+     background-color: #0FD274;
      border: solid;
     }
 
-#help-menu > #button_add_help:hover{
-     background-color: Cornsilk;
+#help-menus > #button_add_help:hover{
+     background-color: #F9EEAC;
     }
 
-#help-menu div {
+#help-menus div {
      display: flex;
      justify-content: space-between;
      align-items: center;
@@ -50,8 +66,8 @@
      position: relative;
      }
 
-#help-menu a{
-      background-color: DarkSeaGreen;
+#help-menus a{
+      background-color: #98E3AD;
       padding: 20px 70px;
       margin: 5px;
       cursor: pointer;
@@ -59,12 +75,12 @@
       flex: 1;
       }
 
-#help-menu button:hover{
-     background-color: Cornsilk;
+#help-menus button:hover{
+     background-color: #F9EEAC;
      }
 
-#help-menu a:hover{
-      background-color: Cornsilk;
+#help-menus a:hover{
+      background-color: #F9EEAC;
       }
 
 
@@ -77,7 +93,7 @@ div.items p:target {
      }
 
 .items p {
-    background-color: DarkSeaGreen;
+    background-color: #98E3AD;
     padding: 20px 70px;
     display: none;
     position: absolute;
@@ -88,6 +104,48 @@ div.items p:target {
 #item1:target, #item2:target, #item3:target, #item4:target {
     display: block;
 }
+
+
+#help-menus #add_help{
+     display: none;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     background-color: #98E3AD;
+     max-width: 800px;
+     padding: 0 20px;
+     border: 2px solid;
+     align-items: center;
+}
+
+#help-menus h2{
+    margin: 5px;
+}
+
+#add_help #title[type="text"] {
+    margin: 5px;
+    width: 500px;
+    height: 30px;
+}
+
+#add_help #lib[type="text"] {
+    margin: 5px;
+    width: 500px;
+    height: 300px;
+}
+
+#add_help #add_help_button{
+     background-color: #0FD274;
+     padding: 5px 50px;
+     cursor: pointer;
+     border: 2px solid;
+     border-radius: 5px;
+}
+
+#add_help #add_help_button:hover{
+     background-color: #F9EEAC;
+}
+
 
 
 
