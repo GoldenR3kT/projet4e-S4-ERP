@@ -64,6 +64,10 @@ app.get('/cash_desk/invoicelist', (req, res) => {
     res.sendFile(path.join(htmlPath, 'cash_desk', 'invoice-list.html'));
 });
 
+app.get('/cash_desk/transaction', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'cash_desk', 'transaction-history.html'));
+});
+
 
 
 //CUSTOMER/CARDS

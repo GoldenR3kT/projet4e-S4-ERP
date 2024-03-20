@@ -125,16 +125,15 @@ li > a:hover{
 #navigation ul ul {
     position: absolute;
     top: 100%;
-    left: 0; /* Place la sous-liste à gauche de l'élément parent */
-    background-color: #0FD274; /* Fond blanc pour la sous-liste */
+    left: 0;
+    background-color: #0FD274;
     padding: 0;
 }
 #navigation ul ul li {
-    border-bottom: 1px solid #ccc; /* Ligne de séparation entre les éléments de la sous-liste */
+    border-bottom: 1px solid #ccc;
 }
-
 #navigation ul ul li:last-child {
-    border-bottom: none; /* Pas de ligne de séparation après le dernier élément */
+    border-bottom: none;
 }
 
 #navigation ul ul li a {
@@ -150,7 +149,7 @@ li > a:hover{
 
 /* Flèche stylisée pour les éléments de niveau principal */
 #navigation > ul > li > a:after {
-    content: '\25B6'; /* Flèche vers la droite par défaut */
+    content: '\25B6';
     position: absolute;
     right: 10px;
     top: 50%;
@@ -159,5 +158,5 @@ li > a:hover{
 
 /* Change la flèche pour indiquer les sous-listes ouvertes */
 #navigation > ul > li.open > a:after {
-    content: '\25BC'; /* Flèche vers le bas lorsque la sous-liste est ouverte */
+    content: '\25BC';
 }

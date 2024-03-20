@@ -1,0 +1,86 @@
+#transaction-history {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#transaction-top  {
+    display: flex;
+    width: 80vw;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#transaction-top-left {
+    display: flex;
+    width: 20vw;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#transaction-mid{
+    display: block;
+    align-items: center;
+    width: 80vw;
+    height: 70vh;
+    margin-top: 4vh;
+    border-radius: 10px;
+    background-color: #0FD274;
+
+
+}
+
+#lab1 > input, #lab2 > input {
+    width: 9vw;
+    height: 5vh;
+    font-size: 20px;
+    background-color: #0FD274;
+    text-align: center;
+}
+
+label {
+    font-size: 18px;
+}
+
+#lab1 , #lab2 {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#search-transaction-button{
+    width: 9vw;
+    height: 5vh;
+    font-size: 20px;
+    background-color: #0FD274;
+    text-align: center;
+}
+
+#transaction-mid > p {
+    font-size: 18px;
+    text-align: left;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    word-spacing: 10vw;
+}
+
+#straight-line {
+    display: block;
+    width: 77vw;
+    height: 2px;
+    margin-top: 2vh;
+    margin-left: 1vw;
+    background-color: #000000;
+}
+
+
+.transaction-scrollable {
+    overflow-y: auto;
+    height: 25vh;
+    padding: 20px;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    margin-bottom: 10px;
+    border-radius: 0.5em;
+}
