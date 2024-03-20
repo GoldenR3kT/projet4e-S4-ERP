@@ -1,0 +1,78 @@
+.E-title{
+    color: #5acb47;
+}
+
+#announce-button {
+    width: 13%;
+    height: 6.5vh;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #5acb47;
+    cursor: pointer;
+}
+
+#announce-button:hover {
+    background-color: #8cfd7f;
+}
+
+#left-div {
+    width: 50%;
+    height: 95%;
+    padding: 10px;
+    font-size: 20px;
+    margin-top: 25px;
+    border-right: 2px solid #ccc;
+    margin-right: 50px;
+}
+
+#left-title {
+    border-bottom: 3px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    font-size: 24px;
+    width: 30%;
+}
+
+#incident-scrollable {
+    overflow-y: auto;
+    height: 70vh;
+}
+
+#left-div .horizontal-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+#liste-Incident li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 3px solid #ccc;
+    background-color: #5acb47;
+    gap: 15px;
+}
+
+.adjust-button {
+    width: 22%;
+    height: 6.5vh;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #abf3a1;
+    cursor: pointer;
+}
+
+.adjust-button:hover {
+    background-color: #8cfd7f;
+}
+
+#liste-Incident li .adjust-button {
+    margin-left: auto;
+}
+
+#liste-Incident li p {
+    flex-grow: 1;
+}

@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    z-index: 1;
 }
 
 #search-product-box, #products-list-box{
@@ -14,7 +15,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #search-product-input{
@@ -32,7 +33,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #search-product-button:hover{
@@ -48,7 +49,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 
 }
 
@@ -59,7 +60,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #member-card-client{
@@ -69,7 +70,7 @@
     font-size: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #payment-checkbox{
@@ -83,54 +84,64 @@
     height: 4vh;
     font-size: 20px;
     border-radius: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 
 
 }
 
 
 #energy-card-client{
-    width: 25%;
-    height: 19.2vh;
+    width: 45%;
+    height: 15vh;
     padding: 10px;
     font-size: 20px;
     border-radius: 10px;
-    background-color: #409a35;
+    background-color: #0FD274;
 }
 
 #validate{
-    width: 30%;
+    width: 43%;
     height: 15vh;
     font-size: 25px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    margin-right: 3vw;
-    background-color: #038d0c;
+    background-color: #0FD274;
 }
 
 #validate:hover{
     background-color: #0f4408;
-    border: #409a35;
+    border: #0FD274;
     cursor: pointer;
 }
 
 
 
-#calculator-screen-input ,#button-ok{
-    width: 100%;
+#calculator-screen-input{
+    width: 80%;
     height: 5vh;
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-left: 9.5%;
+    background-color: #ffffff;
+    text-align: end;
+}
+
+#button-ok{
+    width: 80%;
+    height: 5vh;
+    font-size: 20px;
+    margin-top: -0.5%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     background-color: #ffffff;
 }
 
 #calculator-buttons{
     align-items: center;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .button-calculator {
@@ -154,7 +165,7 @@
     height: 27vh;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #0FD274;
     border-radius: 0.5em;
 
 }
@@ -164,7 +175,7 @@
     height: 18vh;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #0FD274;
     border-radius: 0.5em;
 
 }
@@ -173,7 +184,7 @@
     overflow-y: auto;
     height: 16vh;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     border-radius: 0.5em;
 
 }
@@ -196,7 +207,7 @@ div > button{
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #45c631;
+    background-color: #0FD274;
     margin-left: 15%;
     cursor: pointer;
 }

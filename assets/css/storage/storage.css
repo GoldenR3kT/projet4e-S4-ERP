@@ -100,7 +100,6 @@ table .no_border{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2fa243;
 }
 
 .stocks-filter {

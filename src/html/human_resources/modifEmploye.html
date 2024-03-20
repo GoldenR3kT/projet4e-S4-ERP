@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/login.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/css/human_resources/human_resources.css">
+    <link rel="stylesheet" type="text/css" href="/css/human_resources/info_employee.css">
+
+
+    <title>InfoEmployee-Modif</title>
+
+    <header>
+        <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+    </header>
+</head>
+<body>    
+    <div class="info-employee">
+        <form action="#" method="POST">
+            <fieldset>
+                <legend>INFORMATIONS</legend>
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                
+                    <div class="input-container">
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" id="prenom" name="prenom" required>
+                    </div>
+                </div>
+                
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="tel">Numéro de téléphone :</label>
+                        <input type="tel" id="tel" name="tel" required>
+                    </div>
+                
+                    <div class="input-container">
+                        <label for="email">Adresse email :</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="adresse">Adresse :</label>
+                        <textarea id="adresse" name="adresse" rows="4" required></textarea>
+                    </div>
+                </div>
+                
+                <br><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>POSTE</legend>
+                <div class="line-input">
+                    <div class="input-container">
+                        <label for="poste">Poste :</label>
+                        <input type="text" id="poste" name="poste" required><br><br>
+                    </div>
+                    <div class="input-container">
+                        <label for="rang">Rang :</label>
+                        <input type="text" id="rang" name="rang" required><br><br>
+                    </div>
+                </div>
+            </fieldset>
+            <input type="submit" value="Confirmer les modifications">
+        </form>
+    </div>
+</body>
+</html>

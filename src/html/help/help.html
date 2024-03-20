@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/help/help.css">
+    <title>Planergy</title>
+
+    <header>
+        <iframe src="/topbar" frameborder="0" width="100%" height="65vh"></iframe>
+    </header>
+</head>
+<body>
+<div id="erp">
+
+    <div id="main">
+
+        <div id="help">
+
+            <div id="navigation-help">
+                <button class="help-button" data-target="help-menu1">Profil</button>
+                <button class="help-button" data-target="help-menu2">Direction</button>
+                <button class="help-button" data-target="help-menu3">Caisse</button>
+                <button class="help-button" data-target="help-menu4">Stock</button>
+                <button class="help-button" data-target="help-menu5">RH</button>
+                <button class="help-button" data-target="help-menu6">Client/Carte</button>
+                <button class="help-button" data-target="help-menu7">Incidents</button>
+                <button class="help-button" data-target="help-menu8">Calendrier</button>
+            </div>
+
+            <div id="help-menus">
+                <button id="button_add_help" data-target="help_add">+ Ajouter une aide</button>
+                <div class="help-menu" id="help-menu1">
+                    <div>
+                        <a href="#item1">Voir les informations</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item2">Modifier les informations</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item3">Voir l'emploi du temps</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item">Se deconnecter</a>
+                        <button>X</button>
+                    </div>
+                </div>
+
+                <div class="help-menu" id="help-menu2">
+                    <div>
+                        <a href="#item1">Envoyer les comptes rendus</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item2">Recevoir les directives</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item3">Voir le dernier journal des comptes</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item">Gérer le journal des transactions</a>
+                        <button>X</button>
+                    </div>
+                </div>
+
+                <div class="help-menu" id="help-menu3">
+                    <div>
+                        <a href="#item1">Gérer un encaissement</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item2">Imprimer des tickets/factures</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item3">Historique de transaction par dates</a>
+                        <button>X</button>
+                    </div>
+                    <div>
+                        <a href="#item">Historique de transaction par clients</a>
+                        <button>X</button>
+                    </div>
+                </div>
+
+                <div id="add_help">
+                    <h2>Ajouter une aide</h2>
+                    <input id="title" type="text" placeholder="Titre">
+                    <input id="lib" type="text" placeholder="Libellé">
+                    <button id="add_help_button">Ajouter</button>
+                    <p>TESTESTEST</p>
+                </div>
+            </div>
+
+            <div class="items">
+                <p id="item1">Aide1</p>
+                <p id="item2">Aide2</p>
+                <p id="item3">Aide3</p>
+                <p id="item4">Aide</p>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/ts/help/menu.js"></script>
+
+<script src="/ts/nav-call.js"></script>
+
+</body>
+</html>

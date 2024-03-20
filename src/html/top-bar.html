@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+
     <title>Planergy</title>
 </head>
 <body>
@@ -22,32 +23,28 @@
                 <circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
             </svg>
         </div>
-        
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const menuButton = document.getElementById('menu');
-        const navigationDiv = document.getElementById('navigation-div');
+        var svgTopbar = document.getElementById('svg-topbar');
 
-        if (menuButton && navigationDiv) {
-            menuButton.addEventListener('click', function() {
-                // Vérifier si la navigation est actuellement affichée
-                const navigationVisible = navigationDiv.style.display === 'block';
-                
-                // Afficher ou masquer la navigation en fonction de son état actuel
-                if (navigationVisible) {
-                    navigationDiv.style.display = 'none';
-                } else {
-                    navigationDiv.style.display = 'block';
-                }
-            });
-        }
+        svgTopbar.addEventListener('click', function() {
+            window.parent.postMessage('openNavigation', '*');
         });
-
     </script>
 
-    
+    <script>
+        document.getElementById("button-help").addEventListener("click", function() {
+            window.top.location.href = "/help";
+        });
+    </script>
+
+    <script>
+        document.getElementById("button-incidents").addEventListener("click", function() {
+            window.top.location.href = "/incidents";
+        });
+    </script>
+
 
 
 </body>

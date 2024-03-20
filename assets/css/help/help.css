@@ -1,0 +1,154 @@
+#help{
+   display: flex;
+   justify-content: space-between;
+}
+
+#navigation-help{
+    display : flex;
+    flex-direction: column;
+    border-right: 2px solid black;
+    padding-right: 10px;
+    }
+
+#navigation-help button {
+     background-color: #0FD274;
+     padding: 20px 70px;
+     margin: 5px;
+     cursor: pointer;
+     }
+
+#navigation-help button:hover{
+    background-color: #F9EEAC;
+    }
+
+
+#help-menus{
+     display : flex;
+     flex-direction: column;
+     margin: 5px;
+     margin-left: auto;
+     margin-right: auto;
+     }
+
+.help-menu {
+    display: none;
+}
+
+#help-menus .help-menu {
+    display: none;
+}
+
+#help-menus .help-menu.active {
+    display: block;
+}
+
+#help-menus button{
+     background-color: #98E3AD;
+     padding: 20px 70px;
+     margin: 5px;
+     cursor: pointer;
+     }
+
+#help-menus > #button_add_help{
+     background-color: #0FD274;
+     border: solid;
+    }
+
+#help-menus > #button_add_help:hover{
+     background-color: #F9EEAC;
+    }
+
+#help-menus div {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 5px;
+     position: relative;
+     }
+
+#help-menus a{
+      background-color: #98E3AD;
+      padding: 20px 70px;
+      margin: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      flex: 1;
+      }
+
+#help-menus button:hover{
+     background-color: #F9EEAC;
+     }
+
+#help-menus a:hover{
+      background-color: #F9EEAC;
+      }
+
+
+div.items p:not(:target) {
+     display: none
+     }
+
+div.items p:target {
+     display: block
+     }
+
+.items p {
+    background-color: #98E3AD;
+    padding: 20px 70px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+#item1:target, #item2:target, #item3:target, #item4:target {
+    display: block;
+}
+
+
+#help-menus #add_help{
+     display: none;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     background-color: #98E3AD;
+     max-width: 800px;
+     padding: 0 20px;
+     border: 2px solid;
+     align-items: center;
+}
+
+#help-menus h2{
+    margin: 5px;
+}
+
+#add_help #title[type="text"] {
+    margin: 5px;
+    width: 500px;
+    height: 30px;
+}
+
+#add_help #lib[type="text"] {
+    margin: 5px;
+    width: 500px;
+    height: 300px;
+}
+
+#add_help #add_help_button{
+     background-color: #0FD274;
+     padding: 5px 50px;
+     cursor: pointer;
+     border: 2px solid;
+     border-radius: 5px;
+}
+
+#add_help #add_help_button:hover{
+     background-color: #F9EEAC;
+}
+
+
+
+
+
+
+
