@@ -2,7 +2,7 @@ var navigationOpened = false;
 function openNavigation() {
     if (!navigationOpened) {
         var scriptElement = document.createElement('script');
-        scriptElement.src = '/ts/navigation.js';
+        scriptElement.src = '/ts/nav/navigation.js';
         document.body.appendChild(scriptElement);
         navigationOpened = true;
     }
