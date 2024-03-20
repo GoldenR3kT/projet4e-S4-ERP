@@ -77,6 +77,10 @@ app.get('/profile', (req, res) => {
     res.sendFile(path.join(htmlPath, 'profile', 'profile.html'));
 });
 
+app.get('/profile-modification', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'profile', 'profile-modification.html'));
+});
+
 app.get('/schedule', (req, res) => {
     res.sendFile(path.join(htmlPath, 'schedule', 'schedule.html'));
 });

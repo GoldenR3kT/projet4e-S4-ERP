@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/profile/profile.css">
+        <title>Planergy</title>
+        <header>    
+            <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+        </header>
+    </head>
+    <body>
+        <div id="profil-superieur">
+
+            <div id="profil-informations">
+                <div id="informations-identite">
+                    <div class="conteneur-photo-profil">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
+                            <circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
+                        </svg>
+                    </div>
+                    <p id="prenom" class="informations-utilisateur">Prénom</p>
+                    <p id="nom" class="informations-utilisateur">Nom</p>
+                    <div class="conteneur-rang">
+                        <p>Rang</p>
+                    </div>
+                </div>
+    
+                <div id="informations-personnelles">
+                    <p id="email" class="informations-personnelles">E-mail</p>
+                    <p id="telephone" class="informations-personnelles">Téléphone</p>
+                    <p id="adresse" class="informations-personnelles">Adresse</p>
+                </div>
+            </div>
+
+            <div class="profil-boutons-options">   
+                <button id="bouton-modifier" class="bouton-profil" onclick="window.location.href='/profile-modification'">
+                    Modifier
+                </button>
+                <button id="bouton-deconnexion" class="bouton-profil">
+                    Déconnexion
+                </button>
+            </div>
+
+        </div>
+
+
+        <div class="emploi-du-temps">
+
+            <p id="mon-edt">Mon emploi du temps</p>
+            <div class="conteneur-edt">
+                <button class="boutons-edt">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50px" height="100px">
+                        <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div class="edt">
+                    Emploi du temps de la semaine
+                </div>
+
+                <button class="boutons-edt">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50px" height="100px">
+                        <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+    </body>
+</html>
