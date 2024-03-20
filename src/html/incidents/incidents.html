@@ -6,19 +6,40 @@
     <link rel="stylesheet" type="text/css" href="/css/incidents/incidents.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <script src="/ts/incidents/incidents.js"></script>
+    <script src="/ts/nav/nav-call.js"></script>
 </head>
 <body>
 <header>
-    <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+    <iframe src="/topbar" frameborder="0" width="100%" height="65vh"></iframe>
 </header>
 <div id="erp">
     <div id="main">
+        <h1>PLAN<span class="E-title">E</span>RGY</h1>
         <button id="announce-button">Déclarer un incident</button>
         <div id="left-div">
-            <p>Incident non réglés :</p>
+            <p id="left-title">Incident non réglés :</p>
             <div id="incident-scrollable">
-
-
+                <ul id="liste-Incident">
+                    <li>
+                        <p>nom employé,</p>
+                        <p>heure,</p>
+                        <p>libellé</p>
+                        <button class="adjust-button">Régler</br>l'incident</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="right-div">
+            <p id="right-title">Incident réglés :</p>
+            <div id="incident-scrollable-right">
+                <ul id="liste-Incident-right">
+                    <li>
+                        <p>nom employé,</p>
+                        <p>heure,</p>
+                        <p>libellé</p>
+                        <button class="adjust-button">Régler</br>l'incident</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

@@ -1,24 +1,41 @@
-function ajouterListeHorizontale() {
-    console.log('Ajout de la liste horizontale');
-    var divContainer = document.getElementById('left-div');
-    console.log('divContainer:', divContainer);
-    var ul = document.createElement('ul');
-    ul.classList.add('horizontal-list'); // Add this line to add the class
+function ajouterIncident(): void {
+    // Sélectionner l'ul
+    const listeIncident = document.getElementById("liste-Incident");
 
-    var items = ['Accueil', 'Actualités', 'Contact', 'À propos'];
-    items.forEach(function(itemText) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = '#';
-        a.textContent = itemText;
-        li.appendChild(a);
-        ul.appendChild(li);
-    });
+    // Créer un nouvel élément li
+    const nouvelIncident = document.createElement("li");
 
-    divContainer.appendChild(ul);
+    // Ajouter les éléments p avec le même contenu
+    const nomEmploye = document.createElement("p");
+    nomEmploye.textContent = "nom employé,";
+    nouvelIncident.appendChild(nomEmploye);
+
+    const heure = document.createElement("p");
+    heure.textContent = "heure,";
+    nouvelIncident.appendChild(heure);
+
+    const libelle = document.createElement("p");
+    libelle.textContent = "libellé";
+    nouvelIncident.appendChild(libelle);
+
+    // Créer le bouton avec la même classe et texte
+    const boutonRegler = document.createElement("button");
+    boutonRegler.className = "adjust-button";
+    boutonRegler.innerHTML = "Régler<br>l'incident";
+    nouvelIncident.appendChild(boutonRegler);
+
+    // Ajouter le nouvel élément li à l'ul
+    listeIncident.appendChild(nouvelIncident);
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    ajouterIncident();
+    ajouterIncident();
+    ajouterIncident();
+    ajouterIncident();
+    ajouterIncident();
+    ajouterIncident();
+    ajouterIncident();
+    ajouterIncident();
 
-document.addEventListener('DOMContentLoaded', function() {
-    ajouterListeHorizontale();
 });
