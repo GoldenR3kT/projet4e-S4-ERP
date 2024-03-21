@@ -21,6 +21,24 @@ function ajouterIncident() {
     // Ajouter le nouvel élément li à l'ul
     listeIncident.appendChild(nouvelIncident);
 }
+function ajouterIncidentDroite() {
+    // Sélectionner l'ul
+    var listeIncidentDroite = document.getElementById("liste-Incident-right");
+    // Créer un nouvel élément li
+    var nouvelIncidentDroite = document.createElement("li");
+    // Ajouter les éléments p avec le même contenu
+    var nomEmploye = document.createElement("p");
+    nomEmploye.textContent = "nom employé,";
+    nouvelIncidentDroite.appendChild(nomEmploye);
+    var heure = document.createElement("p");
+    heure.textContent = "heure,";
+    nouvelIncidentDroite.appendChild(heure);
+    var libelle = document.createElement("p");
+    libelle.textContent = "libellé";
+    nouvelIncidentDroite.appendChild(libelle);
+    // Ajouter le nouvel élément li à l'ul
+    listeIncidentDroite.appendChild(nouvelIncidentDroite);
+}
 document.addEventListener("DOMContentLoaded", function () {
     ajouterIncident();
     ajouterIncident();
@@ -30,4 +48,14 @@ document.addEventListener("DOMContentLoaded", function () {
     ajouterIncident();
     ajouterIncident();
     ajouterIncident();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
+    ajouterIncidentDroite();
 });
