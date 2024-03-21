@@ -46,6 +46,8 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 
@@ -73,6 +75,8 @@
     margin: 10px;
     background-color: #0FD274;
     text-align: center;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 
@@ -87,6 +91,8 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 
 }
 
@@ -142,6 +148,8 @@
     margin: 10px;
     background-color: #0FD274;
     text-align: center;
+    box-shadow: 0 0 10px #494949;
+
 }
 h2{
     font-size: 30px;

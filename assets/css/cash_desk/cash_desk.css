@@ -16,6 +16,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
 }
 
 #search-product-input{
@@ -34,6 +35,8 @@
     border-radius: 5px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 #search-product-button:hover{
@@ -50,6 +53,8 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 
 }
 
@@ -61,6 +66,8 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 #member-card-client{
@@ -71,6 +78,8 @@
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 #payment-checkbox{
@@ -85,6 +94,8 @@
     font-size: 20px;
     border-radius: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 
 
 }
@@ -97,6 +108,8 @@
     font-size: 20px;
     border-radius: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 #validate{
@@ -107,6 +120,8 @@
     border-radius: 5px;
     margin-bottom: 10px;
     background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+
 }
 
 #validate:hover{
