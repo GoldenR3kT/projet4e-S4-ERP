@@ -1,0 +1,90 @@
+#main {
+    display: flex;
+    flex-direction: column;
+}
+
+.E-title{
+    color: #5acb47;
+}
+
+#main-title{
+    font-size: 45px;
+}
+
+.title {
+    text-align: center;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 5px;
+    font-size: 24px;
+    width: fit-content;
+}
+
+#incident-name {
+    margin: 90px auto 0 35%;
+    width: fit-content;
+}
+
+#incident-level {
+    margin: -95px auto 35% 55%;
+    width: fit-content;
+}
+
+
+#incident-description {
+    margin: -500px auto 0 35.5%;
+    width: fit-content;
+}
+
+#name {
+    margin-top: 10px;
+    background-color: #f1e3a4;
+    border-radius: 10px;
+    width: 250px;
+    height: 50px;
+}
+
+#name::placeholder {
+    font-size: 16px;
+    color: #555;
+}
+
+#description {
+    margin-top: 10px;
+    background-color: #f1e3a4;
+    border-radius: 10px;
+    width: 420px;
+    height: 250px;
+    vertical-align: top;
+    resize: none;
+}
+
+#description::placeholder {
+    font-size: 25px;
+    color: #555;
+}
+
+#level {
+    background-color: #ffffff;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #000000;
+    height: 52px;
+    width: 100px;
+}
+
+#announce-button {
+    width: 20%;
+    height: 6.5vh;
+    font-size: 20px;
+    border: 1px solid #000000;
+    color: white;
+    border-radius: 10px;
+    background-color: #5acb47;
+    cursor: pointer;
+    margin-top: 50px;
+    margin-left: 39%;
+}
+
+#announce-button:hover {
+    background-color: #8cfd7f;
+}

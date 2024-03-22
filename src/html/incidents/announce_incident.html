@@ -2,9 +2,40 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Incident - Declarer</title>
+    <link rel="stylesheet" type="text/css" href="/css/incidents/incidents-announce.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/ts/incidents/incidents.js"></script>
+    <script src="/ts/nav/nav-call.js"></script>
 </head>
 <body>
+<header>
+    <iframe src="/topbar" frameborder="0" width="100%" height="65vh"></iframe>
+</header>
+<div id="erp">
+    <div id="main">
+        <h1 id="main-title">PLAN<span class="E-title">E</span>RGY</h1>
+        <div id ="incident-name">
+            <p class="title">Intitulé </p>
+            <input type="text" id="name" placeholder="Nom de l'incident">
+        </div>
 
+        <div id ="incident-level">
+            <p class="title">Niveau </p>
+            <select id="level">
+                <option value="faible">Faible</option>
+                <option value="moyen">Moyen</option>
+                <option value="élevé">Élevé</option>
+            </select>
+        </div>
+
+        <div id ="incident-description">
+            <p class="title">Explication </p>
+            <input type="text" id="description" placeholder="Description de l'incident">
+        </div>
+
+        <button id="announce-button">Déclarer un incident</button>
+    </div>
+</div>
 </body>
 </html>

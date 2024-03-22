@@ -5,10 +5,10 @@ function ajouterIncident() {
     var nouvelIncident = document.createElement("li");
     // Ajouter les éléments p avec le même contenu
     var nomEmploye = document.createElement("p");
-    nomEmploye.textContent = "nom employé,";
+    nomEmploye.textContent = "nom employé";
     nouvelIncident.appendChild(nomEmploye);
     var heure = document.createElement("p");
-    heure.textContent = "heure,";
+    heure.textContent = "heure";
     nouvelIncident.appendChild(heure);
     var libelle = document.createElement("p");
     libelle.textContent = "libellé";
@@ -28,16 +28,19 @@ function ajouterIncidentDroite() {
     var nouvelIncidentDroite = document.createElement("li");
     // Ajouter les éléments p avec le même contenu
     var nomEmploye = document.createElement("p");
-    nomEmploye.textContent = "nom employé,";
+    nomEmploye.textContent = "nom employé";
     nouvelIncidentDroite.appendChild(nomEmploye);
     var heure = document.createElement("p");
-    heure.textContent = "heure,";
+    heure.textContent = "heure";
     nouvelIncidentDroite.appendChild(heure);
     var libelle = document.createElement("p");
     libelle.textContent = "libellé";
     nouvelIncidentDroite.appendChild(libelle);
     // Ajouter le nouvel élément li à l'ul
     listeIncidentDroite.appendChild(nouvelIncidentDroite);
+}
+function redirectionAnnounce() {
+    window.top.location.href = "/incidents/announce";
 }
 document.addEventListener("DOMContentLoaded", function () {
     ajouterIncident();

@@ -52,6 +52,9 @@ function ajouterIncidentDroite(): void {
     listeIncidentDroite.appendChild(nouvelIncidentDroite);
 }
 
+function redirectionAnnounce(): void {
+    window.top.location.href = "/incidents/announce";
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     ajouterIncident();
@@ -72,6 +75,4 @@ document.addEventListener("DOMContentLoaded", function() {
     ajouterIncidentDroite();
     ajouterIncidentDroite();
     ajouterIncidentDroite();
-
-
 });
