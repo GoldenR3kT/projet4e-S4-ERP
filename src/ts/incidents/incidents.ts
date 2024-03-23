@@ -26,6 +26,11 @@ function ajouterIncident(): void {
 
     // Ajouter le nouvel élément li à l'ul
     listeIncident.appendChild(nouvelIncident);
+
+    // Ajouter l'écouteur d'événement au nouveau bouton ajouté
+    boutonRegler.addEventListener("click", function() {
+        window.top.location.href = "/incidents/adjust";
+    });
 }
 
 function ajouterIncidentDroite(): void {
@@ -57,6 +62,8 @@ function redirectionAnnounce(): void {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    ajouterIncident();
+    ajouterIncident();
     ajouterIncident();
     ajouterIncident();
     ajouterIncident();

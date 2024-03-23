@@ -161,4 +161,60 @@ li > a:hover{
     content: '\25BC';
 }
 
+#incident-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+#incident-dropdown a {
+    padding: 8px 0;
+    text-decoration: none;
+    display: block;
+    color: #333;
+}
 
+#incident-dropdown a:hover {
+    background-color: #8cfd7f;
+}
+
+#incident-dropdown a.incident {
+    background-color: #f1e3a4; /* Couleur de fond pour les liens avec la classe .incident */
+}
+
+#incident-dropdown a.incident:hover {
+    /* Ne rien définir ici pour annuler complètement le comportement de survol */
+}
+
+.topBot {
+    background-color: #0FD274;
+    border: 3px solid #000000;
+    color: white;
+}
+
+.incident {
+    background-color: #f1e3a4;
+    border: 1px solid #000000;
+}
+
+.adjust {
+    background-color: #abf3a1;
+    border-radius: 5px;
+    border: 1px solid #000000;
+}
+
+.adjust:hover {
+    background-color: #cdf3c8;
+}
+
+.detail {
+    background-color: #abf3a1;
+    border-radius: 5px;
+    border: 1px solid #000000;
+}
+
+.detail:hover {
+    background-color: #cdf3c8;
+}
