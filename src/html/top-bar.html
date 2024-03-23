@@ -22,22 +22,19 @@
                 <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/>
                 <circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
             </svg>
-            <div id="incident-dropdown">
-                <a id="announce" class="topBot" href="#">+ Déclarer</a>
-                <a class="incident" href="#">Incident 1 <button class="detail"> Ouvrir les </br> détails </button> <button class="adjust"> Régler </br> l'incident </button></a>
-                <a class="incident" href="#">Incident 2</a>
-                <a class="incident" href="#">Incident 3</a>
-                <a id="all" class="topBot" href="#">Voir tous</a>
-            </div>
         </div>
     </div>
 
     <script>
         var svgTopbar = document.getElementById('svg-topbar');
-        var incidentDropdown = document.getElementById('incident-dropdown');
+        var incidentDropdown = document.getElementById('button-incidents');
 
         svgTopbar.addEventListener('click', function() {
             window.parent.postMessage('openNavigation', '*');
+        });
+
+        incidentDropdown.addEventListener('click', function() {
+            window.parent.postMessage('openIncidents', '*');
         });
     </script>
 
@@ -47,7 +44,7 @@
         });
     </script>
 
-    <script>
+   <!-- <script>
         document.getElementById("button-incidents").addEventListener("click", function() {
             // Affiche ou cache le menu déroulant des incidents
             if (incidentDropdown.style.display === "block") {
@@ -62,7 +59,7 @@
                 });
             }
         });
-    </script>
+    </script>-->
 
 
 

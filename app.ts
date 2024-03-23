@@ -143,6 +143,10 @@ app.get('/navigation', (req, res) =>{
     res.sendFile(path.join(htmlPath, 'navigation.html'))
 });
 
+app.get('/topbar-incidents', (req, res) =>{
+    res.sendFile(path.join(htmlPath, 'top-bar-incidents.html'))
+});
+
 // On lance le serveur sur le port 3000
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
