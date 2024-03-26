@@ -4,21 +4,6 @@ import fs from 'fs';
 import { exec } from 'child_process';
 import {Sequelize} from "sequelize";
 
-//CONFIG BDD
-const { host, dialect, database, username, password } = require("./dbconfig.json");
-
-const sequelize = new Sequelize(database, username, password, {
-    host: host,
-    dialect: dialect
-});
-
-try {
-    sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-} catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
-
 const app = express();
 const port = 3000;
 
