@@ -169,7 +169,7 @@ li > a:hover{
     z-index: 1000;
 }
 #incident-dropdown a {
-    padding: 8px 0;
+    padding: 8px 34px;
     text-decoration: none;
     display: block;
     color: #333;
@@ -198,13 +198,13 @@ li > a:hover{
     border: 1px solid #000000;
 }
 
-.adjust {
+.manage {
     background-color: #abf3a1;
     border-radius: 5px;
     border: 1px solid #000000;
 }
 
-.adjust:hover {
+.manage:hover {
     background-color: #cdf3c8;
 }
 

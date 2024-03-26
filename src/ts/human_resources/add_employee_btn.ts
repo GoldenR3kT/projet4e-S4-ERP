@@ -2,8 +2,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const addEmployeeButton = document.getElementById("add-employee-button");
     const infoEmployeeSection = document.querySelector(".info-employee");
 
+    let selectedRoles = []; // Variable pour stocker les rôles sélectionnés
+
     // Fonction pour gérer le clic sur le bouton "Ajouter un employé"
-    function handleAddEmployeeClick(event: { preventDefault: () => void; }) {
+    function handleAddEmployeeClick(event) {
         event.preventDefault(); // Pour éviter le comportement par défaut du bouton (rechargement de la page)
 
         // Construction du formulaire à afficher dans la section info-employee
@@ -44,22 +46,46 @@ document.addEventListener("DOMContentLoaded", function() {
                             <textarea id="adresse" name="adresse" rows="4" required></textarea>
                         </div>
                     </div>
-                    
-                    <br><br>
                 </fieldset>
-        
                 <fieldset>
                     <legend>POSTE</legend>
                     <div class="line-input">
                         <div class="input-container">
                             <label for="poste">Poste :</label>
-                            <input type="text" id="poste" name="poste" required><br><br>
+                            <input type="text" id="poste" name="poste" required>
                         </div>
+                    
                         <div class="input-container">
                             <label for="rang">Rang :</label>
-                            <input type="text" id="rang" name="rang" required><br><br>
+                            <input type="text" id="rang" name="rang" required>
                         </div>
                     </div>
+                </fieldset>
+                <fieldset>
+                    <legend>ROLES</legend>
+                                        
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="selected-roles">Rôles sélectionnés :</label>
+                            <ul id="selected-roles"></ul>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <div class="role-selector-container">
+                                <label for="role">Rôle :</label>
+                                <select id="role" name="role">
+                                    <option value="role1">Rôle 1</option>
+                                    <option value="role2">Rôle 2</option>
+                                    <option value="role3">Rôle 3</option>
+                                </select>
+                                <button type="button" id="add-role-button">Ajouter</button>
+                                <button type="button" id="remove-role-button">Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br><br>
                 </fieldset>
             </form>
         `;
@@ -67,7 +93,56 @@ document.addEventListener("DOMContentLoaded", function() {
         // Affichage du formulaire dans la section info-employee
         if(infoEmployeeSection) {
             infoEmployeeSection.innerHTML = formHTML;
+            // Ajouter des gestionnaires d'événements pour les boutons "Ajouter" et "Supprimer" les rôles
+            const addRoleButton = document.getElementById("add-role-button");
+            const removeRoleButton = document.getElementById("remove-role-button");
+            addRoleButton.addEventListener("click", handleAddRoleClick);
+            removeRoleButton.addEventListener("click", handleRemoveRoleClick);
         }
+    }
+
+    // Fonction pour gérer le clic sur le bouton "Ajouter"
+    function handleAddRoleClick() {
+        const roleSelect = document.getElementById("role") as HTMLSelectElement; // Spécifiez le type HTMLSelectElement
+        const selectedRolesList = document.getElementById("selected-roles");
+        const selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
+        const option = roleSelect.querySelector(`option[value="${selectedRole}"]`);
+
+        // Vérifier si l'option n'a pas déjà été sélectionnée
+        if (!selectedRoles.includes(selectedRole) && option) {
+            selectedRoles.push(selectedRole); // Ajouter le rôle à la liste des rôles sélectionnés
+            updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+        }
+    }
+
+    // Fonction pour gérer le clic sur le bouton "Supprimer"
+    function handleRemoveRoleClick() {
+        const roleSelect = document.getElementById("role") as HTMLSelectElement; // Spécifiez le type HTMLSelectElement
+        const selectedRolesList = document.getElementById("selected-roles");
+        const selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
+        const option = roleSelect.querySelector(`option[value="${selectedRole}"]`);
+    
+        // Recherche de l'index du rôle sélectionné dans le tableau selectedRoles
+        const index = selectedRoles.indexOf(selectedRole);
+    
+        // Vérifier si le rôle est présent dans le tableau et le retirer s'il est trouvé
+        if (index !== -1 && option) {
+            selectedRoles.splice(index, 1); // Retirer le rôle du tableau des rôles sélectionnés
+            updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+        }
+    }
+        
+
+
+    // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
+    function updateSelectedRolesList(selectedRolesList) {
+        selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
+        selectedRoles.forEach((role) => {
+            const li = document.createElement("li");
+            li.textContent = role;
+            li.setAttribute("data-value", role);
+            selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
+        });
     }
 
     // Ajout de l'écouteur d'événement sur le clic du bouton "Ajouter un employé"

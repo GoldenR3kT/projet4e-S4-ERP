@@ -22,7 +22,7 @@
     flex-direction: column;
     align-items: flex-start; /* Aligner verticalement les éléments au début */
     margin-right: 30px; /* Augmentation de la marge à droite pour l'espace entre les éléments */
-    margin-bottom: 30px; /* Augmentation de l'espace en bas */
+    margin-bottom: 18px; /* Augmentation de l'espace en bas */
 }
 
 label {
@@ -64,3 +64,22 @@ label {
 .info-employee input[type="submit"] {
     margin-top: 30px; /* Augmentation de l'espace entre le formulaire et le bouton */
 }
+
+/**************AJOUTER EMPLOYE**************/
+
+.role-selector-container {
+    display: flex;
+    align-items: center;
+}
+
+.role-selector-container select {
+    margin-right: 10px;
+}
+.info-employee select {
+    width: 25vh;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: 2px solid #ccc;
+    padding: 10px;
+}
+
