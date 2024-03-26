@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 document.addEventListener("DOMContentLoaded", function () {
     var submenuItems = document.querySelectorAll("#navigation > ul > li > a");
     submenuItems.forEach((item) => {

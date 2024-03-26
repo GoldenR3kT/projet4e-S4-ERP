@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 document.addEventListener("DOMContentLoaded", () => {
     const listEmployees = document.querySelector('.list-employees');
     // Données des employés (simulées)
@@ -43,6 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Peupler la liste des employés
     employeesData.forEach((employee) => {
         const employeeElement = createEmployeeElement(employee);
-        listEmployees?.appendChild(employeeElement);
+        listEmployees === null || listEmployees === void 0 ? void 0 : listEmployees.appendChild(employeeElement);
     });
 });

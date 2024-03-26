@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function ajouterIncident() {
     // Sélectionner l'ul
     const listeIncident = document.getElementById("liste-Incident");
@@ -21,7 +20,7 @@ function ajouterIncident() {
     boutonRegler.innerHTML = "Régler<br>l'incident";
     nouvelIncident.appendChild(boutonRegler);
     // Ajouter le nouvel élément li à l'ul
-    listeIncident?.appendChild(nouvelIncident);
+    listeIncident === null || listeIncident === void 0 ? void 0 : listeIncident.appendChild(nouvelIncident);
     // Ajouter l'écouteur d'événement au nouveau bouton ajouté
     boutonRegler.addEventListener("click", function () {
         const w = window.top;
@@ -46,7 +45,7 @@ function ajouterIncidentDroite() {
     libelle.textContent = "libellé";
     nouvelIncidentDroite.appendChild(libelle);
     // Ajouter le nouvel élément li à l'ul
-    listeIncidentDroite?.appendChild(nouvelIncidentDroite);
+    listeIncidentDroite === null || listeIncidentDroite === void 0 ? void 0 : listeIncidentDroite.appendChild(nouvelIncidentDroite);
 }
 function redirectionAnnounce() {
     const w = window.top;

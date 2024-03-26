@@ -1,7 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var incidentsOpened = false;
 function openIncidents() {
+    var _a;
     if (!incidentsOpened) {
         var scriptElement = document.createElement('script');
         scriptElement.src = '/ts/incidents/create-menu-incidents.js';
@@ -9,7 +9,7 @@ function openIncidents() {
         incidentsOpened = true;
     }
     else {
-        document.getElementById('incidentDropdown')?.remove();
+        (_a = document.getElementById('incidentDropdown')) === null || _a === void 0 ? void 0 : _a.remove();
         incidentsOpened = false;
     }
 }

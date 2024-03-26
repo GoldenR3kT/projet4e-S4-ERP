@@ -2,7 +2,7 @@
     navigationDiv.id = 'navigation-div';
 
 
-    const iframe = document.createElement('iframe');
+    iframe = document.createElement('iframe');
     iframe.src = '/navigation';
     iframe.width = '18%';
     iframe.height = '100%';
@@ -10,7 +10,7 @@
     iframe.style.zIndex = '1000';
     navigationDiv.appendChild(iframe);
 
-    const erpElement = document.getElementById('erp');
+    erpElement = document.getElementById('erp');
 
     navigationDiv.classList.add('slide-in');
 

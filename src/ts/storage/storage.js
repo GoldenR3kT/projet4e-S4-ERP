@@ -76,8 +76,9 @@ class StockManager {
         const menuItems = document.querySelectorAll('.menu a');
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
+                var _a;
                 // Obtenez l'identifiant de l'onglet à partir de l'attribut href
-                const tabId = item.getAttribute('href')?.substring(1);
+                const tabId = (_a = item.getAttribute('href')) === null || _a === void 0 ? void 0 : _a.substring(1);
                 const categorie_title = document.getElementById('categorie_title');
                 switch (tabId) {
                     case 'energie':
