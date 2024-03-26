@@ -6,20 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const sequelize_1 = require("sequelize");
-//CONFIG BDD
-const { host, dialect, database, username, password } = require("./dbconfig.json");
-const sequelize = new sequelize_1.Sequelize(database, username, password, {
-    host: host,
-    dialect: dialect
-});
-try {
-    sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-}
-catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
 const app = (0, express_1.default)();
 const port = 3000;
 // chemin absolu vers le dossier 'html'

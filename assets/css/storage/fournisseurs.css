@@ -12,9 +12,25 @@
     background-color: #8cfd7f;
 }
 
+#btn_profile {
+    width: 20%;
+    height: 4.5vh;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #5acb47;
+    cursor: pointer;
+    margin-left: 50px;
+}
+
+#btn_profile:hover {
+    background-color: #8cfd7f;
+}
+
 #title-button {
     display: flex;
 }
+
 
 table {
     max-width: 1000px;
@@ -27,7 +43,7 @@ table th, table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-    background-color: #8cfd7f;
+    background-color: #0FD274;
 }
 
 table th {
@@ -38,39 +54,44 @@ table .no_border{
     border: none;
 }
 
-#table-and-profile {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.flex-container {
-    display: flex;
-    justify-content: space-between;
-}
-
 #table-and-profil {
-    margin-left: 5%;
-    margin-right:5%;
+    margin-left: 1%;
+    margin-right:1%;
     display: flex;
-    align-items: center; /* Centre les éléments verticalement */
     flex-wrap: wrap; /* Permet le retour à la ligne des éléments si nécessaire */
     justify-content: space-between;
     z-index: 999;
 }
 
-.table-fournisseurs {
-    width: 50%; /* Définissez une largeur fixe pour le tableau */
+#left_container {
+    width: 50%; /* Ajoutez la largeur appropriée pour chaque conteneur */
+    border-radius: 5px;
+    position: static;
+}
+#table-fournisseurs {
+    width: 100%; /* Définissez une largeur fixe pour le tableau */
     max-width: 800px;
+    position: static;
 
 }
-.table-fournisseurs td th{
+
+#table-fournisseurs td th{
     max-height: 10px;
-
 }
-#profil-fournisseur {
+
+#table-fournisseurs tr {
+    max-height: 10px;
+}
+
+
+#right_container {
     width: 50%;
     max-width: 700px;
+}
+#search_filter {
+    margin-bottom: 20px;
+}
+#profil-fournisseur {
     max-height: 300px;
     padding: 20px;
     border: 1px solid #ccc;
@@ -78,12 +99,17 @@ table .no_border{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: #0FD274;
 }
 
 #profil-fournisseur input {
-    width: 40%; /* Ajustez la largeur des inputs pour remplir la div */
+    width: 50%; /* Ajustez la largeur des inputs pour remplir la div */
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
+    background-color: #faf1b2;
 }
 
+#profil-fournisseur #adresse {
+    width: 80%;
+}

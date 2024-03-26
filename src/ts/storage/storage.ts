@@ -1,5 +1,3 @@
-import {Database} from "../database/Database";
-
 class StockManager {
 
     constructor() {
@@ -146,6 +144,3 @@ class StockManager {
 const stockManager = new StockManager();
 // Ajouter des gestionnaires d'événements pour écouter les clics sur les liens de menu
 stockManager.setupMenuListeners();
-
-console.log("dez");
-console.log(Database.selectArticles(1));

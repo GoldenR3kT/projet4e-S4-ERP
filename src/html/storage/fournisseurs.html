@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <header>
-        <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+        <iframe src="/topbar" frameborder="0" width="100%" height="65vh"></iframe>
     </header>
 </head>
 <body>
@@ -21,10 +21,11 @@
                 Ajouter un fournisseur
             </button>
         </div>
-        <h3> Liste des fournisseurs :</h3>
+        <h3 id="liste_title"> Liste des fournisseurs :</h3>
 
-        <div id="table-and-profil" class="flex-container">
-            <table class="table-fournisseurs">
+        <div id="table-and-profil">
+            <div id="left_container">
+            <table id="table-fournisseurs">
                 <tr>
                     <th>Nom</th>
                     <th>Adresse</th>
@@ -35,16 +36,39 @@
                     <td>adresse1</td>
                     <td>email1</td>
                 </tr>
+                <tr>
+                    <td>nom1</td>
+                    <td>adresse1</td>
+                    <td>email1</td>
+                </tr>
 
             </table>
-
-            <div id="profil-fournisseur">
-                <h3>Informations :</h3>
-                <input type="text" id="nom" name="nom" placeholder="Nom">
-                <input type="text" id="email" name="email" placeholder="Email">
-                <input type="text" id="adresse" name="adresse" placeholder="Adresse">
             </div>
+            <div id="right_container">
+                <div id="search_filter">
+                    <div class="search-bar">
+                        <label for="recherche">Rechercher un produit :</label>
+                        <input type="text" id="recherche" placeholder="Entrez le nom du stock">
+                    </div>
+                    <label>Trier par :</label>
+                    <select id="filtre_container">
+                        <option value="filtre1">filtre 1</option>
+                        <option value="filtre2">filtre 2</option>
+                        <option value="filtre3">filtre 3</option>
+                        <!-- Ajoutez d'autres options selon vos besoins -->
+                    </select>
+                </div>
 
+                <div id="profil-fournisseur">
+                    <h3>Informations :</h3>
+                    <input type="text" id="nom" name="nom" placeholder="Nom">
+                    <input type="text" id="email" name="email" placeholder="Email">
+                    <input type="text" id="adresse" name="adresse" placeholder="Adresse">
+                    <button id="btn_profile">
+                        Ajouter un fournisseur
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

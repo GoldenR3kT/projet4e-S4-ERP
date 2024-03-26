@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const Database_1 = require("../database/Database");
 class StockManager {
     constructor() {
         // Remplacez ces données simulées par vos propres données
@@ -129,5 +127,3 @@ class StockManager {
 const stockManager = new StockManager();
 // Ajouter des gestionnaires d'événements pour écouter les clics sur les liens de menu
 stockManager.setupMenuListeners();
-console.log("dez");
-console.log(Database_1.Database.selectArticles(1));
