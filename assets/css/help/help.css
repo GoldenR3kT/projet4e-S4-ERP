@@ -12,7 +12,7 @@
 
 #navigation-help button {
      background-color: #0FD274;
-     padding: 20px 70px;
+     padding: 40px 120px;
      margin: 5px;
      cursor: pointer;
      }
@@ -47,6 +47,7 @@
      padding: 20px 70px;
      margin: 5px;
      cursor: pointer;
+     border: none;
      }
 
 #help-menus > #button_add_help{
@@ -64,7 +65,13 @@
      align-items: center;
      margin-bottom: 5px;
      position: relative;
+
      }
+
+#help-menus .div-menu{
+    background-color: #98E3AD;
+    border: solid;
+}
 
 #help-menus a{
       background-color: #98E3AD;
