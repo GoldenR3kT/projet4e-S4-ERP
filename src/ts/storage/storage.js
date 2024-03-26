@@ -127,3 +127,7 @@ class StockManager {
 const stockManager = new StockManager();
 // Ajouter des gestionnaires d'événements pour écouter les clics sur les liens de menu
 stockManager.setupMenuListeners();
+<<<<<<< HEAD
+=======
+console.log("dez");
+>>>>>>> c433e651b384cdbdd86b303e2a84e20f122aded1
