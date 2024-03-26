@@ -7,7 +7,7 @@ function openNavigation() {
         navigationOpened = true;
     }
     else {
-        document.getElementById('navigation-div').remove();
+        document.getElementById('navigation-div')?.remove();
         navigationOpened = false;
     }
 }

@@ -1,8 +1,8 @@
-    var navigationDiv = document.createElement('div');
+    const navigationDiv = document.createElement('div');
     navigationDiv.id = 'navigation-div';
 
 
-    var iframe = document.createElement('iframe');
+    const iframe = document.createElement('iframe');
     iframe.src = '/navigation';
     iframe.width = '18%';
     iframe.height = '100%';
@@ -10,10 +10,10 @@
     iframe.style.zIndex = '1000';
     navigationDiv.appendChild(iframe);
 
-    var erpElement = document.getElementById('erp');
+    const erpElement = document.getElementById('erp');
 
     navigationDiv.classList.add('slide-in');
 
-    erpElement.insertBefore(navigationDiv, erpElement.firstChild);
+    erpElement?.insertBefore(navigationDiv, erpElement.firstChild);
 
 

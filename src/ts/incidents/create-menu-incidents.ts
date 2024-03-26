@@ -1,8 +1,8 @@
-var incidentDiv = document.createElement('div');
+const incidentDiv = document.createElement('div');
 incidentDiv.id = 'incidentDropdown';
 
+const iframe = document.createElement('iframe');
 
-var iframe = document.createElement('iframe');
 iframe.src = '/topbar-incidents';
 iframe.width = '195vw';
 iframe.height = '206vh';
@@ -13,10 +13,10 @@ iframe.setAttribute('scrolling', 'no');
 
 incidentDiv.appendChild(iframe);
 
-var erpElement = document.getElementById('erp');
+const erpElement = document.getElementById('erp');
 
 incidentDiv.classList.add('slide-in');
 
-erpElement.insertBefore(incidentDiv, erpElement.firstChild);
+erpElement?.insertBefore(incidentDiv, erpElement.firstChild);
 
 

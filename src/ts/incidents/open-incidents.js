@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var incidentsOpened = false;
 function openIncidents() {
     if (!incidentsOpened) {
@@ -7,7 +9,7 @@ function openIncidents() {
         incidentsOpened = true;
     }
     else {
-        document.getElementById('incidentDropdown').remove();
+        document.getElementById('incidentDropdown')?.remove();
         incidentsOpened = false;
     }
 }

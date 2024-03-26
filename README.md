@@ -7,5 +7,14 @@ npm install
 
 Lancement du serveur 
 ```bash
-- npm run start
+npm run start
+```
+
+Compilation des fichier Typescript
+```bash
+tsc --project .
+```
+ou
+```bash
+tsc -p .
 ```

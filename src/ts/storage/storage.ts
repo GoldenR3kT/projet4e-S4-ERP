@@ -1,3 +1,5 @@
+import {Database} from "../database/Database";
+
 class StockManager {
 
     constructor() {
@@ -87,11 +89,14 @@ class StockManager {
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
                 // Obtenez l'identifiant de l'onglet à partir de l'attribut href
-                const tabId = item.getAttribute('href').substring(1);
+                const tabId = item.getAttribute('href')?.substring(1);
 
+                const categorie_title = document.getElementById('categorie_title');
                 switch (tabId) {
                     case 'energie':
-                        document.getElementById('categorie_title').textContent = 'Energie';
+                        if(categorie_title) {
+                            categorie_title.textContent = 'Energie';
+                        }
                         const energieData = [
                             { nom: 'Diesel', prixHT: '1.2', prixTTC: '1.70', quantite: '500L' },
                             { nom: 'SP 95', prixHT: '1.5', prixTTC: '2.00', quantite: '600L' },
@@ -105,7 +110,9 @@ class StockManager {
                         this.fillReapproData(reapproEnergieData);
                         break;
                     case 'boutique':
-                        document.getElementById('categorie_title').textContent = 'Boutique';
+                        if(categorie_title) {
+                            categorie_title.textContent = 'Boutique';
+                        }
                         const stocksData = [
                             { nom: 'twix', prixHT: '10.00', prixTTC: '12.00', quantite: '50' },
                             { nom: 'redbull', prixHT: '15.00', prixTTC: '18.00', quantite: '30' },
@@ -119,10 +126,14 @@ class StockManager {
                         this.fillReapproData(reapproBoutiqueData);
                         break;
                     case 'atelier':
-                        document.getElementById('categorie_title').textContent = 'Atelier';
+                        if(categorie_title) {
+                            categorie_title.textContent = 'Atelier';
+                        }
                         break;
                     case 'restaurant':
-                        document.getElementById('categorie_title').textContent = 'Restaurant';
+                        if(categorie_title) {
+                            categorie_title.textContent = 'Restaurant';
+                        }
                         break;
                 }
 
@@ -135,3 +146,6 @@ class StockManager {
 const stockManager = new StockManager();
 // Ajouter des gestionnaires d'événements pour écouter les clics sur les liens de menu
 stockManager.setupMenuListeners();
+
+console.log("dez");
+console.log(Database.selectArticles(1));
