@@ -1,7 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 document.addEventListener("DOMContentLoaded", function () {
     var submenuItems = document.querySelectorAll("#navigation > ul > li > a");
-    submenuItems.forEach(function (item) {
-        item.addEventListener("click", function (event) {
+    submenuItems.forEach((item) => {
+        item.addEventListener("click", (event) => {
             event.preventDefault();
             var parentLi = this.parentNode;
             var submenu = parentLi.querySelector("ul");

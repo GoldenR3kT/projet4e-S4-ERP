@@ -58,6 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Peupler la liste des employés
     employeesData.forEach((employee) => {
         const employeeElement = createEmployeeElement(employee);
-        listEmployees.appendChild(employeeElement);
+        listEmployees?.appendChild(employeeElement);
     });
 });

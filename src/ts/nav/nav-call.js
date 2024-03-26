@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var navigationOpened = false;
 function openNavigation() {
     if (!navigationOpened) {
@@ -7,7 +9,7 @@ function openNavigation() {
         navigationOpened = true;
     }
     else {
-        document.getElementById('navigation-div').remove();
+        document.getElementById('navigation-div')?.remove();
         navigationOpened = false;
     }
 }
