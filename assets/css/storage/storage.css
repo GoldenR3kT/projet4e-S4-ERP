@@ -6,7 +6,6 @@ body {
     margin-left: 2%;
     margin-right:2%;
     display: flex;
-    align-items: center; /* Centre les éléments verticalement */
     flex-wrap: wrap; /* Permet le retour à la ligne des éléments si nécessaire */
     justify-content: space-between;
 
@@ -85,6 +84,7 @@ table th, table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    background-color: #0FD274;
 }
 
 table th {
@@ -100,6 +100,11 @@ table .no_border{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-left: 20px;
+}
+
+#categorie_title {
+    margin-left: 20px;
 }
 
 .stocks-filter {
@@ -115,6 +120,7 @@ table .no_border{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    position: static;
 }
 
 .table-reappro,

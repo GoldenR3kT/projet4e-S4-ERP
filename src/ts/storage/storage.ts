@@ -1,4 +1,3 @@
-import {Database} from "../database/Database";
 
 class StockManager {
 
@@ -148,4 +147,3 @@ const stockManager = new StockManager();
 stockManager.setupMenuListeners();
 
 console.log("dez");
-console.log(Database.selectArticles(1));
