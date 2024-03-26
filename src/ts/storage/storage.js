@@ -1,7 +1,7 @@
 "use strict";
 class StockManager {
     constructor() {
-        // Remplacez ces données simulées par vos propres données
+        //TODO Changer les données simulées par les données réelles
         const stocksDataEnergie = [
             { nom: 'Diesel', prixHT: '1.2', prixTTC: '1.70', quantite: '500L' },
             { nom: 'SP 95', prixHT: '1.5', prixTTC: '2.00', quantite: '600L' },
@@ -75,10 +75,11 @@ class StockManager {
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
                 var _a;
-                // Obtenez l'identifiant de l'onglet à partir de l'attribut href
+                // On recup l'id de l'onglet
                 const tabId = (_a = item.getAttribute('href')) === null || _a === void 0 ? void 0 : _a.substring(1);
                 const categorie_title = document.getElementById('categorie_title');
                 switch (tabId) {
+                    //TODO Changer les données simulées par les données réelles
                     case 'energie':
                         if (categorie_title) {
                             categorie_title.textContent = 'Energie';
@@ -95,6 +96,7 @@ class StockManager {
                         this.fillReapproData(reapproEnergieData);
                         break;
                     case 'boutique':
+                        //TODO Changer les données simulées par les données réelles
                         if (categorie_title) {
                             categorie_title.textContent = 'Boutique';
                         }
@@ -110,11 +112,13 @@ class StockManager {
                         this.fillReapproData(reapproBoutiqueData);
                         break;
                     case 'atelier':
+                        //TODO Changer les données simulées par les données réelles
                         if (categorie_title) {
                             categorie_title.textContent = 'Atelier';
                         }
                         break;
                     case 'restaurant':
+                        //TODO Changer les données simulées par les données réelles
                         if (categorie_title) {
                             categorie_title.textContent = 'Restaurant';
                         }

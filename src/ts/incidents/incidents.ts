@@ -1,4 +1,5 @@
 function ajouterIncident(): void {
+
     // Sélectionner l'ul
     const listeIncident = document.getElementById("liste-Incident");
 
