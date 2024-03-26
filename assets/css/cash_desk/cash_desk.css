@@ -82,6 +82,10 @@
 
 }
 
+#member-card-client > button{
+    margin-top: 5vh;
+}
+
 #payment-checkbox{
     display: flex;
     justify-content: space-between;
@@ -112,6 +116,11 @@
 
 }
 
+#energy-card-client> button{
+    margin-top: 1vh;
+}
+
+
 #validate{
     width: 43%;
     height: 15vh;
@@ -125,7 +134,7 @@
 }
 
 #validate:hover{
-    background-color: #0f4408;
+    background-color: #f1e3a4;
     border: #0FD274;
     cursor: pointer;
 }
@@ -170,7 +179,7 @@
 }
 
 .button-calculator:hover, #button-ok:hover {
-    background-color: #105408;
+    background-color: #f1e3a4;
     cursor: pointer;
 }
 
@@ -222,8 +231,14 @@ div > button{
     font-size: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #0FD274;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px #494949;
     margin-left: 15%;
+    cursor: pointer;
+}
+
+div > button:hover{
+    background-color: #f1e3a4;
     cursor: pointer;
 }
 

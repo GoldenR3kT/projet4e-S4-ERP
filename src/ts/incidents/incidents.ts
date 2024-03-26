@@ -25,11 +25,14 @@ function ajouterIncident(): void {
     nouvelIncident.appendChild(boutonRegler);
 
     // Ajouter le nouvel élément li à l'ul
-    listeIncident.appendChild(nouvelIncident);
+    listeIncident?.appendChild(nouvelIncident);
 
     // Ajouter l'écouteur d'événement au nouveau bouton ajouté
     boutonRegler.addEventListener("click", function() {
-        window.top.location.href = "/incidents/adjust";
+        const w = window.top;
+        if(w) {
+            w.location.href = "/incidents/adjust";
+        }
     });
 }
 
@@ -54,11 +57,14 @@ function ajouterIncidentDroite(): void {
     nouvelIncidentDroite.appendChild(libelle);
 
     // Ajouter le nouvel élément li à l'ul
-    listeIncidentDroite.appendChild(nouvelIncidentDroite);
+    listeIncidentDroite?.appendChild(nouvelIncidentDroite);
 }
 
 function redirectionAnnounce(): void {
-    window.top.location.href = "/incidents/announce";
+    const w = window.top;
+    if (w) {
+        w.location.href = "/incidents/announce";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {

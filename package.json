@@ -12,11 +12,13 @@
     "from": "^0.1.7",
     "isexe": "^2.0.0",
     "map-stream": "^0.1.0",
+    "mysql2": "^3.9.2",
     "node-cleanup": "^2.1.2",
     "path": "^0.12.7",
     "path-key": "^3.1.1",
     "pause-stream": "^0.0.11",
     "ps-tree": "^1.2.0",
+    "sequelize": "^6.37.1",
     "shebang-command": "^2.0.0",
     "shebang-regex": "^3.0.0",
     "split": "^0.3.3",
@@ -27,6 +29,7 @@
     "which": "^2.0.2"
   },
   "devDependencies": {
+    "@tsconfig/node-lts": "^20.1.2",
     "@types/express": "^4.17.21",
     "express": "^4.18.3",
     "http-server": "^14.1.1",

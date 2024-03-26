@@ -48,7 +48,7 @@ body{
 
 
 .button-top-bar:hover{
-    background-color: #2e9a21;
+    background-color: #f1e3a4;
     cursor: pointer;
 }
 
@@ -93,7 +93,7 @@ li >a{
 }
 
 li > a:hover{
-    color: hsl(61, 100%, 50%);
+    color: #f1e3a4;
     cursor: pointer;
 }
 
@@ -164,7 +164,6 @@ li > a:hover{
 #incident-dropdown {
     display: block;
     position: absolute;
-    background-color: #f9f9f9;
 
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1000;

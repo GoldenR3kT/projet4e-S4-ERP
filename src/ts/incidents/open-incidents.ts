@@ -7,7 +7,7 @@ function openIncidents() {
         incidentsOpened = true;
     }
     else {
-        document.getElementById('incidentDropdown').remove();
+        document.getElementById('incidentDropdown')?.remove();
         incidentsOpened = false;
     }
 }
