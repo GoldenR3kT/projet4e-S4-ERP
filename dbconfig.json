@@ -1,0 +1,8 @@
+{
+  "host": "localhost",
+  "dialect": "mysql",
+
+  "database": "projet4e",
+  "username": "admin",
+  "password": "1234"
+}
