@@ -1,7 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var navigationOpened = false;
 function openNavigation() {
+    var _a;
     if (!navigationOpened) {
         var scriptElement = document.createElement('script');
         scriptElement.src = '/ts/nav/navigation.js';
@@ -9,7 +9,7 @@ function openNavigation() {
         navigationOpened = true;
     }
     else {
-        document.getElementById('navigation-div')?.remove();
+        (_a = document.getElementById('navigation-div')) === null || _a === void 0 ? void 0 : _a.remove();
         navigationOpened = false;
     }
 }

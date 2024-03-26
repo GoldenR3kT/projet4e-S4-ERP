@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class StockManager {
     constructor() {
         // Remplacez ces données simulées par vos propres données
@@ -75,8 +74,9 @@ class StockManager {
         const menuItems = document.querySelectorAll('.menu a');
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
+                var _a;
                 // Obtenez l'identifiant de l'onglet à partir de l'attribut href
-                const tabId = item.getAttribute('href')?.substring(1);
+                const tabId = (_a = item.getAttribute('href')) === null || _a === void 0 ? void 0 : _a.substring(1);
                 const categorie_title = document.getElementById('categorie_title');
                 switch (tabId) {
                     case 'energie':
@@ -127,7 +127,3 @@ class StockManager {
 const stockManager = new StockManager();
 // Ajouter des gestionnaires d'événements pour écouter les clics sur les liens de menu
 stockManager.setupMenuListeners();
-<<<<<<< HEAD
-=======
-console.log("dez");
->>>>>>> c433e651b384cdbdd86b303e2a84e20f122aded1

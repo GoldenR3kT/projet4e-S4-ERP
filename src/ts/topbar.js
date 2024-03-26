@@ -1,11 +1,10 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // Fonction pour basculer entre l'affichage de la navigation et l'agrandissement du contenu principal
 function toggleNavigation() {
     const navigationDiv = document.getElementById('navigation-div');
     const mainContent = document.getElementById('main');
     // Vérifier si la navigation est actuellement affichée
-    const navigationVisible = navigationDiv?.style.display === 'block';
+    const navigationVisible = (navigationDiv === null || navigationDiv === void 0 ? void 0 : navigationDiv.style.display) === 'block';
     // Afficher ou masquer la navigation en fonction de son état actuel
     if (navigationVisible) {
         navigationDiv.style.display = 'none';

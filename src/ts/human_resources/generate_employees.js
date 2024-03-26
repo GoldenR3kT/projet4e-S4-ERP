@@ -1,8 +1,9 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var listEmployees = document.querySelector('.list-employees');
-    var infoEmployee = document.querySelector('.info-employee');
+"use strict";
+document.addEventListener("DOMContentLoaded", () => {
+    const listEmployees = document.querySelector('.list-employees');
+    const infoEmployee = document.querySelector('.info-employee');
     // Données des employés (simulées)
-    var employeesData = [
+    const employeesData = [
         { name: "Nom de l'Employé 1", id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1" },
         { name: "Nom de l'Employé 2", id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", poste: "Poste2", rang: "Rang2" },
         { name: "Nom de l'Employé 3", id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", poste: "Poste3", rang: "Rang3" },
@@ -16,26 +17,26 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
     // Fonction pour créer un élément d'employé
     function createEmployeeElement(employee) {
-        var employeeDiv = document.createElement('div');
+        const employeeDiv = document.createElement('div');
         employeeDiv.classList.add('employee');
-        var img = document.createElement('img');
+        const img = document.createElement('img');
         img.setAttribute('src', 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'1.25\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3\'/%3E%3Ccircle cx=\'12\' cy=\'10\' r=\'3\'/%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E');
         img.setAttribute('alt', 'Employee Image');
         employeeDiv.appendChild(img);
-        var span = document.createElement('span');
+        const span = document.createElement('span');
         span.textContent = employee.nom + " " + employee.prenom + " " + employee.email + " " + employee.poste;
         employeeDiv.appendChild(span);
-        var buttonsDiv = document.createElement('div');
+        const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('employee-buttons');
-        var voirButton = document.createElement('button');
+        const voirButton = document.createElement('button');
         voirButton.textContent = "Voir l'EDT";
         buttonsDiv.appendChild(voirButton);
-        var modifierButton = document.createElement('button');
+        const modifierButton = document.createElement('button');
         modifierButton.textContent = "Modifier l'employé";
-        modifierButton.addEventListener('click', function () {
+        modifierButton.addEventListener('click', () => {
             showEmployeeInfo(employee);
         });
-        var supprimerButton = document.createElement('button');
+        const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer l'employé";
         buttonsDiv.appendChild(supprimerButton);
         employeeDiv.appendChild(buttonsDiv);
@@ -45,12 +46,64 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Fonction pour afficher les informations de l'employé sélectionné
     function showEmployeeInfo(employee) {
-        var employeeInfoHTML = "\n            <h2>Modification Informations de l'employ\u00E9 : <span id=\"employee_id\">".concat(employee.id, "</span>\n                <button id=\"edt-permissions-button\">Modifier l'EDT / Permissions</button>\n            </h2>\n            <form action=\"#\" method=\"POST\">\n                <fieldset>\n                    <legend>INFORMATIONS</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"nom\">Nom :</label>\n                            <input type=\"text\" id=\"nom\" name=\"nom\" value=\"").concat(employee.nom, "\" required>\n                        </div>\n                        <div class=\"input-container\">\n                            <label for=\"prenom\">Pr\u00E9nom :</label>\n                            <input type=\"text\" id=\"prenom\" name=\"prenom\" value=\"").concat(employee.prenom, "\" required>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"tel\">Num\u00E9ro de t\u00E9l\u00E9phone :</label>\n                            <input type=\"tel\" id=\"tel\" name=\"tel\" value=\"").concat(employee.tel, "\" required>\n                        </div>\n                        <div class=\"input-container\">\n                            <label for=\"email\">Adresse email :</label>\n                            <input type=\"email\" id=\"email\" name=\"email\" value=\"").concat(employee.email, "\" required>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"adresse\">Adresse :</label>\n                            <textarea id=\"adresse\" name=\"adresse\" rows=\"4\" required>").concat(employee.adresse, "</textarea>\n                        </div>\n                    </div>\n                    <br><br>\n                </fieldset>\n                <fieldset>\n                    <legend>POSTE</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"poste\">Poste :</label>\n                            <input type=\"text\" id=\"poste\" name=\"poste\" value=\"").concat(employee.poste, "\" required><br><br>\n                        </div>\n                        <div class=\"input-container\">\n                            <label for=\"rang\">Rang :</label>\n                            <input type=\"text\" id=\"rang\" name=\"rang\" value=\"").concat(employee.rang, "\" required><br><br>\n                        </div>\n                    </div>\n                </fieldset>\n                <input type=\"submit\" value=\"Confirmer les modifications\">\n            </form>\n        ");
-        infoEmployee.innerHTML = employeeInfoHTML;
+        const employeeInfoHTML = `
+            <h2>Modification Informations de l'employé : <span id="employee_id">${employee.id}</span>
+                <button id="edt-permissions-button">Modifier l'EDT / Permissions</button>
+            </h2>
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>INFORMATIONS</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="nom">Nom :</label>
+                            <input type="text" id="nom" name="nom" value="${employee.nom}" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="prenom">Prénom :</label>
+                            <input type="text" id="prenom" name="prenom" value="${employee.prenom}" required>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="tel">Numéro de téléphone :</label>
+                            <input type="tel" id="tel" name="tel" value="${employee.tel}" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="email">Adresse email :</label>
+                            <input type="email" id="email" name="email" value="${employee.email}" required>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="adresse">Adresse :</label>
+                            <textarea id="adresse" name="adresse" rows="4" required>${employee.adresse}</textarea>
+                        </div>
+                    </div>
+                    <br><br>
+                </fieldset>
+                <fieldset>
+                    <legend>POSTE</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="poste">Poste :</label>
+                            <input type="text" id="poste" name="poste" value="${employee.poste}" required><br><br>
+                        </div>
+                        <div class="input-container">
+                            <label for="rang">Rang :</label>
+                            <input type="text" id="rang" name="rang" value="${employee.rang}" required><br><br>
+                        </div>
+                    </div>
+                </fieldset>
+                <input type="submit" value="Confirmer les modifications">
+            </form>
+        `;
+        if (infoEmployee) {
+            infoEmployee.innerHTML = employeeInfoHTML;
+        }
     }
     // Peupler la liste des employés
-    employeesData.forEach(function (employee) {
-        var employeeElement = createEmployeeElement(employee);
+    employeesData.forEach((employee) => {
+        const employeeElement = createEmployeeElement(employee);
         listEmployees === null || listEmployees === void 0 ? void 0 : listEmployees.appendChild(employeeElement);
     });
 });

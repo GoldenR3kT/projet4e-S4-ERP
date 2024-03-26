@@ -123,7 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="submit" value="Confirmer les modifications">
             </form>
         `;
-        infoEmployee.innerHTML = employeeInfoHTML;
+        if(infoEmployee) {
+            infoEmployee.innerHTML = employeeInfoHTML;
+        }
     }
 
     // Peupler la liste des employés

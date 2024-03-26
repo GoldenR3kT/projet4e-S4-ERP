@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const infoEmployeeSection = document.querySelector(".info-employee");
 
     // Fonction pour gérer le clic sur le bouton "Ajouter un employé"
-    function handleAddEmployeeClick(event) {
+    function handleAddEmployeeClick(event: { preventDefault: () => void; }) {
         event.preventDefault(); // Pour éviter le comportement par défaut du bouton (rechargement de la page)
 
         // Construction du formulaire à afficher dans la section info-employee
@@ -65,9 +65,11 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
 
         // Affichage du formulaire dans la section info-employee
-        infoEmployeeSection.innerHTML = formHTML;
+        if(infoEmployeeSection) {
+            infoEmployeeSection.innerHTML = formHTML;
+        }
     }
 
     // Ajout de l'écouteur d'événement sur le clic du bouton "Ajouter un employé"
-    addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+    addEmployeeButton?.addEventListener("click", handleAddEmployeeClick);
 });

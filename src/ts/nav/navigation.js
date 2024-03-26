@@ -1,14 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const navigationDiv = document.createElement('div');
 navigationDiv.id = 'navigation-div';
-const iframe = document.createElement('iframe');
+let iframe = document.createElement('iframe');
 iframe.src = '/navigation';
 iframe.width = '18%';
 iframe.height = '100%';
 iframe.style.position = 'fixed';
 iframe.style.zIndex = '1000';
 navigationDiv.appendChild(iframe);
-const erpElement = document.getElementById('erp');
+let erpElement = document.getElementById('erp');
 navigationDiv.classList.add('slide-in');
-erpElement?.insertBefore(navigationDiv, erpElement.firstChild);
+erpElement === null || erpElement === void 0 ? void 0 : erpElement.insertBefore(navigationDiv, erpElement.firstChild);

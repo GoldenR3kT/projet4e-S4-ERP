@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // Récupération des éléments du DOM
 let input = document.getElementById('calculator-screen-input');
 let buttons = document.getElementsByClassName('button-calculator');
