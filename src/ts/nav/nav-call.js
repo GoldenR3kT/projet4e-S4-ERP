@@ -1,11 +1,24 @@
 "use strict";
 var navigationOpened = false;
+const navigationDiv = document.createElement('div');
+navigationDiv.id = 'navigation-div';
+let iframe = document.createElement('iframe');
+let erpElement = document.getElementById('erp');
+function createNavigation() {
+    iframe.src = '/navigation';
+    iframe.width = '18%';
+    iframe.height = '100%';
+    iframe.style.position = 'fixed';
+    iframe.style.zIndex = '1000';
+    iframe.style.left = '0vw';
+    navigationDiv.appendChild(iframe);
+    navigationDiv.classList.add('slide-in');
+    erpElement === null || erpElement === void 0 ? void 0 : erpElement.insertBefore(navigationDiv, erpElement.firstChild);
+}
 function openNavigation() {
     var _a;
     if (!navigationOpened) {
-        var scriptElement = document.createElement('script');
-        scriptElement.src = '/ts/nav/navigation.js';
-        document.body.appendChild(scriptElement);
+        createNavigation();
         navigationOpened = true;
     }
     else {
