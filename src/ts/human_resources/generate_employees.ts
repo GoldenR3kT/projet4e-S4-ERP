@@ -59,7 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer l'employé";
+                // Ajouter un gestionnaire d'événements pour le bouton "Supprimer l'employé"
+                supprimerButton.addEventListener('click', () => {
+                    // Appeler la fonction pour supprimer l'employé
+                    removeEmployee(employeeDiv);
+                });
         buttonsDiv.appendChild(supprimerButton);
+
 
         employeeDiv.appendChild(buttonsDiv);
 
@@ -123,9 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="submit" value="Confirmer les modifications">
             </form>
         `;
-        if(infoEmployee) {
-            infoEmployee.innerHTML = employeeInfoHTML;
-        }
+        infoEmployee.innerHTML = employeeInfoHTML;
+    }
+
+    // Fonction pour supprimer un employé de la liste
+    function removeEmployee(employeeElement: HTMLDivElement) {
+        // Retirer l'élément de la liste des employés
+        listEmployees.removeChild(employeeElement);
     }
 
     // Peupler la liste des employés
