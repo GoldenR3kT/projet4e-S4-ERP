@@ -35,7 +35,7 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    width: 15vw;
+    width: 9vw;
     height: 70vh;
     margin-top: 5vh;
     border-radius: 10px;
@@ -47,7 +47,7 @@
     display: block;
     font-size: 18px;
     text-align: center;
-    width: 11vw;
+    width: 9vw;
     height: 5.2vh;
     background-color: #0FD274;
     border: 1px solid #222222;
@@ -57,45 +57,12 @@
     margin-top: 1.5vh;
 }
 
-#hours{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    width: 7vw;
-    height: 68vh;
-    border-radius: 10px;
-    margin-top: 3.1vh;
-    box-shadow: 0 0 10px #494949;
-}
-
-#hours-title{
-    display: block;
-    font-size: 18px;
-    text-align: center;
-    width: 7vw;
-    height: 5.5vh;
-    background-color: #0FD274;
-    border: 1px solid #222222;
-}
-
-
-
-
-.hour{
-    border: 1px solid #222222;
-    display: block;
-    width: 7vw;
-    height: 5.8vh;
-    background: #F9EEAC;
-    text-align: center;
-}
 
 .event{
     border: 1px solid #222222;
     display: block;
-    width: 11vw;
-    height: 5.5vh;
+    width: 9vw;
+    height: 12vh;
     background-color: #ffffff;
     text-align: center;
 }
