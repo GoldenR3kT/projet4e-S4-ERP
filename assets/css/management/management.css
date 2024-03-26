@@ -1,0 +1,97 @@
+#management{
+    display: flex;
+}
+
+/*left*/
+ #left_management {
+        float: left;
+        width: 50%;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+ }
+
+ #left_management #seek{
+        display: flex;
+  }
+
+  #left_management #seek input{
+          background-color: #F9EEAC;
+          width: 300px;
+          border-radius: 10px
+    }
+
+#left_management #button_left{
+         display: flex;
+   }
+
+  #left_management #button_left button{
+         background-color: #0FD274;
+         width: 300px;
+         height: 50px;
+         margin-right: 5px;
+         border-radius: 30px
+   }
+
+
+ #left_management .scroller {
+   width: 300px;
+   height: 100px;
+   overflow-y: scroll;
+   scrollbar-color: #F9EEAC #0FD274;
+   scrollbar-width: thin;
+ }
+
+ /*right*/
+#right_management {
+        float: right;
+        width: 50%;
+        align-items: center;
+ }
+
+
+ #right_management #new_button {
+        display : flex;
+        flex-direction: column;
+ }
+
+ #right_management #new_button button{
+         width: 350px;
+         height: 50px;
+         background-color: #0FD274;
+         border-radius: 30px;
+  }
+
+  #right_management #new_button input{
+         margin-top: 5px;
+         width: 600px;
+         height: 300px;
+         background-color: #F9EEAC;
+  }
+
+
+   #right_management #div_journal{
+             margin-left: auto;
+             margin-right: auto;
+   }
+
+
+  #right_management #div_journal #journal_comptes{
+           display : flex;
+  }
+
+   #right_management #div_journal #journal_comptes .input_journal{
+              width: 250px;
+              height: 300px;
+              background-color: #F9EEAC;
+    }
+
+  #right_management button{
+        background-color: #0FD274;
+        width: 200px;
+        height: 50px;
+        border-radius: 10px;
+  }
+
+
+
