@@ -10,11 +10,14 @@ function createIncidents() {
     iframe.style.position = 'fixed';
     iframe.style.zIndex = '1000';
     iframe.style.left = '90vw';
-    iframe.setAttribute('scrolling', 'no');
+    iframe.style.top = '0vh';
+    iframe.style.transition = 'top 0.5s ease';
     incidentDiv.appendChild(iframe);
     erpElement = document.getElementById('erp');
-    incidentDiv.classList.add('slide-in');
     erpElement === null || erpElement === void 0 ? void 0 : erpElement.insertBefore(incidentDiv, erpElement.firstChild);
+    void iframe.offsetHeight;
+    iframe.style.top = '10vh';
+    iframe.setAttribute('scrolling', 'no');
 }
 function openIncidents() {
     var _a;

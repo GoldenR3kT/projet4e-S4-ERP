@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         item.addEventListener("click", (event) => {
             event.preventDefault();
             // @ts-ignore
-            let parentLi = event.target.parentNode; // Utiliser event.target.parentNode pour accéder au parent
+            let parentLi = event.target.parentNode;
             let submenu = parentLi.querySelector("ul") as HTMLElement;
             if (parentLi && submenu) {
                 // Vérifie si le menu est déjà ouvert
@@ -41,13 +41,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 // Cache ou affiche le sous-menu en fonction de l'état ouvert
                 if (isOpen) {
-                    // @ts-ignore
                     submenu.classList.add("visible");
                     submenu.style.height = submenu.scrollHeight + 'px';
+                    submenu.style.top = '0vh';
+                    submenu.style.transition = 'top 0.5s ease';
+                    void submenu.offsetHeight;
+                    submenu.style.top = '4vh';
+
+
                 } else {
-                    // @ts-ignore
                     submenu.classList.remove("visible");
                     submenu.style.height = '0px';
+                    submenu.style.transition = 'top 0.5s ease';
+                    void submenu.offsetHeight;
+                    submenu.style.top = '2vh';
                 }
 
 

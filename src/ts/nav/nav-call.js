@@ -10,10 +10,12 @@ function createNavigation() {
     iframe.height = '100%';
     iframe.style.position = 'fixed';
     iframe.style.zIndex = '1000';
-    iframe.style.left = '0vw';
+    iframe.style.left = '-15%';
+    iframe.style.transition = 'left 0.5s ease'; // Ajoutez une transition au style left
     navigationDiv.appendChild(iframe);
-    navigationDiv.classList.add('slide-in');
     erpElement === null || erpElement === void 0 ? void 0 : erpElement.insertBefore(navigationDiv, erpElement.firstChild);
+    void iframe.offsetWidth;
+    iframe.style.left = '0';
 }
 function openNavigation() {
     var _a;
@@ -22,6 +24,9 @@ function openNavigation() {
         navigationOpened = true;
     }
     else {
+        iframe.style.transition = 'left 0.5s ease';
+        iframe.style.left = '-15%';
+        void iframe.offsetWidth;
         (_a = document.getElementById('navigation-div')) === null || _a === void 0 ? void 0 : _a.remove();
         navigationOpened = false;
     }
