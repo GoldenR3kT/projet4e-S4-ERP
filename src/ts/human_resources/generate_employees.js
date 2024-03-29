@@ -20,34 +20,39 @@ document.addEventListener("DOMContentLoaded", () => {
     function createEmployeeElement(employee) {
         const employeeDiv = document.createElement('div');
         employeeDiv.classList.add('employee');
+        // Informations de l'employé (à gauche)
+        const infoDiv = document.createElement('div');
+        infoDiv.classList.add('employee-info');
+        employeeDiv.appendChild(infoDiv);
         const img = document.createElement('img');
         img.setAttribute('src', 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'1.25\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3\'/%3E%3Ccircle cx=\'12\' cy=\'10\' r=\'3\'/%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E');
         img.setAttribute('alt', 'Employee Image');
-        employeeDiv.appendChild(img);
+        infoDiv.appendChild(img);
         const span = document.createElement('span');
         span.textContent = employee.nom + " " + employee.prenom + " " + employee.email + " " + employee.poste;
-        employeeDiv.appendChild(span);
+        infoDiv.appendChild(span);
+        // Boutons (à droite)
         const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('employee-buttons');
+        employeeDiv.appendChild(buttonsDiv);
         const voirButton = document.createElement('button');
         voirButton.textContent = "Voir l'EDT";
+        voirButton.classList.add('employee-button');
         buttonsDiv.appendChild(voirButton);
         const modifierButton = document.createElement('button');
         modifierButton.textContent = "Modifier l'employé";
         modifierButton.addEventListener('click', () => {
             showEmployeeInfo(employee);
         });
+        modifierButton.classList.add('employee-button');
+        buttonsDiv.appendChild(modifierButton);
         const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer l'employé";
-        // Ajouter un gestionnaire d'événements pour le bouton "Supprimer l'employé"
         supprimerButton.addEventListener('click', () => {
-            // Appeler la fonction pour supprimer l'employé
             removeEmployee(employeeDiv);
         });
+        supprimerButton.classList.add('employee-button');
         buttonsDiv.appendChild(supprimerButton);
-        employeeDiv.appendChild(buttonsDiv);
-        buttonsDiv.appendChild(modifierButton);
-        employeeDiv.appendChild(buttonsDiv);
         return employeeDiv;
     }
     // Fonction pour afficher les informations de l'employé sélectionné

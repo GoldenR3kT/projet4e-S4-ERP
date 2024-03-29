@@ -247,3 +247,26 @@ svg:hover{
 #menu{
     margin-left: 10px;
 }
+
+
+
+
+
+
+
+
+.employee-buttons {
+    display: flex;
+    justify-content: flex-end; /* Aligner les boutons à droite */
+}
+
+.employee-button {
+    padding: 30px; /* Augmentation de la taille */
+    margin-left: 10px; /* Espacement entre les boutons */
+}
+
+.employee {
+    display: grid;
+    grid-template-columns: 1fr auto; /* Diviser en deux colonnes */
+    align-items: center; /* Centrer verticalement les éléments */
+}
