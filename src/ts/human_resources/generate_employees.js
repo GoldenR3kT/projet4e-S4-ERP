@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const listEmployees = document.querySelector('.list-employees');
     const infoEmployee = document.querySelector('.info-employee');
+    const selectedPermissions = [];
     // Données des employés (simulées)
     const employeesData = [
         { name: "Nom de l'Employé 1", id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1" },
@@ -19,34 +20,39 @@ document.addEventListener("DOMContentLoaded", () => {
     function createEmployeeElement(employee) {
         const employeeDiv = document.createElement('div');
         employeeDiv.classList.add('employee');
+        // Informations de l'employé (à gauche)
+        const infoDiv = document.createElement('div');
+        infoDiv.classList.add('employee-info');
+        employeeDiv.appendChild(infoDiv);
         const img = document.createElement('img');
         img.setAttribute('src', 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'1.25\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3\'/%3E%3Ccircle cx=\'12\' cy=\'10\' r=\'3\'/%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E');
         img.setAttribute('alt', 'Employee Image');
-        employeeDiv.appendChild(img);
+        infoDiv.appendChild(img);
         const span = document.createElement('span');
         span.textContent = employee.nom + " " + employee.prenom + " " + employee.email + " " + employee.poste;
-        employeeDiv.appendChild(span);
+        infoDiv.appendChild(span);
+        // Boutons (à droite)
         const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('employee-buttons');
+        employeeDiv.appendChild(buttonsDiv);
         const voirButton = document.createElement('button');
         voirButton.textContent = "Voir l'EDT";
+        voirButton.classList.add('employee-button');
         buttonsDiv.appendChild(voirButton);
         const modifierButton = document.createElement('button');
         modifierButton.textContent = "Modifier l'employé";
         modifierButton.addEventListener('click', () => {
             showEmployeeInfo(employee);
         });
+        modifierButton.classList.add('employee-button');
+        buttonsDiv.appendChild(modifierButton);
         const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer l'employé";
-        // Ajouter un gestionnaire d'événements pour le bouton "Supprimer l'employé"
         supprimerButton.addEventListener('click', () => {
-            // Appeler la fonction pour supprimer l'employé
             removeEmployee(employeeDiv);
         });
+        supprimerButton.classList.add('employee-button');
         buttonsDiv.appendChild(supprimerButton);
-        employeeDiv.appendChild(buttonsDiv);
-        buttonsDiv.appendChild(modifierButton);
-        employeeDiv.appendChild(buttonsDiv);
         return employeeDiv;
     }
     // Fonction pour afficher les informations de l'employé sélectionné
@@ -102,18 +108,173 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="submit" value="Confirmer les modifications">
             </form>
         `;
+<<<<<<< HEAD
         // @ts-ignore
         infoEmployee.innerHTML = employeeInfoHTML;
+=======
+        if (infoEmployee) {
+            infoEmployee.innerHTML = employeeInfoHTML;
+        }
+        const edtPermissionsButton = document.getElementById('edt-permissions-button');
+        if (edtPermissionsButton) {
+            edtPermissionsButton.addEventListener('click', () => {
+                showEDTPermissionsForm(employee);
+            });
+        }
+>>>>>>> f40becc1abdb96094374de290aefccd314b2db5c
     }
     // Fonction pour supprimer un employé de la liste
     function removeEmployee(employeeElement) {
         // Retirer l'élément de la liste des employés
+<<<<<<< HEAD
         // @ts-ignore
         listEmployees.removeChild(employeeElement);
+=======
+        if (listEmployees) {
+            listEmployees.removeChild(employeeElement);
+        }
+>>>>>>> f40becc1abdb96094374de290aefccd314b2db5c
     }
     // Peupler la liste des employés
     employeesData.forEach((employee) => {
         const employeeElement = createEmployeeElement(employee);
         listEmployees === null || listEmployees === void 0 ? void 0 : listEmployees.appendChild(employeeElement);
     });
+    // Fonction pour afficher le formulaire de modification des permissions et de l'EDT
+    function showEDTPermissionsForm(employee) {
+        const edtPermissionsFormHTML = `
+            <h2>Modification des permissions ou de l'EDT de l'employé : <span id="employee_id">${employee.id}</span>
+                <button id="modif-info-button">Modifier les informations</button>
+            </h2>
+                <form>
+                    <fieldset>
+                        <legend>PERMISSIONS</legend>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <label for="selected-perms">Permissions sélectionnées :</label>
+                                <ul id="selected-perms"></ul>
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <div class="perm-selector-container">
+                                    <label for="perm">Permissions :</label>
+                                    <select id="perm" name="perm">
+                                        <option value="perm1">Perm 1</option>
+                                        <option value="perm2">Perm 2</option>
+                                        <option value="perm3">Perm 3</option>
+                                    </select>
+                                    <button type="button" id="add-perm-button">Ajouter</button>
+                                    <button type="button" id="remove-perm-button">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>EDT</legend>
+                        <div class="line-input">
+                            <div class="input-container">
+                                    <label for="activity">Label de l'activité :</label>
+                                    <input type="text" id="activity" name="activity" required placeholder="Activité">
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <label for="startdate">Date de début :</label>
+                                <input type="text" id="startdate" name="startdate" required placeholder="JJ/MM/AAAA">
+                            </div>
+                            <div class="input-container">
+                                <label for="starthour">Heure de début :</label>
+                                <input type="text" id="starthour" name="starthour" required placeholder="hh:mm">
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <label for="enddate">Date de fin :</label>
+                                <input type="text" id="enddate" name="enddate" required placeholder="JJ/MM/AAAA">
+                            </div>
+                            <div class="input-container">
+                                <label for="endhour">Heure de fin :</label>
+                                <input type="text" id="endhour" name="endhour" required placeholder="hh:mm">
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <button type="button" id="add-activity-button">Ajouter</button>
+                            </div>
+                            <div class="input-container">
+                                <button type="button" id="remove-activity-button">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            `;
+        if (infoEmployee) {
+            infoEmployee.innerHTML = edtPermissionsFormHTML;
+        }
+        const selectedPermissionsList = document.getElementById("selected-perms");
+        if (selectedPermissionsList) {
+            updateSelectedPermissionsList(selectedPermissionsList);
+        }
+        // Ajouter les gestionnaires d'événements pour les boutons dans le formulaire
+        const modifInfoButton = document.getElementById('modif-info-button');
+        const addPermButton = document.getElementById('add-perm-button');
+        const removePermButton = document.getElementById('remove-perm-button');
+        const addActivityButton = document.getElementById('add-activity-button');
+        const removeActivityButton = document.getElementById('remove-activity-button');
+        if (addPermButton && removePermButton && addActivityButton && removeActivityButton) {
+            addPermButton.addEventListener('click', handleAddPermissionClick);
+            removePermButton.addEventListener('click', handleRemovePermissionClick);
+        }
+        if (modifInfoButton) {
+            modifInfoButton.addEventListener('click', () => {
+                showEmployeeInfo(employee);
+            });
+        }
+    }
+    // Fonction pour mettre à jour la liste des permissions sélectionnées
+    function updateSelectedPermissionsList(selectedPermissionsList) {
+        // Effacer la liste actuelle
+        selectedPermissionsList.innerHTML = "";
+        // Parcourir le tableau des permissions sélectionnées et les ajouter à la liste
+        selectedPermissions.forEach((permission) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = permission;
+            selectedPermissionsList.appendChild(listItem);
+        });
+    }
+    // Fonction pour gérer le clic sur le bouton "Ajouter" dans le formulaire de permissions
+    function handleAddPermissionClick() {
+        const permissionSelect = document.getElementById("perm");
+        const selectedPermissionsList = document.getElementById("selected-perms");
+        // Récupérer la permission sélectionnée
+        const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
+        // Vérifier si la permission n'a pas déjà été sélectionnée
+        if (!selectedPermissions.includes(selectedPermission)) {
+            // Ajouter la permission à la liste des permissions sélectionnées
+            selectedPermissions.push(selectedPermission);
+            // Mettre à jour l'affichage de la liste des permissions sélectionnées
+            if (selectedPermissionsList) {
+                updateSelectedPermissionsList(selectedPermissionsList);
+            }
+        }
+    }
+    // Fonction pour gérer le clic sur le bouton "Supprimer" dans le formulaire de permissions
+    function handleRemovePermissionClick() {
+        const permissionSelect = document.getElementById("perm");
+        const selectedPermissionsList = document.getElementById("selected-perms");
+        // Récupérer la permission sélectionnée
+        const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
+        // Trouver l'index de la permission sélectionnée dans le tableau des permissions sélectionnées
+        const index = selectedPermissions.indexOf(selectedPermission);
+        // Vérifier si la permission est présente dans le tableau et la supprimer si elle est trouvée
+        if (index !== -1) {
+            selectedPermissions.splice(index, 1);
+            // Mettre à jour l'affichage de la liste des permissions sélectionnées
+            if (selectedPermissionsList) {
+                updateSelectedPermissionsList(selectedPermissionsList);
+            }
+        }
+    }
 });
