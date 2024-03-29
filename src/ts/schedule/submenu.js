@@ -1,0 +1,23 @@
+"use strict";
+const promotionItems = document.querySelectorAll('.promotion-item');
+promotionItems.forEach(item => {
+    item.addEventListener('click', function () {
+        const promotionMenu = item.querySelector('.promotion-menu');
+        const isOpen = promotionMenu === null || promotionMenu === void 0 ? void 0 : promotionMenu.classList.contains('visible');
+        closeAllPromotionMenus();
+        if (!isOpen && promotionMenu) {
+            promotionMenu.classList.add('visible');
+            item.classList.add('open');
+        }
+    });
+});
+function closeAllPromotionMenus() {
+    const allPromotionMenus = document.querySelectorAll('.promotion-menu');
+    const allPromotionItems = document.querySelectorAll('.promotion-item');
+    allPromotionMenus.forEach(menu => {
+        menu.classList.remove('visible');
+    });
+    allPromotionItems.forEach(item => {
+        item.classList.remove('open');
+    });
+}

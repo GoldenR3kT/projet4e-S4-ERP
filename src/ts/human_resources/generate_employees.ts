@@ -129,12 +129,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="submit" value="Confirmer les modifications">
             </form>
         `;
+        // @ts-ignore
         infoEmployee.innerHTML = employeeInfoHTML;
     }
 
     // Fonction pour supprimer un employé de la liste
     function removeEmployee(employeeElement: HTMLDivElement) {
         // Retirer l'élément de la liste des employés
+        // @ts-ignore
         listEmployees.removeChild(employeeElement);
     }
 

@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const addEmployeeButton = document.getElementById("add-employee-button");
     const infoEmployeeSection = document.querySelector(".info-employee");
 
-    let selectedRoles = []; // Variable pour stocker les rôles sélectionnés
+    let selectedRoles: string[] = []; // Variable pour stocker les rôles sélectionnés
 
     // Fonction pour gérer le clic sur le bouton "Ajouter un employé"
-    function handleAddEmployeeClick(event) {
+    function handleAddEmployeeClick(event: { preventDefault: () => void; }) {
         event.preventDefault(); // Pour éviter le comportement par défaut du bouton (rechargement de la page)
 
         // Construction du formulaire à afficher dans la section info-employee
@@ -96,7 +96,9 @@ document.addEventListener("DOMContentLoaded", function() {
             // Ajouter des gestionnaires d'événements pour les boutons "Ajouter" et "Supprimer" les rôles
             const addRoleButton = document.getElementById("add-role-button");
             const removeRoleButton = document.getElementById("remove-role-button");
+            // @ts-ignore
             addRoleButton.addEventListener("click", handleAddRoleClick);
+            // @ts-ignore
             removeRoleButton.addEventListener("click", handleRemoveRoleClick);
         }
     }
@@ -135,12 +137,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
-    function updateSelectedRolesList(selectedRolesList) {
+    function updateSelectedRolesList(selectedRolesList: HTMLElement | null) {
+        // @ts-ignore
         selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
         selectedRoles.forEach((role) => {
             const li = document.createElement("li");
             li.textContent = role;
             li.setAttribute("data-value", role);
+            // @ts-ignore
             selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
         });
     }

@@ -93,7 +93,9 @@ document.addEventListener("DOMContentLoaded", function () {
             // Ajouter des gestionnaires d'événements pour les boutons "Ajouter" et "Supprimer" les rôles
             const addRoleButton = document.getElementById("add-role-button");
             const removeRoleButton = document.getElementById("remove-role-button");
+            // @ts-ignore
             addRoleButton.addEventListener("click", handleAddRoleClick);
+            // @ts-ignore
             removeRoleButton.addEventListener("click", handleRemoveRoleClick);
         }
     }
@@ -125,11 +127,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
     function updateSelectedRolesList(selectedRolesList) {
+        // @ts-ignore
         selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
         selectedRoles.forEach((role) => {
             const li = document.createElement("li");
             li.textContent = role;
             li.setAttribute("data-value", role);
+            // @ts-ignore
             selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
         });
     }
