@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
         rang: string;
     }
 
+    const selectedPermissions: string[] = [];
+
     // Données des employés (simulées)
     const employeesData: Employee[] = [
         { name: "Nom de l'Employé 1", id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1" },
@@ -129,13 +131,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="submit" value="Confirmer les modifications">
             </form>
         `;
-        infoEmployee.innerHTML = employeeInfoHTML;
+
+        if (infoEmployee) {
+            infoEmployee.innerHTML = employeeInfoHTML;
+        }
+        const edtPermissionsButton = document.getElementById('edt-permissions-button');
+        if (edtPermissionsButton) {
+            edtPermissionsButton.addEventListener('click', () => {
+                showEDTPermissionsForm(employee);
+            });
+        }
+        
     }
 
     // Fonction pour supprimer un employé de la liste
     function removeEmployee(employeeElement: HTMLDivElement) {
         // Retirer l'élément de la liste des employés
-        listEmployees.removeChild(employeeElement);
+        if (listEmployees) {
+            listEmployees.removeChild(employeeElement);
+        }
+
+       
     }
 
     // Peupler la liste des employés
@@ -143,4 +159,163 @@ document.addEventListener("DOMContentLoaded", () => {
         const employeeElement = createEmployeeElement(employee);
         listEmployees?.appendChild(employeeElement);
     });
+
+
+    // Fonction pour afficher le formulaire de modification des permissions et de l'EDT
+    function showEDTPermissionsForm(employee: Employee) {
+        const edtPermissionsFormHTML = `
+            <h2>Modification des permissions ou de l'EDT de l'employé : <span id="employee_id">${employee.id}</span>
+                <button id="modif-info-button">Modifier les informations</button>
+            </h2>
+                <form>
+                    <fieldset>
+                        <legend>PERMISSIONS</legend>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <label for="selected-perms">Permissions sélectionnées :</label>
+                                <ul id="selected-perms"></ul>
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <div class="perm-selector-container">
+                                    <label for="perm">Permissions :</label>
+                                    <select id="perm" name="perm">
+                                        <option value="perm1">Perm 1</option>
+                                        <option value="perm2">Perm 2</option>
+                                        <option value="perm3">Perm 3</option>
+                                    </select>
+                                    <button type="button" id="add-perm-button">Ajouter</button>
+                                    <button type="button" id="remove-perm-button">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>EDT</legend>
+                        <div class="line-input">
+                            <div class="input-container">
+                                    <label for="activity">Label de l'activité :</label>
+                                    <input type="text" id="activity" name="activity" required placeholder="Activité">
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <label for="startdate">Date de début :</label>
+                                <input type="text" id="startdate" name="startdate" required placeholder="JJ/MM/AAAA">
+                            </div>
+                            <div class="input-container">
+                                <label for="starthour">Heure de début :</label>
+                                <input type="text" id="starthour" name="starthour" required placeholder="hh:mm">
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <label for="enddate">Date de fin :</label>
+                                <input type="text" id="enddate" name="enddate" required placeholder="JJ/MM/AAAA">
+                            </div>
+                            <div class="input-container">
+                                <label for="endhour">Heure de fin :</label>
+                                <input type="text" id="endhour" name="endhour" required placeholder="hh:mm">
+                            </div>
+                        </div>
+                        <div class="line-input">
+                            <div class="input-container">
+                                <button type="button" id="add-activity-button">Ajouter</button>
+                            </div>
+                            <div class="input-container">
+                                <button type="button" id="remove-activity-button">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            `;
+        if (infoEmployee) {
+            infoEmployee.innerHTML = edtPermissionsFormHTML;
+        }
+
+        const selectedPermissionsList = document.getElementById("selected-perms");
+        if (selectedPermissionsList) {
+            updateSelectedPermissionsList(selectedPermissionsList);
+        }
+
+        // Ajouter les gestionnaires d'événements pour les boutons dans le formulaire
+        const modifInfoButton = document.getElementById('modif-info-button');
+        const addPermButton = document.getElementById('add-perm-button');
+        const removePermButton = document.getElementById('remove-perm-button');
+        const addActivityButton = document.getElementById('add-activity-button');
+        const removeActivityButton = document.getElementById('remove-activity-button');
+
+        if (addPermButton && removePermButton && addActivityButton && removeActivityButton) {
+            addPermButton.addEventListener('click', handleAddPermissionClick);
+            removePermButton.addEventListener('click', handleRemovePermissionClick);
+        }
+        if(modifInfoButton){
+            modifInfoButton.addEventListener('click', () => {
+                showEmployeeInfo(employee);
+            });
+        }
+    }
+
+
+
+
+
+    // Fonction pour mettre à jour la liste des permissions sélectionnées
+    function updateSelectedPermissionsList(selectedPermissionsList: HTMLElement) {
+        // Effacer la liste actuelle
+        selectedPermissionsList.innerHTML = "";
+
+        // Parcourir le tableau des permissions sélectionnées et les ajouter à la liste
+        selectedPermissions.forEach((permission) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = permission;
+            selectedPermissionsList.appendChild(listItem);
+        });
+    }
+
+    // Fonction pour gérer le clic sur le bouton "Ajouter" dans le formulaire de permissions
+    function handleAddPermissionClick() {
+        const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
+        const selectedPermissionsList = document.getElementById("selected-perms");
+
+        // Récupérer la permission sélectionnée
+        const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
+
+        // Vérifier si la permission n'a pas déjà été sélectionnée
+        if (!selectedPermissions.includes(selectedPermission)) {
+            // Ajouter la permission à la liste des permissions sélectionnées
+            selectedPermissions.push(selectedPermission);
+
+            // Mettre à jour l'affichage de la liste des permissions sélectionnées
+            if (selectedPermissionsList) {
+                updateSelectedPermissionsList(selectedPermissionsList);
+            }
+        }
+    }
+
+    // Fonction pour gérer le clic sur le bouton "Supprimer" dans le formulaire de permissions
+    function handleRemovePermissionClick() {
+        const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
+        const selectedPermissionsList = document.getElementById("selected-perms");
+
+        // Récupérer la permission sélectionnée
+        const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
+
+        // Trouver l'index de la permission sélectionnée dans le tableau des permissions sélectionnées
+        const index = selectedPermissions.indexOf(selectedPermission);
+
+        // Vérifier si la permission est présente dans le tableau et la supprimer si elle est trouvée
+        if (index !== -1) {
+            selectedPermissions.splice(index, 1);
+
+            // Mettre à jour l'affichage de la liste des permissions sélectionnées
+            if (selectedPermissionsList) {
+                updateSelectedPermissionsList(selectedPermissionsList);
+            }
+        }
+    }
+
+    
 });

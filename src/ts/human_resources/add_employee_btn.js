@@ -2,8 +2,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     const addEmployeeButton = document.getElementById("add-employee-button");
     const infoEmployeeSection = document.querySelector(".info-employee");
-    let selectedRoles = []; // Variable pour stocker les rôles sélectionnés
-    // Fonction pour gérer le clic sur le bouton "Ajouter un employé"
+    const listEmployees = document.getElementById("list-employees");
+    let selectedRoles = []; // Déclaration explicite du type de selectedRoles
+    // Spécification du type de 'event' comme MouseEvent
     function handleAddEmployeeClick(event) {
         event.preventDefault(); // Pour éviter le comportement par défaut du bouton (rechargement de la page)
         // Construction du formulaire à afficher dans la section info-employee
@@ -90,11 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Affichage du formulaire dans la section info-employee
         if (infoEmployeeSection) {
             infoEmployeeSection.innerHTML = formHTML;
-            // Ajouter des gestionnaires d'événements pour les boutons "Ajouter" et "Supprimer" les rôles
+            // Ajout de gestionnaires d'événements après la vérification de nullité
             const addRoleButton = document.getElementById("add-role-button");
             const removeRoleButton = document.getElementById("remove-role-button");
-            addRoleButton.addEventListener("click", handleAddRoleClick);
-            removeRoleButton.addEventListener("click", handleRemoveRoleClick);
+            if (addRoleButton && removeRoleButton) {
+                addRoleButton.addEventListener("click", handleAddRoleClick);
+                removeRoleButton.addEventListener("click", handleRemoveRoleClick);
+            }
         }
     }
     // Fonction pour gérer le clic sur le bouton "Ajouter"
@@ -106,7 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Vérifier si l'option n'a pas déjà été sélectionnée
         if (!selectedRoles.includes(selectedRole) && option) {
             selectedRoles.push(selectedRole); // Ajouter le rôle à la liste des rôles sélectionnés
-            updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+            if (selectedRolesList !== null) {
+                updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+            }
         }
     }
     // Fonction pour gérer le clic sur le bouton "Supprimer"
@@ -120,19 +125,26 @@ document.addEventListener("DOMContentLoaded", function () {
         // Vérifier si le rôle est présent dans le tableau et le retirer s'il est trouvé
         if (index !== -1 && option) {
             selectedRoles.splice(index, 1); // Retirer le rôle du tableau des rôles sélectionnés
-            updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+            if (selectedRolesList !== null) {
+                updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+            }
         }
     }
     // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
     function updateSelectedRolesList(selectedRolesList) {
-        selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
-        selectedRoles.forEach((role) => {
-            const li = document.createElement("li");
-            li.textContent = role;
-            li.setAttribute("data-value", role);
-            selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
-        });
+        if (selectedRolesList) {
+            selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
+            selectedRoles.forEach((role) => {
+                const li = document.createElement("li");
+                li.textContent = role;
+                li.setAttribute("data-value", role);
+                if (selectedRolesList) {
+                    selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
+                }
+            });
+        }
     }
-    // Ajout de l'écouteur d'événement sur le clic du bouton "Ajouter un employé"
-    addEmployeeButton === null || addEmployeeButton === void 0 ? void 0 : addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+    if (addEmployeeButton) {
+        addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+    }
 });
