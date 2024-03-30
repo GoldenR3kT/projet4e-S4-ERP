@@ -38,7 +38,9 @@ app.set('views', htmlPath);
 app.get('/', (req, res) => {
     res.sendFile(path_1.default.join(htmlPath, 'index.html'));
 });
-// Gérer les requêtes GET pour chaque page
+app.get('/forgot-password', (req, res) => {
+    res.sendFile(path_1.default.join(htmlPath, 'forgot-password.html'));
+}); // Gérer les requêtes GET pour chaque page
 //CASHDESK
 app.get('/cash_desk', (req, res) => {
     res.sendFile(path_1.default.join(htmlPath, 'cash_desk', 'cash_desk.html'));
