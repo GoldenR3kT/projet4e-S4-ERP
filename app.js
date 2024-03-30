@@ -89,6 +89,9 @@ app.get('/profile-modification', (req, res) => {
 app.get('/schedule', (req, res) => {
     res.sendFile(path_1.default.join(htmlPath, 'schedule', 'schedule.html'));
 });
+app.get('/schedule/event', (req, res) => {
+    res.sendFile(path_1.default.join(htmlPath, 'schedule', 'event.html'));
+});
 //STORAGE
 app.get('/storage', (req, res) => {
     res.sendFile(path_1.default.join(htmlPath, 'storage', 'storage.html'));

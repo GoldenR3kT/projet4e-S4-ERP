@@ -88,53 +88,23 @@
                         <p>Day selected</p>
                     </div>
                     <div class="event-list">
-                        <p>Promotions:</p>
+                        <p>Évènements:</p>
                         <ul class="promotion-list">
-                            <li>
-                                <ul class="promotion-item">Article 1</ul>
-                                <ul class="promotion-menu">
-                                    Debut: Fin: </br>
-                                    Solde: 0%
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="promotion-item">Article 2</ul>
-                                <ul class="promotion-menu">
-                                    Debut: Fin: </br>
-                                    Solde: 0%
-                                </ul>                            </li>
-                            <li>
-                                <ul class="promotion-item">Article 3</ul>
-                                <ul class="promotion-menu">
-                                    Debut: Fin: </br>
-                                    Solde: 0%
-                                </ul>                            </li>
-                            <li>
-                                <ul class="promotion-item">Article 4</ul>
-                                <ul class="promotion-menu">
-                                    Debut: Fin: </br>
-                                    Solde: 0%
-                                </ul>                            </li>
-                            <li>
-                                <ul class="promotion-item">Article 5</ul>
-                                <ul class="promotion-menu">
-                                    Debut: Fin: </br>
-                                    Solde: 0%
-                                </ul>                            </li>
+
                         </ul>
                     </div>
 
                     <div class="promotion">
-                        <p>Ajouter une promotion</p>
+                        <p>Ajouter un evenement</p>
                         <div class="add-promotion">
                             <div id="left-promo">
-                                <input type="number" id="id-article" placeholder="ID article">
+                                <input type="text" id="id-article" placeholder="Type dévènement">
                                 <input type="date" id="date-start-promo" placeholder="Date de début">
                                 <button id="edit-promotion">Modifier</button>
                             </div>
 
                             <div id="right-promo">
-                                <input type="number" id="promotion-pourcentage" placeholder="% Promotion">
+                                <input type="text" id="promotion-pourcentage" placeholder="Employé(e)">
                                 <input type="date" id="date-end-promo" placeholder="Date de fin">
                                 <button id="add-promotion">Ajouter</button>
                             </div>
@@ -145,14 +115,13 @@
         </div>
     </div>
 
-    </div>
+</div>
 
 
 <script src="/ts/nav/nav-call.js"></script>
 <script src="/ts/incidents/open-incidents.js"></script>
 <script src="/ts/schedule/date-update.js"></script>
-<script src="/ts/schedule/submenu.js"></script>
-
+<script src="/ts/schedule/submenu-event.js"></script>
 
 </body>
 </html>

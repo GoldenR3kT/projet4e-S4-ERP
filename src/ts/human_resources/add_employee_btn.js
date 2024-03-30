@@ -94,17 +94,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // Ajout de gestionnaires d'événements après la vérification de nullité
             const addRoleButton = document.getElementById("add-role-button");
             const removeRoleButton = document.getElementById("remove-role-button");
-<<<<<<< HEAD
-            // @ts-ignore
-            addRoleButton.addEventListener("click", handleAddRoleClick);
-            // @ts-ignore
-            removeRoleButton.addEventListener("click", handleRemoveRoleClick);
-=======
             if (addRoleButton && removeRoleButton) {
                 addRoleButton.addEventListener("click", handleAddRoleClick);
                 removeRoleButton.addEventListener("click", handleRemoveRoleClick);
             }
->>>>>>> f40becc1abdb96094374de290aefccd314b2db5c
         }
     }
     // Fonction pour gérer le clic sur le bouton "Ajouter"
@@ -139,17 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
     function updateSelectedRolesList(selectedRolesList) {
-<<<<<<< HEAD
-        // @ts-ignore
-        selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
-        selectedRoles.forEach((role) => {
-            const li = document.createElement("li");
-            li.textContent = role;
-            li.setAttribute("data-value", role);
-            // @ts-ignore
-            selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
-        });
-=======
         if (selectedRolesList) {
             selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
             selectedRoles.forEach((role) => {
@@ -164,6 +146,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (addEmployeeButton) {
         addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
->>>>>>> f40becc1abdb96094374de290aefccd314b2db5c
     }
 });

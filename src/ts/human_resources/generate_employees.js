@@ -108,10 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="submit" value="Confirmer les modifications">
             </form>
         `;
-<<<<<<< HEAD
-        // @ts-ignore
-        infoEmployee.innerHTML = employeeInfoHTML;
-=======
         if (infoEmployee) {
             infoEmployee.innerHTML = employeeInfoHTML;
         }
@@ -121,19 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 showEDTPermissionsForm(employee);
             });
         }
->>>>>>> f40becc1abdb96094374de290aefccd314b2db5c
     }
     // Fonction pour supprimer un employé de la liste
     function removeEmployee(employeeElement) {
         // Retirer l'élément de la liste des employés
-<<<<<<< HEAD
-        // @ts-ignore
-        listEmployees.removeChild(employeeElement);
-=======
         if (listEmployees) {
             listEmployees.removeChild(employeeElement);
         }
->>>>>>> f40becc1abdb96094374de290aefccd314b2db5c
     }
     // Peupler la liste des employés
     employeesData.forEach((employee) => {

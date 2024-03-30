@@ -161,7 +161,8 @@ li > a:hover{
 
 /* Change la flèche pour indiquer les sous-listes ouvertes */
 #navigation > ul > li.open > a:after {
-    content: '\25BC';
+    transition: transform 0.2s ease; /* Transition de rotation de 0.5 seconde */
+    transform: translateY(-50%) rotate(90deg);
 }
 
 #incident-dropdown {

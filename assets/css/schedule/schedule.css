@@ -148,8 +148,8 @@
 }
 
 .promotion-list {
-
     position: relative;
+
 }
 
 .promotion-menu {
@@ -169,17 +169,20 @@
 
 .promotion-item {
     cursor: pointer;
+    border: 1px solid #000000;
+    width: 20vw;
+    margin-left: -0.65vw;
+    padding-left: 2vw;
 }
 
-.promotion-item:after {
-    content: '\25B6';
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-}
 
-/* Change la flèche pour indiquer les sous-listes ouvertes */
+
+.promotion-menu.style-open {
+    background: #79e1ac;
+    margin-left: -0.65vw;
+    padding-left: 2vw;
+    width: 20vw;
+}
 .promotion-item::after {
     content: '\25B6'; /* Flèche vers la droite par défaut */
     position: absolute;
@@ -190,12 +193,23 @@
 }
 
 .promotion-item.open::after {
-    content: '\25BC'; /* Flèche vers le bas lorsque la sous-liste est ouverte */
-    transform: translateY(-50%) rotate(90deg); /* Rotation de la flèche */
+    content: '\25B6'; /* Flèche vers le bas lorsque la sous-liste est ouverte */
+    transform: translateY(-50%) rotate(90deg);
 }
+
+.promotion-item.open{
+    background-color: #0FD274;
+    width: 20vw;
+    margin-left: -0.65vw;
+    padding-left: 2vw;
+
+
+}
+
 
 .promotion-list li {
     position: relative;
+    margin: 0;
 }
 
 
@@ -203,6 +217,10 @@
     text-align: left;
     margin-bottom: 20vh;
     margin-right: 10vw;
+
+    @media (min-width: 2060px) {
+        margin-top: 10vh;
+    }
 }
 
 #left-promo {

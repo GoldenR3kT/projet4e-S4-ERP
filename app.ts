@@ -123,6 +123,10 @@ app.get('/schedule', (req, res) => {
     res.sendFile(path.join(htmlPath, 'schedule', 'schedule.html'));
 });
 
+app.get('/schedule/event', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'schedule', 'event.html'));
+});
+
 
 //STORAGE
 app.get('/storage', (req, res) => {
