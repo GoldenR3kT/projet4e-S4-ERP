@@ -161,4 +161,6 @@ document.addEventListener("DOMContentLoaded", function() {
     if(addEmployeeButton) {
         addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
     }
+
+    
 });

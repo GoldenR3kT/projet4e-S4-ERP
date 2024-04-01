@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Interface pour définir la structure des employés
     interface Employee {
-        name: string;
         id: number;
         nom: string;
         prenom: string;
@@ -14,21 +13,22 @@ document.addEventListener("DOMContentLoaded", () => {
         poste: string;
         rang: string;
     }
+    
 
     const selectedPermissions: string[] = [];
 
     // Données des employés (simulées)
     const employeesData: Employee[] = [
-        { name: "Nom de l'Employé 1", id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1" },
-        { name: "Nom de l'Employé 2", id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", poste: "Poste2", rang: "Rang2" },
-        { name: "Nom de l'Employé 3", id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", poste: "Poste3", rang: "Rang3" },
-        { name: "Nom de l'Employé 4", id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", poste: "Poste4", rang: "Rang4" },
-        { name: "Nom de l'Employé 5", id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", poste: "Poste5", rang: "Rang5" },
-        { name: "Nom de l'Employé 6", id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", poste: "Poste6", rang: "Rang6" },
-        { name: "Nom de l'Employé 7", id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", poste: "Poste7", rang: "Rang7" },
-        { name: "Nom de l'Employé 8", id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", poste: "Poste8", rang: "Rang8" },
-        { name: "Nom de l'Employé 9", id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", poste: "Poste9", rang: "Rang9" },
-        { name: "Nom de l'Employé 10", id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", poste: "Poste10", rang: "Rang10" }
+        { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1" },
+        { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", poste: "Poste2", rang: "Rang2" },
+        { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", poste: "Poste3", rang: "Rang3" },
+        { id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", poste: "Poste4", rang: "Rang4" },
+        { id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", poste: "Poste5", rang: "Rang5" },
+        { id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", poste: "Poste6", rang: "Rang6" },
+        { id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", poste: "Poste7", rang: "Rang7" },
+        { id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", poste: "Poste8", rang: "Rang8" },
+        { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", poste: "Poste9", rang: "Rang9" },
+        { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", poste: "Poste10", rang: "Rang10" }
     ];
     
 
@@ -59,6 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const voirButton = document.createElement('button');
         voirButton.textContent = "Voir l'EDT";
         voirButton.classList.add('employee-button');
+        voirButton.addEventListener('click', () => {
+            handleVoirEDTClick(employee);
+        });
         buttonsDiv.appendChild(voirButton);
     
         const modifierButton = document.createElement('button');
@@ -131,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 </fieldset>
-                <input type="submit" value="Confirmer les modifications">
+                <input id="modif-submit-button" type="submit" value="Confirmer les modifications">
             </form>
         `;
 
@@ -143,6 +146,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (edtPermissionsButton) {
             edtPermissionsButton.addEventListener('click', () => {
                 showEDTPermissionsForm(employee);
+            });
+        }
+        const modifSubmitButton = document.querySelector('form');
+        if (modifSubmitButton) {
+            modifSubmitButton.addEventListener("submit", (event) => {
+                handleModifyEmployeeFormSubmit(event);
             });
         }
         
@@ -321,6 +330,315 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
+    // Fonction pour gérer le clic sur le bouton "Voir EDT"
+    function handleVoirEDTClick(employee: Employee) {
+        // Mettre à jour le contenu de l'élément info-employee avec les informations de l'employé
+        if (infoEmployee) {
+            infoEmployee.innerHTML = `
+                <div class="employee-info">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
+                    <h2>${employee.nom} ${employee.prenom}</h2>
+                    <div class="white-square">
+                        <div id="edt-text">EDT</div>
+                    </div>
+                    <p>Semaine du :</p>
+                    <input type="text" id="week-input" placeholder="jj/mm/aaaa">
+                </div>
+            `;
+            const weekInput = document.getElementById('week-input') as HTMLInputElement;
+            weekInput?.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    const edtText = document.getElementById('edt-text');
+                    if (edtText) {
+                        edtText.textContent = 'EDT ' + weekInput.value;
+                    }
+                }
+            });
+        }
+    }
+    
+    const addEmployeeButton = document.getElementById("add-employee-button");
+    const infoEmployeeSection = document.querySelector(".info-employee") as HTMLElement;
+
+
+    let selectedRoles: string[] = []; // Déclaration explicite du type de selectedRoles
+
+    // Spécification du type de 'event' comme MouseEvent
+    function handleAddEmployeeClick(event: MouseEvent) {
+        event.preventDefault();
+
+        // Construction du formulaire à afficher dans la section info-employee
+        const formHTML = `
+            <form action="#" method="POST">
+                <h2>Ajouter un employé : 
+                    <input type="submit" value="Confirmer l'ajout">
+                </h2>
+                <fieldset>
+                    <legend>INFORMATIONS</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="nom">Nom :</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="prenom">Prénom :</label>
+                            <input type="text" id="prenom" name="prenom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="tel">Numéro de téléphone :</label>
+                            <input type="tel" id="tel" name="tel" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="email">Adresse email :</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="adresse">Adresse :</label>
+                            <textarea id="adresse" name="adresse" rows="4" required></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>POSTE</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="poste">Poste :</label>
+                            <input type="text" id="poste" name="poste" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="rang">Rang :</label>
+                            <input type="text" id="rang" name="rang" required>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>ROLES</legend>
+                                        
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="selected-roles">Rôles sélectionnés :</label>
+                            <ul id="selected-roles"></ul>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <div class="role-selector-container">
+                                <label for="role">Rôle :</label>
+                                <select id="role" name="role">
+                                    <option value="role1">Rôle 1</option>
+                                    <option value="role2">Rôle 2</option>
+                                    <option value="role3">Rôle 3</option>
+                                </select>
+                                <button type="button" id="add-role-button">Ajouter</button>
+                                <button type="button" id="remove-role-button">Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br><br>
+                </fieldset>
+            </form>
+        `;
+
+        // Affichage du formulaire dans la section info-employee
+        if(infoEmployeeSection) {
+            infoEmployeeSection.innerHTML = formHTML;
+
+            const addRoleButton = document.getElementById("add-role-button");
+            const removeRoleButton = document.getElementById("remove-role-button");
+
+            if(addRoleButton && removeRoleButton) {
+                addRoleButton.addEventListener("click", handleAddRoleClick);
+                removeRoleButton.addEventListener("click", handleRemoveRoleClick);
+            }
+            // Les fonctions handleAddRoleClick et handleRemoveRoleClick restent inchangées
+
+            if(addEmployeeButton) {
+                addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+            }
+
+            const confirmButton = document.querySelector('input[type="submit"]');
+            confirmButton?.addEventListener("click", handleFormSubmit);
+        }
+
+    }
+
+    // Fonction pour gérer le clic sur le bouton "Ajouter"
+    function handleAddRoleClick() {
+        const roleSelect = document.getElementById("role") as HTMLSelectElement; // Spécifiez le type HTMLSelectElement
+        const selectedRolesList = document.getElementById("selected-roles");
+        const selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
+        const option = roleSelect.querySelector(`option[value="${selectedRole}"]`);
+
+        // Vérifier si l'option n'a pas déjà été sélectionnée
+        if (!selectedRoles.includes(selectedRole) && option) {
+            selectedRoles.push(selectedRole); // Ajouter le rôle à la liste des rôles sélectionnés
+            if (selectedRolesList !== null) {
+                updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+            }
+        }
+    }
+
+    // Fonction pour gérer le clic sur le bouton "Supprimer"
+    function handleRemoveRoleClick() {
+        const roleSelect = document.getElementById("role") as HTMLSelectElement; // Spécifiez le type HTMLSelectElement
+        const selectedRolesList = document.getElementById("selected-roles");
+        const selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
+        const option = roleSelect.querySelector(`option[value="${selectedRole}"]`);
+    
+        // Recherche de l'index du rôle sélectionné dans le tableau selectedRoles
+        const index = selectedRoles.indexOf(selectedRole);
+    
+        // Vérifier si le rôle est présent dans le tableau et le retirer s'il est trouvé
+        if (index !== -1 && option) {
+            selectedRoles.splice(index, 1); // Retirer le rôle du tableau des rôles sélectionnés
+            if (selectedRolesList !== null) {
+                updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
+            }
+        }
+    }
+        
+    // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
+
+    function updateSelectedRolesList(selectedRolesList: HTMLElement) {
+        if(selectedRolesList) {
+            selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
+            selectedRoles.forEach((role) => {
+                const li = document.createElement("li");
+                li.textContent = role;
+                li.setAttribute("data-value", role);
+                if(selectedRolesList) {
+                    selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
+                }
+            });
+        }
+    }
+    
+
+    if(addEmployeeButton) {
+        addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+    }
+
+    function handleFormSubmit(event: Event) {
+        event.preventDefault();
+
+        const form = event.target as HTMLFormElement;
+
+        const nom = form.elements.namedItem("nom") as HTMLInputElement;
+        const prenom = form.elements.namedItem("prenom") as HTMLInputElement;
+        const tel = form.elements.namedItem("tel") as HTMLInputElement;
+        const email = form.elements.namedItem("email") as HTMLInputElement;
+        const adresse = form.elements.namedItem("adresse") as HTMLTextAreaElement;
+        const poste = form.elements.namedItem("poste") as HTMLInputElement;
+        const rang = form.elements.namedItem("rang") as HTMLInputElement;
+
+        // Créez un nouvel objet employé avec les valeurs du formulaire
+        const newEmployee = {
+            id: 99, 
+            nom: nom.value,
+            prenom: prenom.value,
+            tel: tel.value,
+            email: email.value,
+            adresse: adresse.value,
+            poste: poste.value,
+            rang: rang.value,
+            roles: selectedRoles // Ajoutez également les rôles sélectionnés
+        };
+
+        // Ajoutez le nouvel employé à la liste des employés
+        if(listEmployees && newEmployee) {
+            const employeeElement = createEmployeeElement(newEmployee);
+            listEmployees.appendChild(employeeElement);
+        }
+
+        // Réinitialisez le formulaire et la liste des rôles sélectionnés
+        form.reset();
+        selectedRoles = [];
+        const selectedRolesList = document.getElementById("selected-roles");
+        if(selectedRolesList) {
+            selectedRolesList.innerHTML = "";
+        }
+    }
+
+    // Fonction pour gérer la soumission du formulaire de modification d'employé
+    function handleModifyEmployeeFormSubmit(event: Event) {
+        event.preventDefault();
+
+        const form = event.target as HTMLFormElement;
+
+        const employeeId = parseInt(document.getElementById("employee_id")?.textContent || "");
+        const nom = form.elements.namedItem("nom") as HTMLInputElement;
+        const prenom = form.elements.namedItem("prenom") as HTMLInputElement;
+        const tel = form.elements.namedItem("tel") as HTMLInputElement;
+        const email = form.elements.namedItem("email") as HTMLInputElement;
+        const adresse = form.elements.namedItem("adresse") as HTMLTextAreaElement;
+        const poste = form.elements.namedItem("poste") as HTMLInputElement;
+        const rang = form.elements.namedItem("rang") as HTMLInputElement;
+
+        // Mettez à jour les informations de l'employé dans la liste
+        const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
+        if (updatedEmployee) {
+            updatedEmployee.nom = nom.value;
+            updatedEmployee.prenom = prenom.value;
+            updatedEmployee.tel = tel.value;
+            updatedEmployee.email = email.value;
+            updatedEmployee.adresse = adresse.value;
+            updatedEmployee.poste = poste.value;
+            updatedEmployee.rang = rang.value;
+
+            // Mettez à jour l'affichage de l'employé dans la liste
+            const employeeElement = document.querySelector(`.employee[data-id="${employeeId}"]`);
+            if (employeeElement) {
+                const infoDiv = employeeElement.querySelector('.employee-info');
+                if (infoDiv) {
+                    infoDiv.textContent = `${updatedEmployee.nom} ${updatedEmployee.prenom} ${updatedEmployee.email} ${updatedEmployee.poste}`;
+                }
+            }
+        }
+
+        // Effacez le contenu de la section info-employee
+        if (infoEmployee) {
+            infoEmployee.innerHTML = '';
+        }
+
+        // Rafraîchir la liste des employés
+        refreshEmployeeList();
+    }
+
+    
+    
+    function refreshEmployeeList() {
+        const listEmployees = document.getElementById('list-employees');
+        if (!listEmployees) return;
+    
+        // Efface tout le contenu de list-employees
+        listEmployees.innerHTML = '';
+    
+        // Réaffiche toute la liste
+        employeesData.forEach(employee => {
+            const employeeElement = document.createElement('div');
+            employeeElement.classList.add('employee');
+            employeeElement.setAttribute('data-id', employee.id.toString());
+    
+            const employeeInfo = document.createElement('div');
+            employeeInfo.classList.add('employee-info');
+            employeeInfo.textContent = `${employee.nom} ${employee.prenom} ${employee.email} ${employee.poste}`;
+    
+            employeeElement.appendChild(employeeInfo);
+            listEmployees.appendChild(employeeElement);
+        });
+    }
+    
 
     
 });

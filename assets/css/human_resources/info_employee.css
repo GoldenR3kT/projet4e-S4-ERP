@@ -10,6 +10,17 @@
     justify-content: center; /* Centrer verticalement les input-container */
 }
 
+.info-employee .white-square {
+    width: 700px; /* Taille du carré blanc */
+    height: 300px; /* Taille du carré blanc */
+    background-color: white; /* Couleur du carré */
+    border: 1px solid #ccc; /* Bordure du carré */
+    margin-bottom: 20px; /* Espace en bas du carré */
+    display: flex; /* Ajout de display flex */
+    justify-content: center; /* Centrer le contenu horizontalement */
+    align-items: center; /* Centrer le contenu verticalement */
+}
+
 .info-employee .line-input {
     display: flex;
     flex-direction: row; /* Modifier la direction en ligne */
