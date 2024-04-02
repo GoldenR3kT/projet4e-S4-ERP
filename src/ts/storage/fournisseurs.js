@@ -1,32 +1,60 @@
 "use strict";
 function ajouterFournisseur() {
     // Sélectionner l'ul
-    const listeIncident = document.getElementById("list-fournisseurs");
+    const listeFournisseurs = document.getElementById("liste-fournisseurs");
     // Créer un nouvel élément li
-    const Fournisseur = document.createElement("li");
+    const fournisseur = document.createElement("li");
     // Ajouter les éléments p avec le même contenu
     const name = document.createElement("p");
-    name.textContent = "name";
-    Fournisseur.appendChild(name);
-    const adress = document.createElement("p");
-    adress.textContent = "adress";
-    Fournisseur.appendChild(adress);
+    name.textContent = "Nom du fournisseur"; // Remplacez cela par la vraie valeur du nom du fournisseur
+    fournisseur.appendChild(name);
+    const address = document.createElement("p");
+    address.textContent = "Adresse du fournisseur"; // Remplacez cela par la vraie valeur de l'adresse du fournisseur
+    fournisseur.appendChild(address);
     const mail = document.createElement("p");
-    mail.textContent = "mail";
-    Fournisseur.appendChild(mail);
+    mail.textContent = "Email du fournisseur"; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    fournisseur.appendChild(mail);
     // Créer le bouton avec la même classe et texte
     const btnModify = document.createElement("button");
     btnModify.className = "modify-button";
-    btnModify.innerHTML = "Régler<br>l'incident";
-    Fournisseur.appendChild(btnModify);
+    btnModify.innerHTML = "Modifier";
+    btnModify.onclick = () => modifierProfil(name.textContent || "", address.textContent || "", mail.textContent || "");
+    fournisseur.appendChild(btnModify);
     // Créer le bouton avec la même classe et texte
     const btnDelete = document.createElement("button");
     btnDelete.className = "modify-button";
-    btnDelete.innerHTML = "Régler<br>l'incident";
-    Fournisseur.appendChild(btnDelete);
+    btnDelete.innerHTML = "Supprimer";
+    fournisseur.appendChild(btnDelete);
     // Ajouter le nouvel élément li à l'ul
-    listeIncident === null || listeIncident === void 0 ? void 0 : listeIncident.appendChild(Fournisseur);
+    listeFournisseurs === null || listeFournisseurs === void 0 ? void 0 : listeFournisseurs.appendChild(fournisseur);
+}
+function modifierProfil(nom, adresse, email) {
+    const nomInput = document.getElementById("nom");
+    const adresseInput = document.getElementById("adresse");
+    const emailInput = document.getElementById("email");
+    const profilBtn = document.getElementById("btn_profile");
+    // Remplir les inputs avec les données du fournisseur sélectionné
+    nomInput.value = nom;
+    adresseInput.value = adresse;
+    emailInput.value = email;
+    // Modifier le texte du bouton profil
+    profilBtn.textContent = "Modifier profil";
 }
 document.addEventListener("DOMContentLoaded", function () {
-    ajouterFournisseur();
+    for (let i = 0; i < 50; i++) {
+        ajouterFournisseur();
+    }
+    const btnAjouter = document.getElementById("btn_ajouter");
+    const nomInput = document.getElementById("nom");
+    const adresseInput = document.getElementById("adresse");
+    const emailInput = document.getElementById("email");
+    const profilBtn = document.getElementById("btn_profile");
+    btnAjouter.addEventListener("click", () => {
+        // Effacer le contenu des inputs
+        nomInput.value = "";
+        adresseInput.value = "";
+        emailInput.value = "";
+        // Remettre le texte original du bouton profil
+        profilBtn.textContent = "Ajouter un fournisseur";
+    });
 });

@@ -4,7 +4,7 @@
     font-size: 20px;
     border: 2px solid #000000;
     border-radius: 5px;
-    background-color: #5acb47;
+    background-color: #0FD274   ;
     cursor: pointer;
     margin-left: 50px;
 }
@@ -18,7 +18,7 @@
     font-size: 20px;
     border: 2px solid #000000;
     border-radius: 5px;
-    background-color: #5acb47;
+    background-color: #abf3a1;
     cursor: pointer;
     align-self: center;
     margin-top: 5%;
@@ -91,20 +91,6 @@ table .no_border{
     border-radius: 5px;
     position: static;
 }
-#table-fournisseurs {
-    width: 100%; /* Définissez une largeur fixe pour le tableau */
-    max-width: 800px;
-    position: static;
-
-}
-
-#table-fournisseurs td th{
-    max-height: 10px;
-}
-
-#table-fournisseurs tr {
-    max-height: 10px;
-}
 
 
 #right_container {
@@ -114,6 +100,27 @@ table .no_border{
 #search_filter {
     margin-bottom: 20px;
 }
+
+#fournisseurs-scrollable {
+    overflow-y: auto;
+    height: 65vh;
+}
+
+#fournisseurs-scrollable li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+    background-color: #0FD274;
+    gap: 15px;
+    padding : 5px;
+}
+
+#liste-fournisseurs li p {
+    flex-grow: 1;
+    font-size: 18px;
+}
+
 #profil-fournisseur {
     padding: 20px;
     border: 1px solid #ccc;
@@ -151,3 +158,4 @@ table .no_border{
 .modify-button:hover {
     background-color: #8cfd7f;
 }
+

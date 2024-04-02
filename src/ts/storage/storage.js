@@ -1,133 +1,67 @@
 "use strict";
-class StockManager {
-    constructor() {
-        //TODO Changer les données simulées par les données réelles
-        const stocksDataEnergie = [
-            { nom: 'Diesel', prixHT: '1.2', prixTTC: '1.70', quantite: '500L' },
-            { nom: 'SP 95', prixHT: '1.5', prixTTC: '2.00', quantite: '600L' },
-        ];
-        const reapproDataEnergie = [
-            { num: '1', date: '15/01/2024', produit: 'Diesel', quantite: '500L', prix: '1.70' },
-            { num: '2', date: '17/01/2024', produit: 'SP 95', quantite: '600L', prix: '2.00' },
-        ];
-        this.fillStocksData(stocksDataEnergie);
-        this.fillReapproData(reapproDataEnergie);
-    }
-    clearTable(table) {
-        const tableRows = table.querySelectorAll('tr');
-        // Commencez à partir de 1 pour ne pas supprimer la première ligne (les titres des colonnes)
-        for (let i = 1; i < tableRows.length; i++) {
-            tableRows[i].remove();
-        }
-    }
-    fillStocksData(stockData) {
-        const table = document.querySelector(".table-stocks");
-        if (table) {
-            const tableBody = table.querySelector('tbody');
-            if (tableBody) {
-                this.clearTable(table);
-                for (const data of stockData) {
-                    const newRow = tableBody.insertRow();
-                    // Ajoutez les cellules avec les données appropriées
-                    const cell1 = newRow.insertCell(0);
-                    const cell2 = newRow.insertCell(1);
-                    const cell3 = newRow.insertCell(2);
-                    const cell4 = newRow.insertCell(3);
-                    const cell5 = newRow.insertCell(4);
-                    cell1.textContent = data.nom;
-                    cell2.textContent = data.prixHT;
-                    cell3.textContent = data.prixTTC;
-                    cell4.textContent = data.quantite;
-                    cell5.innerHTML = '<button>Réapprovisionner</button>';
-                    cell5.className = "no_border";
-                }
-            }
-        }
-    }
-    fillReapproData(reapproData) {
-        const table = document.querySelector(".table-reappro");
-        if (table) {
-            const tableBody = table.querySelector('tbody');
-            if (tableBody) {
-                this.clearTable(table);
-                for (const data of reapproData) {
-                    const newRow = tableBody.insertRow();
-                    // Ajoutez les cellules avec les données appropriées
-                    const cell1 = newRow.insertCell(0);
-                    const cell2 = newRow.insertCell(1);
-                    const cell3 = newRow.insertCell(2);
-                    const cell4 = newRow.insertCell(3);
-                    const cell5 = newRow.insertCell(4);
-                    const cell6 = newRow.insertCell(5);
-                    cell1.textContent = data.num;
-                    cell2.textContent = data.date;
-                    cell3.textContent = data.produit;
-                    cell4.textContent = data.quantite;
-                    cell5.textContent = data.prix;
-                    cell6.innerHTML = '<button>Annuler</button> <button>Enregistrer</button>';
-                    cell6.className = "no_border";
-                }
-            }
-        }
-    }
-    setupMenuListeners() {
-        const menuItems = document.querySelectorAll('.menu a');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                var _a;
-                // On recup l'id de l'onglet
-                const tabId = (_a = item.getAttribute('href')) === null || _a === void 0 ? void 0 : _a.substring(1);
-                const categorie_title = document.getElementById('categorie_title');
-                switch (tabId) {
-                    //TODO Changer les données simulées par les données réelles
-                    case 'energie':
-                        if (categorie_title) {
-                            categorie_title.textContent = 'Energie';
-                        }
-                        const energieData = [
-                            { nom: 'Diesel', prixHT: '1.2', prixTTC: '1.70', quantite: '500L' },
-                            { nom: 'SP 95', prixHT: '1.5', prixTTC: '2.00', quantite: '600L' },
-                        ];
-                        this.fillStocksData(energieData);
-                        const reapproEnergieData = [
-                            { num: '1', date: '15/01/2024', produit: 'Diesel', quantite: '500L', prix: '1.70' },
-                            { num: '2', date: '17/01/2024', produit: 'SP 95', quantite: '600L', prix: '2.00' },
-                        ];
-                        this.fillReapproData(reapproEnergieData);
-                        break;
-                    case 'boutique':
-                        //TODO Changer les données simulées par les données réelles
-                        if (categorie_title) {
-                            categorie_title.textContent = 'Boutique';
-                        }
-                        const stocksData = [
-                            { nom: 'twix', prixHT: '10.00', prixTTC: '12.00', quantite: '50' },
-                            { nom: 'redbull', prixHT: '15.00', prixTTC: '18.00', quantite: '30' },
-                        ];
-                        this.fillStocksData(stocksData);
-                        const reapproBoutiqueData = [
-                            { num: '1', date: '15/01/2024', produit: 'twix', quantite: '50', prix: '1.00' },
-                            { num: '2', date: '17/01/2024', produit: 'redbull', quantite: '30', prix: '2.00' },
-                        ];
-                        this.fillReapproData(reapproBoutiqueData);
-                        break;
-                    case 'atelier':
-                        //TODO Changer les données simulées par les données réelles
-                        if (categorie_title) {
-                            categorie_title.textContent = 'Atelier';
-                        }
-                        break;
-                    case 'restaurant':
-                        //TODO Changer les données simulées par les données réelles
-                        if (categorie_title) {
-                            categorie_title.textContent = 'Restaurant';
-                        }
-                        break;
-                }
-            });
-        });
-    }
+function ajouterStock() {
+    // Sélectionner l'ul
+    const listeStocks = document.getElementById("liste-stocks");
+    // Créer un nouvel élément li
+    const stock = document.createElement("li");
+    // Ajouter les éléments p avec le même contenu
+    const name = document.createElement("p");
+    name.textContent = "Produit"; // Remplacez cela par la vraie valeur du nom du fournisseur
+    stock.appendChild(name);
+    const prixHT = document.createElement("p");
+    prixHT.textContent = "Prix HT"; // Remplacez cela par la vraie valeur de l'adresse du fournisseur
+    stock.appendChild(prixHT);
+    const prixTTC = document.createElement("p");
+    prixTTC.textContent = "Prix TTC"; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    stock.appendChild(prixTTC);
+    const quantite = document.createElement("p");
+    quantite.textContent = "Quantité"; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    stock.appendChild(quantite);
+    // Créer le bouton avec la même classe et texte
+    const btnReappro = document.createElement("button");
+    btnReappro.className = "reappro-button";
+    btnReappro.innerHTML = "Réappro";
+    stock.appendChild(btnReappro);
+    // Ajouter le nouvel élément li à l'ul
+    listeStocks === null || listeStocks === void 0 ? void 0 : listeStocks.appendChild(stock);
 }
-const stockManager = new StockManager();
-// Ajouter des gestionnaires d'événements pour écouter les clics sur les liens de menu
-stockManager.setupMenuListeners();
+function ajouterReappro() {
+    // Sélectionner l'ul
+    const listeReappro = document.getElementById("liste-reappro");
+    // Créer un nouvel élément li
+    const reappro = document.createElement("li");
+    // Ajouter les éléments p avec le même contenu
+    const id = document.createElement("p");
+    id.textContent = "id"; // Remplacez cela par la vraie valeur du nom du fournisseur
+    reappro.appendChild(id);
+    const date = document.createElement("p");
+    date.textContent = "Date de commande"; // Remplacez cela par la vraie valeur de l'adresse du fournisseur
+    reappro.appendChild(date);
+    const produit = document.createElement("p");
+    produit.textContent = "Produit || Energie"; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    reappro.appendChild(produit);
+    const quantite = document.createElement("p");
+    quantite.textContent = "Quantite"; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    reappro.appendChild(quantite);
+    const prix = document.createElement("p");
+    prix.textContent = "Prix"; // Remplacez cela par la vraie valeur de l'adresse du fournisseur
+    reappro.appendChild(prix);
+    const btnAnnuler = document.createElement("button");
+    btnAnnuler.className = "annuler-button";
+    btnAnnuler.innerHTML = "Annuler";
+    reappro.appendChild(btnAnnuler);
+    const btnEnregistrer = document.createElement("button");
+    btnEnregistrer.className = "enregistrer-button";
+    btnEnregistrer.innerHTML = "Enregistrer la reception";
+    reappro.appendChild(btnEnregistrer);
+    // Ajouter le nouvel élément li à l'ul
+    listeReappro === null || listeReappro === void 0 ? void 0 : listeReappro.appendChild(reappro);
+}
+document.addEventListener("DOMContentLoaded", function () {
+    for (let i = 0; i < 50; i++) {
+        ajouterStock();
+    }
+    for (let i = 0; i < 50; i++) {
+        ajouterReappro();
+    }
+});
