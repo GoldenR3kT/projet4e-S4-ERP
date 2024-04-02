@@ -1,3 +1,4 @@
+"use strict";
 var navigationDiv = document.createElement('div');
 navigationDiv.id = 'navigation-div';
 var iframe = document.createElement('iframe');

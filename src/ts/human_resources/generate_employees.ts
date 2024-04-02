@@ -30,8 +30,23 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", poste: "Poste9", rang: "Rang9" },
         { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", poste: "Poste10", rang: "Rang10" }
     ];
-    
+    refreshEmployeeList();
 
+    // Fonction pour supprimer et réafficher la liste des employés
+    function refreshEmployeeList() {
+        const listEmployees = document.getElementById('list-employees');
+        if (!listEmployees) return;
+    
+        // Efface tout le contenu de list-employees
+        listEmployees.innerHTML = '';
+    
+        // Réaffiche toute la liste
+        employeesData.forEach(employee => {
+            const employeeElement = createEmployeeElement(employee); // Utilisation de createEmployeeElement
+            listEmployees.appendChild(employeeElement);
+        });
+    }
+    
     // Fonction pour créer un élément d'employé
     function createEmployeeElement(employee: Employee): HTMLDivElement {
         const employeeDiv = document.createElement('div');
@@ -75,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer l'employé";
         supprimerButton.addEventListener('click', () => {
-            removeEmployee(employeeDiv);
+            removeEmployee(employeeDiv, employee);
         });
         supprimerButton.classList.add('employee-button');
         buttonsDiv.appendChild(supprimerButton);
@@ -157,23 +172,15 @@ document.addEventListener("DOMContentLoaded", () => {
         
     }
 
-    // Fonction pour supprimer un employé de la liste
-    function removeEmployee(employeeElement: HTMLDivElement) {
+    // Fonction pour supprimer un employé de la liste et du tableau
+    function removeEmployee(employeeElement: HTMLDivElement, employee: Employee) {
         // Retirer l'élément de la liste des employés
-
-        if (listEmployees) {
-            listEmployees.removeChild(employeeElement);
+        const index = employeesData.findIndex(emp => emp.id === employee.id);
+        if (index !== -1) {
+            employeesData.splice(index, 1);
+            listEmployees?.removeChild(employeeElement);
         }
-
-       
     }
-
-    // Peupler la liste des employés
-    employeesData.forEach((employee) => {
-        const employeeElement = createEmployeeElement(employee);
-        listEmployees?.appendChild(employeeElement);
-    });
-
 
     // Fonction pour afficher le formulaire de modification des permissions et de l'EDT
     function showEDTPermissionsForm(employee: Employee) {
@@ -273,9 +280,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
-
-
     // Fonction pour mettre à jour la liste des permissions sélectionnées
     function updateSelectedPermissionsList(selectedPermissionsList: HTMLElement) {
         // Effacer la liste actuelle
@@ -357,6 +361,54 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
+
+
+    // Fonction pour gérer la soumission du formulaire de modification d'employé
+    function handleModifyEmployeeFormSubmit(event: Event) {
+        event.preventDefault();
+
+        const form = event.target as HTMLFormElement;
+
+        const employeeId = parseInt(document.getElementById("employee_id")?.textContent || "");
+        const nom = form.elements.namedItem("nom") as HTMLInputElement;
+        const prenom = form.elements.namedItem("prenom") as HTMLInputElement;
+        const tel = form.elements.namedItem("tel") as HTMLInputElement;
+        const email = form.elements.namedItem("email") as HTMLInputElement;
+        const adresse = form.elements.namedItem("adresse") as HTMLTextAreaElement;
+        const poste = form.elements.namedItem("poste") as HTMLInputElement;
+        const rang = form.elements.namedItem("rang") as HTMLInputElement;
+
+        // Mettez à jour les informations de l'employé dans la liste
+        const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
+        if (updatedEmployee) {
+            updatedEmployee.nom = nom.value;
+            updatedEmployee.prenom = prenom.value;
+            updatedEmployee.tel = tel.value;
+            updatedEmployee.email = email.value;
+            updatedEmployee.adresse = adresse.value;
+            updatedEmployee.poste = poste.value;
+            updatedEmployee.rang = rang.value;
+
+            // Mettez à jour l'affichage de l'employé dans la liste
+            const employeeElement = document.querySelector(`.employee[data-id="${employeeId}"]`);
+            if (employeeElement) {
+                const infoDiv = employeeElement.querySelector('.employee-info');
+                if (infoDiv) {
+                    infoDiv.textContent = `${updatedEmployee.nom} ${updatedEmployee.prenom} ${updatedEmployee.email} ${updatedEmployee.poste}`;
+                }
+            }
+        }
+
+        // Effacez le contenu de la section info-employee
+        if (infoEmployee) {
+            infoEmployee.innerHTML = '';
+        }
+
+        // Rafraîchir la liste des employés
+        refreshEmployeeList();
+    }
+
+
     
     const addEmployeeButton = document.getElementById("add-employee-button");
     const infoEmployeeSection = document.querySelector(".info-employee") as HTMLElement;
@@ -364,6 +416,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selectedRoles: string[] = []; // Déclaration explicite du type de selectedRoles
 
+    
+
+    if(addEmployeeButton) {
+        addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+    }
     // Spécification du type de 'event' comme MouseEvent
     function handleAddEmployeeClick(event: MouseEvent) {
         event.preventDefault();
@@ -450,30 +507,35 @@ document.addEventListener("DOMContentLoaded", () => {
             </form>
         `;
 
-        // Affichage du formulaire dans la section info-employee
-        if(infoEmployeeSection) {
+            // Affichage du formulaire dans la section info-employee
+        if (infoEmployeeSection) {
             infoEmployeeSection.innerHTML = formHTML;
+        }
 
-            const addRoleButton = document.getElementById("add-role-button");
-            const removeRoleButton = document.getElementById("remove-role-button");
+        
+        const addRoleButton = document.getElementById("add-role-button");
+        const removeRoleButton = document.getElementById("remove-role-button");
+        if (addRoleButton && removeRoleButton) {
+            addRoleButton.addEventListener("click", handleAddRoleClick);
+            removeRoleButton.addEventListener("click", handleRemoveRoleClick);
+        }
 
-            if(addRoleButton && removeRoleButton) {
-                addRoleButton.addEventListener("click", handleAddRoleClick);
-                removeRoleButton.addEventListener("click", handleRemoveRoleClick);
-            }
-            // Les fonctions handleAddRoleClick et handleRemoveRoleClick restent inchangées
+        // Les fonctions handleAddRoleClick et handleRemoveRoleClick restent inchangées
+        if (addEmployeeButton) {
+            addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+        }
 
-            if(addEmployeeButton) {
-                addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
-            }
-
-            const confirmButton = document.querySelector('input[type="submit"]');
-            confirmButton?.addEventListener("click", handleFormSubmit);
+        // Récupération du bouton de soumission et attachement du gestionnaire d'événements
+        const submitButton = document.querySelector('form');
+        if (submitButton) {
+            submitButton.addEventListener("submit", (event) => {
+                handleAddEmployeeFormSubmit(event);
+            });
         }
 
     }
 
-    // Fonction pour gérer le clic sur le bouton "Ajouter"
+    // Fonction pour gérer le clic sur le bouton "Ajouter" des rôles
     function handleAddRoleClick() {
         const roleSelect = document.getElementById("role") as HTMLSelectElement; // Spécifiez le type HTMLSelectElement
         const selectedRolesList = document.getElementById("selected-roles");
@@ -489,7 +551,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Fonction pour gérer le clic sur le bouton "Supprimer"
+    // Fonction pour gérer le clic sur le bouton "Supprimer"  des rôles
     function handleRemoveRoleClick() {
         const roleSelect = document.getElementById("role") as HTMLSelectElement; // Spécifiez le type HTMLSelectElement
         const selectedRolesList = document.getElementById("selected-roles");
@@ -509,7 +571,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
         
     // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
-
     function updateSelectedRolesList(selectedRolesList: HTMLElement) {
         if(selectedRolesList) {
             selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
@@ -523,121 +584,51 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
-    
 
-    if(addEmployeeButton) {
-        addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
-    }
 
-    function handleFormSubmit(event: Event) {
+    function handleAddEmployeeFormSubmit(event: Event) {
         event.preventDefault();
 
         const form = event.target as HTMLFormElement;
 
-        const nom = form.elements.namedItem("nom") as HTMLInputElement;
-        const prenom = form.elements.namedItem("prenom") as HTMLInputElement;
-        const tel = form.elements.namedItem("tel") as HTMLInputElement;
-        const email = form.elements.namedItem("email") as HTMLInputElement;
-        const adresse = form.elements.namedItem("adresse") as HTMLTextAreaElement;
-        const poste = form.elements.namedItem("poste") as HTMLInputElement;
-        const rang = form.elements.namedItem("rang") as HTMLInputElement;
+        // Récupérez les valeurs du formulaire
+        const nom = (form.elements.namedItem("nom") as HTMLInputElement).value;
+        const prenom = (form.elements.namedItem("prenom") as HTMLInputElement).value;
+        const tel = (form.elements.namedItem("tel") as HTMLInputElement).value;
+        const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+        const adresse = (form.elements.namedItem("adresse") as HTMLTextAreaElement).value;
+        const poste = (form.elements.namedItem("poste") as HTMLInputElement).value;
+        const rang = (form.elements.namedItem("rang") as HTMLInputElement).value;
 
         // Créez un nouvel objet employé avec les valeurs du formulaire
-        const newEmployee = {
-            id: 99, 
-            nom: nom.value,
-            prenom: prenom.value,
-            tel: tel.value,
-            email: email.value,
-            adresse: adresse.value,
-            poste: poste.value,
-            rang: rang.value,
-            roles: selectedRoles // Ajoutez également les rôles sélectionnés
+        const newEmployee: Employee = {
+            id: employeesData.length + 1, // Générez un nouvel identifiant unique
+            nom: nom,
+            prenom: prenom,
+            tel: tel,
+            email: email,
+            adresse: adresse,
+            poste: poste,
+            rang: rang,
+            //roles: [] // Pour l'instant, aucun rôle n'est ajouté
         };
 
         // Ajoutez le nouvel employé à la liste des employés
-        if(listEmployees && newEmployee) {
-            const employeeElement = createEmployeeElement(newEmployee);
-            listEmployees.appendChild(employeeElement);
-        }
+        employeesData.push(newEmployee);
 
-        // Réinitialisez le formulaire et la liste des rôles sélectionnés
-        form.reset();
-        selectedRoles = [];
-        const selectedRolesList = document.getElementById("selected-roles");
-        if(selectedRolesList) {
-            selectedRolesList.innerHTML = "";
-        }
-    }
-
-    // Fonction pour gérer la soumission du formulaire de modification d'employé
-    function handleModifyEmployeeFormSubmit(event: Event) {
-        event.preventDefault();
-
-        const form = event.target as HTMLFormElement;
-
-        const employeeId = parseInt(document.getElementById("employee_id")?.textContent || "");
-        const nom = form.elements.namedItem("nom") as HTMLInputElement;
-        const prenom = form.elements.namedItem("prenom") as HTMLInputElement;
-        const tel = form.elements.namedItem("tel") as HTMLInputElement;
-        const email = form.elements.namedItem("email") as HTMLInputElement;
-        const adresse = form.elements.namedItem("adresse") as HTMLTextAreaElement;
-        const poste = form.elements.namedItem("poste") as HTMLInputElement;
-        const rang = form.elements.namedItem("rang") as HTMLInputElement;
-
-        // Mettez à jour les informations de l'employé dans la liste
-        const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
-        if (updatedEmployee) {
-            updatedEmployee.nom = nom.value;
-            updatedEmployee.prenom = prenom.value;
-            updatedEmployee.tel = tel.value;
-            updatedEmployee.email = email.value;
-            updatedEmployee.adresse = adresse.value;
-            updatedEmployee.poste = poste.value;
-            updatedEmployee.rang = rang.value;
-
-            // Mettez à jour l'affichage de l'employé dans la liste
-            const employeeElement = document.querySelector(`.employee[data-id="${employeeId}"]`);
-            if (employeeElement) {
-                const infoDiv = employeeElement.querySelector('.employee-info');
-                if (infoDiv) {
-                    infoDiv.textContent = `${updatedEmployee.nom} ${updatedEmployee.prenom} ${updatedEmployee.email} ${updatedEmployee.poste}`;
-                }
-            }
-        }
+        // Rafraîchissez la liste des employés
+        refreshEmployeeList();
 
         // Effacez le contenu de la section info-employee
         if (infoEmployee) {
             infoEmployee.innerHTML = '';
         }
-
-        // Rafraîchir la liste des employés
-        refreshEmployeeList();
     }
+
 
     
     
-    function refreshEmployeeList() {
-        const listEmployees = document.getElementById('list-employees');
-        if (!listEmployees) return;
-    
-        // Efface tout le contenu de list-employees
-        listEmployees.innerHTML = '';
-    
-        // Réaffiche toute la liste
-        employeesData.forEach(employee => {
-            const employeeElement = document.createElement('div');
-            employeeElement.classList.add('employee');
-            employeeElement.setAttribute('data-id', employee.id.toString());
-    
-            const employeeInfo = document.createElement('div');
-            employeeInfo.classList.add('employee-info');
-            employeeInfo.textContent = `${employee.nom} ${employee.prenom} ${employee.email} ${employee.poste}`;
-    
-            employeeElement.appendChild(employeeInfo);
-            listEmployees.appendChild(employeeElement);
-        });
-    }
+
     
 
     

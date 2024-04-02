@@ -1,3 +1,4 @@
+"use strict";
 var incidentDiv = document.createElement('div');
 incidentDiv.id = 'incidentDropdown';
 var iframe = document.createElement('iframe');
