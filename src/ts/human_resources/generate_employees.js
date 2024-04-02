@@ -333,4 +333,56 @@ document.addEventListener("DOMContentLoaded", function () {
             infoEmployee.innerHTML = '';
         }
     }
+    // Récupérer les éléments de recherche par nom et par ID
+    var searchByNameInput = document.getElementById('search-by-name');
+    var searchByIdInput = document.getElementById('search-by-id');
+    // Ajouter des écouteurs d'événements pour les champs de recherche
+    searchByNameInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            var searchText = searchByNameInput.value.trim().toLowerCase();
+            if (searchText === '') {
+                displayEmployees(employeesData);
+            }
+            else {
+                filterEmployeesByName(searchText);
+            }
+        }
+    });
+    searchByIdInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            var searchId = parseInt(searchByIdInput.value.trim());
+            if (!isNaN(searchId)) {
+                filterEmployeesById(searchId);
+            }
+            else {
+                displayEmployees(employeesData);
+            }
+        }
+    });
+    // Fonction pour filtrer les employés par nom
+    function filterEmployeesByName(name) {
+        var filteredEmployees = employeesData.filter(function (employee) {
+            var fullName = "".concat(employee.nom, " ").concat(employee.prenom).toLowerCase();
+            return fullName.includes(name);
+        });
+        displayEmployees(filteredEmployees);
+    }
+    // Fonction pour filtrer les employés par ID
+    function filterEmployeesById(id) {
+        var filteredEmployees = employeesData.filter(function (employee) { return employee.id === id; });
+        displayEmployees(filteredEmployees);
+    }
+    // Fonction pour afficher les employés
+    function displayEmployees(employees) {
+        var listEmployees = document.getElementById('list-employees');
+        if (!listEmployees)
+            return;
+        // Effacer tout le contenu de list-employees
+        listEmployees.innerHTML = '';
+        // Réafficher les employés filtrés
+        employees.forEach(function (employee) {
+            var employeeElement = createEmployeeElement(employee);
+            listEmployees.appendChild(employeeElement);
+        });
+    }
 });
