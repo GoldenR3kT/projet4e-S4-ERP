@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var selectedPermissions = [];
     // Données des employés (simulées)
     var employeesData = [
-        { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1" },
-        { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", poste: "Poste2", rang: "Rang2" },
-        { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", poste: "Poste3", rang: "Rang3" },
-        { id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", poste: "Poste4", rang: "Rang4" },
-        { id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", poste: "Poste5", rang: "Rang5" },
-        { id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", poste: "Poste6", rang: "Rang6" },
-        { id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", poste: "Poste7", rang: "Rang7" },
-        { id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", poste: "Poste8", rang: "Rang8" },
-        { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", poste: "Poste9", rang: "Rang9" },
-        { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", poste: "Poste10", rang: "Rang10" }
+        { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1", permissions: [] },
+        { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", poste: "Poste2", rang: "Rang2", permissions: [] },
+        { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", poste: "Poste3", rang: "Rang3", permissions: [] },
+        { id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", poste: "Poste4", rang: "Rang4", permissions: [] },
+        { id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", poste: "Poste5", rang: "Rang5", permissions: [] },
+        { id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", poste: "Poste6", rang: "Rang6", permissions: [] },
+        { id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", poste: "Poste7", rang: "Rang7", permissions: [] },
+        { id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", poste: "Poste8", rang: "Rang8", permissions: [] },
+        { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", poste: "Poste9", rang: "Rang9", permissions: [] },
+        { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", poste: "Poste10", rang: "Rang10", permissions: [] }
     ];
     refreshEmployeeList();
     // Fonction pour supprimer et réafficher la liste des employés
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         var selectedPermissionsList = document.getElementById("selected-perms");
         if (selectedPermissionsList) {
-            updateSelectedPermissionsList(selectedPermissionsList);
+            updateSelectedPermissionsList(selectedPermissionsList, employee.permissions);
         }
         // Ajouter les gestionnaires d'événements pour les boutons dans le formulaire
         var modifInfoButton = document.getElementById('modif-info-button');
@@ -116,8 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
         var addActivityButton = document.getElementById('add-activity-button');
         var removeActivityButton = document.getElementById('remove-activity-button');
         if (addPermButton && removePermButton && addActivityButton && removeActivityButton) {
-            addPermButton.addEventListener('click', handleAddPermissionClick);
-            removePermButton.addEventListener('click', handleRemovePermissionClick);
+            addPermButton.addEventListener('click', function () { handleAddPermissionClick(employee.permissions); });
+            removePermButton.addEventListener('click', function () { handleRemovePermissionClick(employee.permissions); });
         }
         if (modifInfoButton) {
             modifInfoButton.addEventListener('click', function () {
@@ -125,19 +125,73 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
+    /*
+        // Fonction pour mettre à jour la liste des permissions sélectionnées
+        function updateSelectedPermissionsList(selectedPermissionsList: HTMLElement) {
+            // Effacer la liste actuelle
+            selectedPermissionsList.innerHTML = "";
+    
+            // Parcourir le tableau des permissions sélectionnées et les ajouter à la liste
+            selectedPermissions.forEach((permission) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = permission;
+                selectedPermissionsList.appendChild(listItem);
+            });
+        }*/
     // Fonction pour mettre à jour la liste des permissions sélectionnées
-    function updateSelectedPermissionsList(selectedPermissionsList) {
+    function updateSelectedPermissionsList(selectedPermissionsList, permissions) {
         // Effacer la liste actuelle
         selectedPermissionsList.innerHTML = "";
         // Parcourir le tableau des permissions sélectionnées et les ajouter à la liste
-        selectedPermissions.forEach(function (permission) {
+        permissions.forEach(function (permission) {
             var listItem = document.createElement("li");
             listItem.textContent = permission;
             selectedPermissionsList.appendChild(listItem);
         });
     }
-    // Fonction pour gérer le clic sur le bouton "Ajouter" dans le formulaire de permissions
-    function handleAddPermissionClick() {
+    /*
+        // Fonction pour gérer le clic sur le bouton "Ajouter" dans le formulaire de permissions
+        function handleAddPermissionClick() {
+            const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
+            const selectedPermissionsList = document.getElementById("selected-perms");
+    
+            // Récupérer la permission sélectionnée
+            const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
+    
+            // Vérifier si la permission n'a pas déjà été sélectionnée
+            if (!selectedPermissions.includes(selectedPermission)) {
+                // Ajouter la permission à la liste des permissions sélectionnées
+                selectedPermissions.push(selectedPermission);
+    
+                // Mettre à jour l'affichage de la liste des permissions sélectionnées
+                if (selectedPermissionsList) {
+                    updateSelectedPermissionsList(selectedPermissionsList);
+                }
+            }
+        }
+    
+        // Fonction pour gérer le clic sur le bouton "Supprimer" dans le formulaire de permissions
+        function handleRemovePermissionClick() {
+            const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
+            const selectedPermissionsList = document.getElementById("selected-perms");
+    
+            // Récupérer la permission sélectionnée
+            const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
+    
+            // Trouver l'index de la permission sélectionnée dans le tableau des permissions sélectionnées
+            const index = selectedPermissions.indexOf(selectedPermission);
+    
+            // Vérifier si la permission est présente dans le tableau et la supprimer si elle est trouvée
+            if (index !== -1) {
+                selectedPermissions.splice(index, 1);
+    
+                // Mettre à jour l'affichage de la liste des permissions sélectionnées
+                if (selectedPermissionsList) {
+                    updateSelectedPermissionsList(selectedPermissionsList);
+                }
+            }
+        }*/
+    function handleAddPermissionClick(permissions) {
         var permissionSelect = document.getElementById("perm");
         var selectedPermissionsList = document.getElementById("selected-perms");
         // Récupérer la permission sélectionnée
@@ -145,27 +199,27 @@ document.addEventListener("DOMContentLoaded", function () {
         // Vérifier si la permission n'a pas déjà été sélectionnée
         if (!selectedPermissions.includes(selectedPermission)) {
             // Ajouter la permission à la liste des permissions sélectionnées
-            selectedPermissions.push(selectedPermission);
+            permissions.push(selectedPermission);
             // Mettre à jour l'affichage de la liste des permissions sélectionnées
             if (selectedPermissionsList) {
-                updateSelectedPermissionsList(selectedPermissionsList);
+                updateSelectedPermissionsList(selectedPermissionsList, permissions);
             }
         }
     }
     // Fonction pour gérer le clic sur le bouton "Supprimer" dans le formulaire de permissions
-    function handleRemovePermissionClick() {
+    function handleRemovePermissionClick(permissions) {
         var permissionSelect = document.getElementById("perm");
         var selectedPermissionsList = document.getElementById("selected-perms");
         // Récupérer la permission sélectionnée
         var selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
-        // Trouver l'index de la permission sélectionnée dans le tableau des permissions sélectionnées
-        var index = selectedPermissions.indexOf(selectedPermission);
-        // Vérifier si la permission est présente dans le tableau et la supprimer si elle est trouvée
+        var index = permissions.indexOf(selectedPermission);
+        // Vérifier si la permission n'a pas déjà été sélectionnée pour cet employé
         if (index !== -1) {
-            selectedPermissions.splice(index, 1);
+            // Ajouter la permission à la liste des permissions de l'employé
+            permissions.splice(index, 1);
             // Mettre à jour l'affichage de la liste des permissions sélectionnées
             if (selectedPermissionsList) {
-                updateSelectedPermissionsList(selectedPermissionsList);
+                updateSelectedPermissionsList(selectedPermissionsList, permissions);
             }
         }
     }
@@ -226,7 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     var addEmployeeButton = document.getElementById("add-employee-button");
     var infoEmployeeSection = document.querySelector(".info-employee");
-    var selectedRoles = []; // Déclaration explicite du type de selectedRoles
     if (addEmployeeButton) {
         addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
     }
@@ -234,20 +287,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleAddEmployeeClick(event) {
         event.preventDefault();
         // Construction du formulaire à afficher dans la section info-employee
-        var formHTML = "\n            <form action=\"#\" method=\"POST\">\n                <h2>Ajouter un employ\u00E9 : \n                    <input type=\"submit\" value=\"Confirmer l'ajout\">\n                </h2>\n                <fieldset>\n                    <legend>INFORMATIONS</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"nom\">Nom :</label>\n                            <input type=\"text\" id=\"nom\" name=\"nom\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"prenom\">Pr\u00E9nom :</label>\n                            <input type=\"text\" id=\"prenom\" name=\"prenom\" required>\n                        </div>\n                    </div>\n                    \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"tel\">Num\u00E9ro de t\u00E9l\u00E9phone :</label>\n                            <input type=\"tel\" id=\"tel\" name=\"tel\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"email\">Adresse email :</label>\n                            <input type=\"email\" id=\"email\" name=\"email\" required>\n                        </div>\n                    </div>\n                    \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"adresse\">Adresse :</label>\n                            <textarea id=\"adresse\" name=\"adresse\" rows=\"4\" required></textarea>\n                        </div>\n                    </div>\n                </fieldset>\n                <fieldset>\n                    <legend>POSTE</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"poste\">Poste :</label>\n                            <input type=\"text\" id=\"poste\" name=\"poste\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"rang\">Rang :</label>\n                            <input type=\"text\" id=\"rang\" name=\"rang\" required>\n                        </div>\n                    </div>\n                </fieldset>\n                <fieldset>\n                    <legend>ROLES</legend>\n                                        \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"selected-roles\">R\u00F4les s\u00E9lectionn\u00E9s :</label>\n                            <ul id=\"selected-roles\"></ul>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <div class=\"role-selector-container\">\n                                <label for=\"role\">R\u00F4le :</label>\n                                <select id=\"role\" name=\"role\">\n                                    <option value=\"role1\">R\u00F4le 1</option>\n                                    <option value=\"role2\">R\u00F4le 2</option>\n                                    <option value=\"role3\">R\u00F4le 3</option>\n                                </select>\n                                <button type=\"button\" id=\"add-role-button\">Ajouter</button>\n                                <button type=\"button\" id=\"remove-role-button\">Supprimer</button>\n                            </div>\n                        </div>\n                    </div>\n                    \n                    <br><br>\n                </fieldset>\n            </form>\n        ";
+        var formHTML = "\n            <form action=\"#\" method=\"POST\">\n                <h2>Ajouter un employ\u00E9 : \n                    <input type=\"submit\" value=\"Confirmer l'ajout\">\n                </h2>\n                <fieldset>\n                    <legend>INFORMATIONS</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"nom\">Nom :</label>\n                            <input type=\"text\" id=\"nom\" name=\"nom\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"prenom\">Pr\u00E9nom :</label>\n                            <input type=\"text\" id=\"prenom\" name=\"prenom\" required>\n                        </div>\n                    </div>\n                    \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"tel\">Num\u00E9ro de t\u00E9l\u00E9phone :</label>\n                            <input type=\"tel\" id=\"tel\" name=\"tel\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"email\">Adresse email :</label>\n                            <input type=\"email\" id=\"email\" name=\"email\" required>\n                        </div>\n                    </div>\n                    \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"adresse\">Adresse :</label>\n                            <textarea id=\"adresse\" name=\"adresse\" rows=\"4\" required></textarea>\n                        </div>\n                    </div>\n                </fieldset>\n                <fieldset>\n                    <legend>POSTE</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"poste\">Poste :</label>\n                            <input type=\"text\" id=\"poste\" name=\"poste\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"rang\">Rang :</label>\n                            <input type=\"text\" id=\"rang\" name=\"rang\" required>\n                        </div>\n                    </div>\n                </fieldset>\n                <fieldset>\n                    <legend>PERMISSIONS</legend>\n                                        \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"selected-perms\">Permissions s\u00E9lectionn\u00E9es :</label>\n                            <ul id=\"selected-perms\"></ul>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <div class=\"perms-selector-container\">\n                                <label for=\"perm\">Permission :</label>\n                                <select id=\"perm\" name=\"perm\">\n                                    <option value=\"perm1\">Perm 1</option>\n                                    <option value=\"perm2\">Perm 2</option>\n                                    <option value=\"perm3\">Perm 3</option>\n                                </select>\n                                <button type=\"button\" id=\"add-role-button\">Ajouter</button>\n                                <button type=\"button\" id=\"remove-role-button\">Supprimer</button>\n                            </div>\n                        </div>\n                    </div>\n                    \n                    <br><br>\n                </fieldset>\n            </form>\n        ";
         // Affichage du formulaire dans la section info-employee
         if (infoEmployeeSection) {
             infoEmployeeSection.innerHTML = formHTML;
         }
+        var permissionsList = [];
         var addRoleButton = document.getElementById("add-role-button");
         var removeRoleButton = document.getElementById("remove-role-button");
         if (addRoleButton && removeRoleButton) {
-            addRoleButton.addEventListener("click", handleAddRoleClick);
-            removeRoleButton.addEventListener("click", handleRemoveRoleClick);
-        }
-        // Les fonctions handleAddRoleClick et handleRemoveRoleClick restent inchangées
-        if (addEmployeeButton) {
-            addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
+            addRoleButton.addEventListener("click", function () { return handleAddPermissionClick(permissionsList); });
+            removeRoleButton.addEventListener("click", function () { return handleRemovePermissionClick(permissionsList); });
         }
         // Récupération du bouton de soumission et attachement du gestionnaire d'événements
         var submitButton = document.querySelector('form');
@@ -256,49 +306,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 handleAddEmployeeFormSubmit(event);
             });
         }
-    }
-    // Fonction pour gérer le clic sur le bouton "Ajouter" des rôles
-    function handleAddRoleClick() {
-        var roleSelect = document.getElementById("role"); // Spécifiez le type HTMLSelectElement
-        var selectedRolesList = document.getElementById("selected-roles");
-        var selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
-        var option = roleSelect.querySelector("option[value=\"".concat(selectedRole, "\"]"));
-        // Vérifier si l'option n'a pas déjà été sélectionnée
-        if (!selectedRoles.includes(selectedRole) && option) {
-            selectedRoles.push(selectedRole); // Ajouter le rôle à la liste des rôles sélectionnés
-            if (selectedRolesList !== null) {
-                updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
-            }
-        }
-    }
-    // Fonction pour gérer le clic sur le bouton "Supprimer"  des rôles
-    function handleRemoveRoleClick() {
-        var roleSelect = document.getElementById("role"); // Spécifiez le type HTMLSelectElement
-        var selectedRolesList = document.getElementById("selected-roles");
-        var selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
-        var option = roleSelect.querySelector("option[value=\"".concat(selectedRole, "\"]"));
-        // Recherche de l'index du rôle sélectionné dans le tableau selectedRoles
-        var index = selectedRoles.indexOf(selectedRole);
-        // Vérifier si le rôle est présent dans le tableau et le retirer s'il est trouvé
-        if (index !== -1 && option) {
-            selectedRoles.splice(index, 1); // Retirer le rôle du tableau des rôles sélectionnés
-            if (selectedRolesList !== null) {
-                updateSelectedRolesList(selectedRolesList); // Mettre à jour l'affichage de la liste des rôles sélectionnés
-            }
-        }
-    }
-    // Fonction pour mettre à jour l'affichage de la liste des rôles sélectionnés
-    function updateSelectedRolesList(selectedRolesList) {
-        if (selectedRolesList) {
-            selectedRolesList.innerHTML = ""; // Effacer le contenu actuel de la liste
-            selectedRoles.forEach(function (role) {
-                var li = document.createElement("li");
-                li.textContent = role;
-                li.setAttribute("data-value", role);
-                if (selectedRolesList) {
-                    selectedRolesList.appendChild(li); // Ajouter chaque rôle à la liste
-                }
-            });
+        // Les fonctions handleAddRoleClick et handleRemoveRoleClick restent inchangées
+        if (addEmployeeButton) {
+            addEmployeeButton.addEventListener("click", handleAddEmployeeClick);
         }
     }
     function handleAddEmployeeFormSubmit(event) {
@@ -322,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
             adresse: adresse,
             poste: poste,
             rang: rang,
-            //roles: [] // Pour l'instant, aucun rôle n'est ajouté
+            permissions: []
         };
         // Ajoutez le nouvel employé à la liste des employés
         employeesData.push(newEmployee);
