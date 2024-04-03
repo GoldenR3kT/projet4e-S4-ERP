@@ -145,6 +145,7 @@ table .no_border{
     width: 80%;
 }
 
+.delete-button,
 .modify-button {
     width: 22%;
     height: 6.5vh;
@@ -155,6 +156,7 @@ table .no_border{
     cursor: pointer;
 }
 
+.delete-button:hover,
 .modify-button:hover {
     background-color: #8cfd7f;
 }
