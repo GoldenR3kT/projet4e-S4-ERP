@@ -2,7 +2,7 @@
   "host": "linserv-info-01.campus.unice.fr",
   "dialect": "mysql",
 
-  "database": "projet4e",
+  "database": "da207280_projet4e",
   "username": "da207280",
   "password": "da207280"
 }
