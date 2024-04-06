@@ -16,9 +16,9 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use('/css', express.static(cssPath));
 
-
-// Middleware pour parser le corps des requêtes POST
 app.use(express.urlencoded({ extended: true }));
+
+//Parser JSON
 app.use(express.json());
 
 // Serve TypeScript files from the 'ts' directory
