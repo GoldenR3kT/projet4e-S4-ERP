@@ -17,26 +17,29 @@ app.set('view engine', 'html');
 app.use('/css', express.static(cssPath));
 
 
+// Middleware pour parser le corps des requêtes POST
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Serve TypeScript files from the 'ts' directory
 const tsPath = path.join(__dirname, 'src', 'ts');
 app.use('/ts', express.static(tsPath));
 
-  
-  // Route to handle JavaScript file requests
-  app.get('/ts/:dir/:file', (req, res) => {
-    const { dir, file } = req.params;
-    const jsFilePath = path.join(__dirname, 'src', 'js', dir, `${file}.js`);
-  
-    // Check if the JavaScript file exists
-    fs.access(jsFilePath, fs.constants.F_OK, (err) => {
-      if (err) {
-        res.status(404).send('File not found');
-        return;
-      }
-      // Serve the compiled JavaScript file
-      res.sendFile(jsFilePath);
-    });
+// Route to handle JavaScript file requests
+app.get('/ts/:dir/:file', (req, res) => {
+  const { dir, file } = req.params;
+  const jsFilePath = path.join(__dirname, 'src', 'js', dir, `${file}.js`);
+
+  // Check if the JavaScript file exists
+  fs.access(jsFilePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      res.status(404).send('File not found');
+      return;
+    }
+    // Serve the compiled JavaScript file
+    res.sendFile(jsFilePath);
   });
+});
 
 
 //dossier des vues à utiliser
@@ -169,7 +172,13 @@ app.post('/seConnecter', async (req, res) => {
     const alias = req.body.alias;
     try {
       const mdp = await db.seConnecter(alias);
-      res.send({ mdp });
+      if(mdp === req.body.password){
+        res.redirect('/cash_desk');
+      }
+        else{
+            res.status(401).send({ error: 'Mot de passe incorrect' });
+        }
+
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
@@ -383,6 +392,16 @@ app.get('/voirHistoriqueTransactions', async (req, res) => {
   });
   
   // STOCKAGE
+
+app.get('/voirArticles', async (req, res) => {
+  try {
+    const produits = await db.voirArticles();
+    res.send(produits);
+  } catch (error) {
+    res.status(500).send({ error: 'Une erreur est survenue' });
+  }
+});
+
   
   // Voir les produits
   app.get('/voirProduits/:categorie', async (req, res) => {

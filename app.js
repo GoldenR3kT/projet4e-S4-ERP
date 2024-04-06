@@ -47,6 +47,9 @@ const cssPath = path_1.default.join(__dirname, 'assets', 'css');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use('/css', express_1.default.static(cssPath));
+// Middleware pour parser le corps des requêtes POST
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use(express_1.default.json());
 // Serve TypeScript files from the 'ts' directory
 const tsPath = path_1.default.join(__dirname, 'src', 'ts');
 app.use('/ts', express_1.default.static(tsPath));
@@ -153,7 +156,12 @@ app.post('/seConnecter', (req, res) => __awaiter(void 0, void 0, void 0, functio
     const alias = req.body.alias;
     try {
         const mdp = yield db.seConnecter(alias);
-        res.send({ mdp });
+        if (mdp === req.body.password) {
+            res.redirect('/cash_desk');
+        }
+        else {
+            res.status(401).send({ error: 'Mot de passe incorrect' });
+        }
     }
     catch (error) {
         res.status(500).send({ error: 'Une erreur est survenue' });
@@ -365,6 +373,15 @@ app.get('/voirDetailTransaction/:idTransaction', (req, res) => __awaiter(void 0,
     }
 }));
 // STOCKAGE
+app.get('/voirArticles', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const produits = yield db.voirArticles();
+        res.send(produits);
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
 // Voir les produits
 app.get('/voirProduits/:categorie', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categorie = req.params.categorie;

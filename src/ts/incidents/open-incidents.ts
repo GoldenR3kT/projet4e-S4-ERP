@@ -1,42 +1,47 @@
-var incidentsOpened = false;
+let incidentsOpened = false;
+let incidentDiv: HTMLElement | null = null;
+let iframeIncident: HTMLIFrameElement | null = null;
 
-const incidentDiv = document.createElement('div');
-incidentDiv.id = 'incidentDropdown';
+const erpElementI = document.getElementById('erp') as HTMLElement;
 
 function createIncidents() {
-    iframe = document.createElement('iframe');
-
-    iframe.src = '/topbar-incidents';
-    iframe.width = '195vw';
-    iframe.height = '206vh';
-    iframe.style.position = 'fixed';
-    iframe.style.zIndex = '1000';
-    iframe.style.left = '90vw';
-    iframe.style.top = '0vh';
-    iframe.style.transition = 'top 0.5s ease';
-    incidentDiv.appendChild(iframe);
-
-    erpElement = document.getElementById('erp');
-    erpElement?.insertBefore(incidentDiv, erpElement.firstChild);
-    void iframe.offsetHeight;
-    iframe.style.top = '10vh';
-    iframe.setAttribute('scrolling', 'no');
-
-
+    incidentDiv = document.createElement('div');
+    iframeIncident = document.createElement('iframe');
+    iframeIncident.src = '/topbar-incidents';
+    iframeIncident.width = '195vw';
+    iframeIncident.height = '206vh';
+    iframeIncident.style.position = 'fixed';
+    iframeIncident.style.zIndex = '1000';
+    iframeIncident.style.left = '90vw';
+    iframeIncident.style.top = '0vh';
+    iframeIncident.style.transition = 'top 0.5s ease';
+    incidentDiv.appendChild(iframeIncident);
+    erpElementI?.insertBefore(incidentDiv, erpElementI.firstChild);
+    void iframeIncident.offsetHeight;
+    iframeIncident.style.top = '10vh';
+    iframeIncident.setAttribute('scrolling', 'no');
 }
-
-
-
-
 
 function openIncidents() {
     if (!incidentsOpened) {
         createIncidents();
+        if (incidentDiv) {
+            incidentDiv.id = 'incidentDropdown';
+            incidentDiv.classList.add('slide-in');
+        }
+        if (iframeIncident) {
+            iframeIncident.width = '12.8%';
+            iframeIncident.height = '30%';
+            iframeIncident.style.left = '85%';
+        }
         incidentsOpened = true;
-    }
-    else {
-        document.getElementById('incidentDropdown')?.remove();
+    } else {
+        if (incidentDiv) {
+            incidentDiv.remove();
+        }
         incidentsOpened = false;
+        incidentDiv = null;
+        iframeIncident = null;
     }
 }
 

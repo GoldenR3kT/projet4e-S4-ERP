@@ -21,7 +21,7 @@
             <div id="cash-desk-top">
                 <div id="search-product-box">
                     <input type="text" id="search-product-input" placeholder="Rechercher un produit">
-                    <button id="search-product-button" onclick=addProductToScrollable()>Rechercher</button>
+                    <button id="search-product-button" onclick=searchProducts()>Rechercher</button>
                     <div id="search-product-scrollable">
 
                     </div>
@@ -31,7 +31,7 @@
                     <div id="products-list-scrollable">
 
                     </div>
-                    <p id="products-list-price">Montant Total : 0€</p>
+                    <div id="products-list-price">MONTANT TOTAL : <p id="price-total">0€</p></div>
                 </div>
                 <div id="calculator">
                     <div id="calculator-screen">
@@ -90,21 +90,21 @@
                     <div id="payment-checkbox">
                         <div>
                             <label for="cb">CB</label>
-                            <input type="checkbox" id="cb" name="mode_paiement" value="CB">
-                            <input type="text" id="cb-input" disabled>
+                            <input type="checkbox" id="cb" name="mode_paiement" value="CB" disabled>
+                            <input type="number" id="cb-input" disabled>
 
 
                         </div>
                         <div>
                             <label for="cce">CCE</label>
-                            <input type="checkbox" id="cce" name="mode_paiement" value="CCE">
-                            <input type="text" id="cce-input" disabled>
+                            <input type="checkbox" id="cce" name="mode_paiement" value="CCE" disabled>
+                            <input type="number" id="cce-input" disabled>
 
                         </div>
                         <div>
                             <label for="especes">Espèces</label>
-                            <input type="checkbox" id="especes" name="mode_paiement" value="Especes">
-                            <input type="text" id="esp-input" disabled>
+                            <input type="checkbox" id="especes" name="mode_paiement" value="Especes" disabled>
+                            <input type="number" id="esp-input" disabled>
 
                         </div>
 
@@ -117,7 +117,7 @@
                     <p id="energy-card-client-wallet">Montant restant:</p>
                     <button id="energy-card-client-add">Ajouter</button>
                 </div>
-                <button id="validate">Valider</button>
+                <button id="validate" disabled>Valider</button>
             </div>
         </div>
     </div>

@@ -8,11 +8,10 @@ if(testdb) {
     testdb.textContent="test"
 }
 
-let cl: Promise<string> = seConnecter("emp1");
+//let cl: Promise<string> = seConnecter("emp1");
 
-cl.then((cl) => {
+/*cl.then((cl) => {
     if(testdb) {
         testdb.textContent = cl;
     }
-}
-)
+}*/
