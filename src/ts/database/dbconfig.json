@@ -1,8 +1,8 @@
 {
-  "host": "localhost",
+  "host": "linserv-info-01.campus.unice.fr",
   "dialect": "mysql",
 
   "database": "projet4e",
-  "username": "admin",
-  "password": "1234"
+  "username": "da207280",
+  "password": "da207280"
 }
