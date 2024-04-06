@@ -17,7 +17,7 @@
 }
 
 
-.invoice-list-scrollable {
+.invoice-list-scrollable, .ticket-list-scrollable{
     overflow-y: auto;
     height: 30vh;
     padding: 20px;
@@ -36,4 +36,44 @@ font-weight: bold;
     margin-top: 10%;
     text-align: center;
     font-size: 25px;
+}
+
+.selected {
+    background-color: #f1e3a4;
+    /* Ajoutez d'autres styles de sélection ici */
+}
+
+#bottom{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#bottom > button{
+    margin-top: 2%;
+    width: 12vw;
+    height: 8vh;
+    font-size: 22px;
+    background-color: #0FD274;
+    text-align: center;
+    box-shadow: 0 0 10px #494949;
+    border-radius: 10px;
+}
+
+#ticket-or-invoice-selected{
+    display: none;
+}
+
+#ticket-or-invoice-selected.visible{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    width: 84.5vw;
+    height: 30vh;
+    background: #0FD274;
+    box-shadow: 0 0 10px #494949;
+    margin-top: 10px;
 }

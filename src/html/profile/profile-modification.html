@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/profile/profile.css">
         <title>Planergy</title>
         <header>    
@@ -12,8 +11,45 @@
         </header>
     </head>
     <body>
-        <div>
-            
+        <div id="conteneur-annuler-bouton">
+            <button  id="bouton-annuler-modifications" class="bouton-profil-modification" onclick="window.location.href='/profile'">
+                Annuler
+            </button>
+        </div>
+
+            <form id="conteneur-modifications" action="" method="post">
+                    <div id="formulaire-modifications">
+                        <div id="informations-label">
+                            <label id="informations">Informations     </label>
+                        </div>
+                        <div class="champ">
+                            <label for="input1">Nom     </label>
+                            <input type="text" id="input1" name="input1" placeholder="Input 1">
+                        </div>
+                        <div class="champ">
+                            <label for="input2">Prénom     </label>
+                            <input type="text" id="input2" name="input2" placeholder="Input 2">
+                        </div>
+                        <div class="champ">
+                            <label for="input3">Email     </label>
+                            <input type="text" id="input3" name="input3" placeholder="Input 3">
+                        </div>
+                        <div class="champ">
+                            <label for="input4">Adresse     </label>
+                            <input type="text" id="input4" name="input4" placeholder="Input 4">
+                        </div>
+                        <div class="champ">
+                            <label for="input5">Téléphone     </label>
+                            <input type="text" id="input5" name="input5" placeholder="Input 5">
+                        </div>
+                    </div>
+            </form>
+        </div>
+
+        <div id="conteneur-valider-bouton">
+            <button  id="bouton-valider-modifications" class="bouton-profil-modification" onclick="window.location.href='/profile'">
+                Valider les modifications
+            </button>
         </div>
 
         <script src="/ts/nav/nav-call.js"></script>

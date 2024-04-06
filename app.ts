@@ -48,12 +48,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(htmlPath, 'index.html'));
 });
 
-//API DB
-
-
-
-
-// Gérer les requêtes GET pour chaque page
+app.get('/forgot-password', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'forgot-password.html'));
+});// Gérer les requêtes GET pour chaque page
 
 
 //CASHDESK
@@ -125,6 +122,10 @@ app.get('/profile-modification', (req, res) => {
 //SCEDULE
 app.get('/schedule', (req, res) => {
     res.sendFile(path.join(htmlPath, 'schedule', 'schedule.html'));
+});
+
+app.get('/schedule/event', (req, res) => {
+    res.sendFile(path.join(htmlPath, 'schedule', 'event.html'));
 });
 
 

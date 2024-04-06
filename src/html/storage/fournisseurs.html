@@ -16,7 +16,7 @@
 <div id="erp">
     <div id="main">
         <div id="title-button">
-            <h1>Fournisseurs</h1>
+            <h1 class="title">Fournisseurs</h1>
             <button id="btn_ajouter">
                 Ajouter un fournisseur
             </button>
@@ -25,30 +25,16 @@
 
         <div id="table-and-profil">
             <div id="left_container">
-            <table id="table-fournisseurs">
-                <tr>
-                    <th>Nom</th>
-                    <th>Adresse</th>
-                    <th>Email</th>
-                </tr>
-                <tr>
-                    <td>nom1</td>
-                    <td>adresse1</td>
-                    <td>email1</td>
-                </tr>
-                <tr>
-                    <td>nom1</td>
-                    <td>adresse1</td>
-                    <td>email1</td>
-                </tr>
-
-            </table>
+                    <div id="fournisseurs-scrollable">
+                        <ul id="liste-fournisseurs">
+                        </ul>
+                    </div>
             </div>
             <div id="right_container">
                 <div id="search_filter">
                     <div class="search-bar">
                         <label for="recherche">Rechercher un produit :</label>
-                        <input type="text" id="recherche" placeholder="Entrez le nom du stock">
+                        <input type="text" id="recherche" placeholder="Nom du fournisseur">
                     </div>
                     <label>Trier par :</label>
                     <select id="filtre_container">
@@ -74,5 +60,6 @@
 </div>
 <script src="/ts/nav/nav-call.js"></script>
 <script src="/ts/incidents/open-incidents.js"></script>
+<script src="/ts/storage/fournisseurs.js"></script>
 </body>
 </html>

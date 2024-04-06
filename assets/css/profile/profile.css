@@ -1,3 +1,8 @@
+/**********
+* PROFILE *
+**********/
+
+/* PARTIE INFORMATIONS */
 html, body {
     display: flex;
     flex-direction: column;
@@ -21,8 +26,8 @@ html, body {
     flex-direction: column;
     position: relative;
     flex-grow: 0.85;
-    margin-bottom: 3%;
-    padding: 0 0 0 2%;
+    margin-bottom: 1%;
+    padding: 0 0 0 4.5%;
 }
 
 #informations-identite {
@@ -83,13 +88,20 @@ html, body {
 }
 
 #bouton-modifier {
+    min-width:min-content;
     background-color: #98E3AD;
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
 #bouton-deconnexion {
+    min-width:min-content;
     background-color: #0FD274;
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
+/* PARTIE EMPLOI DU TEMPS*/
 
 .emploi-du-temps {
     display: flex;
@@ -97,14 +109,12 @@ html, body {
     position: relative;
     flex: 1;
     width: 100%;
-    padding: 0 0 0 0
 }
 
 #mon-edt {
-    padding: 0 0 1% 2%;
+    padding: 0 0 1% 4.5%;
     font-size: 32px;
     font-weight: bold;
-
 }
 
 .conteneur-edt {
@@ -118,6 +128,7 @@ html, body {
 }
 
 .boutons-edt {
+    display: flex;
     align-items: center;
     justify-content: center;
     height: 25%;
@@ -135,4 +146,102 @@ html, body {
     height: 90%;
     background-color: #F9EEAC;
     border: 2px solid black;
+}
+
+/***********************
+* PROFILE-MODIFICATION *
+***********************/
+
+.bouton-profil-modification {
+    font-size: 20px;
+    min-width: min-content;
+    background-color:#0FD274;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#conteneur-annuler-bouton {
+    display: flex;
+    position: relative;
+    flex: 0 0 15%;
+    padding: 2% 0 0 5%;
+}
+
+#bouton-annuler-modifications {
+    width: 10%;
+    height: 50%;
+}
+
+#conteneur-valider-bouton {
+    display: flex;
+    flex: 0 0 15%;
+    position: relative;
+    padding: 0 5% 2% 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+#bouton-valider-modifications {
+    width: 20%;
+    height: 50%;
+}
+
+#conteneur-modifications {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+form {
+    display: flex;
+    padding: 4% 5% 4% 5%;
+    height: fit-content;
+    justify-content: center;
+}
+
+#formulaire-modifications {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    grid-gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    background-color: #98E3AD;
+    border: 2px solid black;
+}
+
+#informations-label {
+    grid-column: 1 / -1;
+    height: min-content;
+    margin-bottom: 5px;
+    padding-bottom: 3px;
+    width: 32%;
+    border-bottom: 1px solid black
+}
+
+#informations {
+    font-size: 20px;
+}
+
+.champ {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    height: min-content;
+}
+
+.champ label {
+    margin-bottom: 5px;
+    padding-bottom: 3px;
+    width: 50%;
+    font-size: small;
+    border-bottom: 1px solid black;
+}
+
+.champ input {
+    margin-bottom: 10px;
+    height: 40px;
+    background-color: #F9EEAC;
+    border-radius: 10px;
 }

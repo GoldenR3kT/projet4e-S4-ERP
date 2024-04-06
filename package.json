@@ -25,6 +25,7 @@
     "stream-combiner": "^0.0.4",
     "string-argv": "^0.3.2",
     "through": "^2.3.8",
+    "tsc": "^2.0.4",
     "typescript": "^4.6.2",
     "which": "^2.0.2"
   },

@@ -12,7 +12,7 @@ h2{
 }
 
 .E-title{
-    color: #5acb47;
+    color: #0FD274;
 }
 
 form{
@@ -27,7 +27,7 @@ form{
     margin-bottom: 10px;
     font-size: 20px;
     margin-right: 13%;
-    color: #5acb47;
+    color: #0FD274;
 
 }
 
@@ -35,7 +35,7 @@ form{
     margin-bottom: 10px;
     font-size: 20px;
     margin-right: 14%;
-    color: #5acb47;
+    color: #0FD274;
 
 }
 
@@ -51,7 +51,7 @@ form > input{
 }
 
 form > a{
-    color: #5acb47;
+    color: #0FD274;
     font-size: 17px;
 }
 
@@ -61,7 +61,7 @@ form > a:hover{
 
 form > input[type="submit"]{
     width: 10%;
-    background-color: #5acb47;
+    background-color: #0FD274;
     color: #ffffff;
     text-align: center;
     border: none;
