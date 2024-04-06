@@ -17,6 +17,9 @@ app.set('view engine', 'html');
 app.use('/css', express.static(cssPath));
 
 
+//Parser JSON
+app.use(express.json());
+
 // Serve TypeScript files from the 'ts' directory
 const tsPath = path.join(__dirname, 'src', 'ts');
 app.use('/ts', express.static(tsPath));
