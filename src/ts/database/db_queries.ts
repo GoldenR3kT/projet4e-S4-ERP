@@ -17,8 +17,8 @@ const {
     Pompe,
     Mouvement,
     Carte,
-    Cm,
-    Cce,
+    CM,
+    CCE,
     GestionCce,
     Bonus,
     CceBonus,
@@ -134,10 +134,13 @@ export async function recupererEnergiePompe(idPompe: number): Promise<typeof Pom
     return await Pompe.findByPk(idPompe, { include: { model: Energie } });
 }
 
-//recuperer carteMembre
+//recuperer carteM
 
-export async function recupererCarteMembre(): Promise<typeof Cm[]> {
-    return await Cm.findAll();
+export async function recupererCarteMembre(): Promise<typeof CM[]> {
+    return await CM.findAll();
+}
+export async function recupererCarteCCE(): Promise<typeof CCE[]> {
+    return await CCE.findAll();
 }
 
 // Enregistrer un paiement

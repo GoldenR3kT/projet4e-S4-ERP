@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/cash_desk/cash_desk.css">
 
-
     <title>Planergy</title>
     <header>    
         <iframe id="topbar" src="/topbar" frameborder="0" width="100%" height="65vh" ></iframe>
@@ -72,7 +71,7 @@
                         <button id="member-card-client-search">OK</button>
                     </div>
 
-                    <p id="member-card-client-id">Client :</p>
+                    <p id="member-card-client-id">Client :<span class="member-card-id-answer"></span></p>
                     <p id="member-card-client-usedDate">Dernière util :</p>
                     <p id="member-card-client-points">Points de fidel:</p>
                     <button id="member-card-client-add">Ajouter</button>
@@ -117,12 +116,12 @@
                             </label>
                             <button id="cce-card-client-search">OK</button>
                         </div>
-                        <p id="energy-card-client-id">Client :</p>
-                        <p id="energy-card-client-wallet">Montant restant:</p>
+                        <p id="energy-card-client-id">Client :<span id="energy-card-id-answer"></span></p>
+                        <p id="energy-card-client-wallet">Montant restant:<span id="amount-cce-answer"></span></p>
                     </div>
                     <button id="energy-card-client-add">Ajouter</button>
                 </div>
-                <button id="validate" disabled>Valider</button>
+                <button id="validate" disabled >Valider</button>
             </div>
         </div>
     </div>
@@ -130,6 +129,7 @@
     <script src="/ts/cash_desk/cashdesk.js"></script>
     <script src="/ts/nav/nav-call.js"></script>
     <script src="/ts/incidents/open-incidents.js"></script>
+
 
 </body>
 </html>

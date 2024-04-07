@@ -101,21 +101,49 @@ async function getMemberCard() {
 
     try {
         const response = await fetch(`/getMemberCard`);
-        const allMembers = await response.json();
+        const allCards = await response.json();
 
-        const member = allMembers.find((m: any) => m.id === memberId);
+        console.log(allCards);
+        const member = allCards.find((m: any) => m.num === parseInt(memberId));
 
         if (member) {
             const memberIdParagraph = document.getElementById('member-card-client-id') as HTMLParagraphElement;
             const memberPointsParagraph = document.getElementById('member-card-client-points') as HTMLParagraphElement;
 
-            memberIdParagraph.textContent = 'Client : ' + member.id;
+            memberIdParagraph.textContent = 'Client : ' + member.num;
             memberPointsParagraph.textContent = 'Points de fidélité : ' + member.ptsMembre;
         } else {
             const memberIdParagraph = document.getElementById('member-card-client-id') as HTMLParagraphElement;
             const memberPointsParagraph = document.getElementById('member-card-client-points') as HTMLParagraphElement;
             memberIdParagraph.textContent = 'Aucun membre trouvé avec l\'ID ' + memberId;
             memberPointsParagraph.textContent = '';
+        }
+    } catch (error) {
+        console.error('Une erreur est survenue lors de la récupération des membres:', error);
+    }
+}
+
+async function getCardCCE() {
+    const cceIdInput = document.getElementById('id-cce') as HTMLInputElement;
+    const cceId = cceIdInput.value;
+
+    try {
+        const response = await fetch(`/getCardCCE`);
+        const allCards = await response.json();
+
+        const member = allCards.find((m: any) => m.num === parseInt(cceId));
+
+        if (member) {
+            const cceIdParagraph = document.getElementById('energy-card-id-answer') as HTMLParagraphElement;
+            const ccePointsParagraph = document.getElementById('amount-cce-answer') as HTMLParagraphElement;
+
+            cceIdParagraph.textContent = member.num;
+            ccePointsParagraph.textContent = member.credit;
+        } else {
+            const cceIdParagraph = document.getElementById('member-card-client-id') as HTMLParagraphElement;
+            const ccePointsParagraph = document.getElementById('member-card-client-points') as HTMLParagraphElement;
+            cceIdParagraph.textContent = 'Aucun membre trouvé avec l\'ID ' + cceId;
+            ccePointsParagraph.textContent = '';
         }
     } catch (error) {
         console.error('Une erreur est survenue lors de la récupération des membres:', error);
@@ -202,3 +230,10 @@ async function displayPumps() {
 }
 
 displayPumps();
+
+
+document.querySelector('#member-card-client-search')?.addEventListener('click', getMemberCard);
+document.querySelector('#cce-card-client-search')?.addEventListener('click', getCardCCE);
+document.querySelector('#validate')?.addEventListener('click', () => {
+    window.location.href = '/cash_desk/overview';
+});

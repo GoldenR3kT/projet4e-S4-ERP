@@ -368,6 +368,16 @@ app.get('/getMemberCard', (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
+// Recuperer carte CCE
+app.get('/getCardCCE', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const cce = yield db.recupererCarteCCE();
+        res.send(cce);
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
 // Enregistrer un paiement
 app.post('/enregistrerPaiement', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const montant = req.body.montant;
