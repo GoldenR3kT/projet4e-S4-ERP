@@ -10,7 +10,7 @@
 
     <title>Planergy</title>
     <header>    
-        <iframe src="/topbar" frameborder="0" width="100%" height="65vh"></iframe>
+        <iframe id="topbar" src="/topbar" frameborder="0" width="100%" height="65vh" ></iframe>
     </header>
     
 </head>
@@ -59,24 +59,19 @@
                 <div id="pumps-station">
                     <p>Station de pompe</p>
                     <div id="pumps-station-scrollable">
-                        <p>1</p>
-                        <p>2</p>
-                        <p>3</p>
-                        <p>4</p>
-                        <p>5</p>
-                        <p>6</p>
-                        <p>7</p>
-                        <p>8</p>
-                        <p>9</p>
-                        <p>10</p>
-                        <p>11</p>
-                        <p>12</p>
-                        <p>13</p>
-                        <p>14</p>
                     </div>
                 </div>
                 <div id="member-card-client">
-                    <p>Carte membre :</p>
+                    <div>
+                        <p>Carte membre :</p>
+                    </div>
+                    <div id="member-card-client-top">
+                        <label>
+                            <input type="number" id="id-member" placeholder="ID">
+                        </label>
+                        <button id="member-card-client-search">OK</button>
+                    </div>
+
                     <p id="member-card-client-id">Client :</p>
                     <p id="member-card-client-usedDate">Dernière util :</p>
                     <p id="member-card-client-points">Points de fidel:</p>
@@ -102,8 +97,8 @@
 
                         </div>
                         <div>
-                            <label for="especes">Espèces</label>
-                            <input type="checkbox" id="especes" name="mode_paiement" value="Especes" disabled>
+                            <label for="esp">Espèces</label>
+                            <input type="checkbox" id="esp" name="mode_paiement" value="Especes" disabled>
                             <input type="number" id="esp-input" disabled>
 
                         </div>
@@ -111,10 +106,20 @@
                     </div>
 
                 </div>
-                <div id="energy-card-client">
-                    <p>CCE :</p>
-                    <p id="energy-card-client-id">Client :</p>
-                    <p id="energy-card-client-wallet">Montant restant:</p>
+                <div id="energy-card">
+                    <div id="energy-card-client">
+                        <div>
+                            <p>CCE :</p>
+                        </div>
+                        <div id="cce-card-client-top">
+                            <label>
+                                <input type="number" id="id-cce" placeholder="ID">
+                            </label>
+                            <button id="cce-card-client-search">OK</button>
+                        </div>
+                        <p id="energy-card-client-id">Client :</p>
+                        <p id="energy-card-client-wallet">Montant restant:</p>
+                    </div>
                     <button id="energy-card-client-add">Ajouter</button>
                 </div>
                 <button id="validate" disabled>Valider</button>
@@ -123,7 +128,6 @@
     </div>
     <script src="/ts/cash_desk/calculator.js"></script>
     <script src="/ts/cash_desk/cashdesk.js"></script>
-
     <script src="/ts/nav/nav-call.js"></script>
     <script src="/ts/incidents/open-incidents.js"></script>
 

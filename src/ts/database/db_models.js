@@ -210,7 +210,9 @@ const Pompe = sequelize.define('pompe', {
         primaryKey: true,
         autoIncrement: true
     },
-    emplacement: DataTypes.INTEGER
+    emplacement: DataTypes.INTEGER,
+    stockage_max: DataTypes.INTEGER,
+    statut: DataTypes.STRING(40)
 }, {
     foreignKeyConstraints: true,
     onUpdate: 'CASCADE',

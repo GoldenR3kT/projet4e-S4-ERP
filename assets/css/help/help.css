@@ -141,6 +141,7 @@ div.items p:target {
     height: 300px;
 }
 
+
 #add_help #add_help_button{
      background-color: #0FD274;
      padding: 5px 50px;
@@ -154,8 +155,22 @@ div.items p:target {
 }
 
 
+#help-menus .help-menu .div-menu a:before {
+    content: '\25B6';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
+#help-menus .help-menu .div-menu a {
+    padding-left: 20px;
+    position: relative;
+}
 
+#help-menus .help-menu .div-menu a:hover:before {
+    transform: translateY(-50%) rotate(90deg);
+}
 
 
 

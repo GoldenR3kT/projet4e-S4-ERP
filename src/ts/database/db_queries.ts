@@ -125,6 +125,21 @@ export async function encaisser(date: Date, totalHT: number, TVA: number, idArti
     }
 }
 
+// Recuperer les pompes
+export async function recupererPompe(): Promise<typeof Pompe[]> {
+    return await Pompe.findAll();
+}
+// Recuperer Energie Pompe
+export async function recupererEnergiePompe(idPompe: number): Promise<typeof Pompe | null> {
+    return await Pompe.findByPk(idPompe, { include: { model: Energie } });
+}
+
+//recuperer carteMembre
+
+export async function recupererCarteMembre(): Promise<typeof Cm[]> {
+    return await Cm.findAll();
+}
+
 // Enregistrer un paiement
 export async function enregistrerPaiement(montant: number, idTransaction: number, idMoyenDePaiement: number, idClient: number): Promise<void> {
     await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: idClient });

@@ -221,3 +221,7 @@ li > a:hover{
 .detail:hover {
     background-color: #cdf3c8;
 }
+
+.selected {
+    background-color: #f1e3a4;
+}

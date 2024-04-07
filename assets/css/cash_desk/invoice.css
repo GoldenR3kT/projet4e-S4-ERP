@@ -38,10 +38,7 @@ font-weight: bold;
     font-size: 25px;
 }
 
-.selected {
-    background-color: #f1e3a4;
-    /* Ajoutez d'autres styles de sélection ici */
-}
+
 
 #bottom{
     display: flex;

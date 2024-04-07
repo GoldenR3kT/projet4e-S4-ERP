@@ -337,6 +337,37 @@ app.post('/encaisser', (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
+// Récuperer Pompe
+app.get('/getPump', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pompes = yield db.recupererPompe();
+        res.send(pompes);
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
+// Recuperer energie pompe
+app.get('/getEnergy/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    try {
+        const energie = yield db.recupererEnergiePompe(id);
+        res.send(energie);
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
+// Recuperer carte membre
+app.get('/getMemberCard', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const carte = yield db.recupererCarteMembre();
+        res.send(carte);
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
 // Enregistrer un paiement
 app.post('/enregistrerPaiement', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const montant = req.body.montant;
