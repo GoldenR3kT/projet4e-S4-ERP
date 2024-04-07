@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD) {
     // Sélectionner l'ul
     const listeStocks = document.getElementById("liste-stocks");
@@ -104,17 +113,20 @@ function afficherBarreRecherche() {
 }
 // Fonction pour initialiser les données pour l'onglet Énergie
 function initEnergie() {
-    viderListes();
-    const categorieTitle = document.getElementById('categorie_title');
-    if (categorieTitle) {
-        categorieTitle.textContent = 'Energie';
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomEnergie" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
+    return __awaiter(this, void 0, void 0, function* () {
+        viderListes();
+        const response = yield fetch(`/voirEnergies`);
+        const energies = yield response.json();
+        const categorieTitle = document.getElementById('categorie_title');
+        if (categorieTitle) {
+            categorieTitle.textContent = 'Energie';
+            energies.forEach((energy, index) => {
+                const { nom, prixHT, prixTTC, quantite } = energy.article;
+                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString());
+                ajouterReappro(energy.id.toString(), "date" + index, nom, quantite.toString(), prixTTC.toString());
+            });
         }
-        for (let i = 0; i < 50; i++) {
-            ajouterReappro("idEnergie" + i, "date" + i, "produit" + i, "quantite" + i, "prix" + i);
-        }
-    }
+    });
 }
 // Fonction pour initialiser les données pour l'onglet Boutique
 function initBoutique() {

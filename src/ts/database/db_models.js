@@ -151,7 +151,8 @@ const Article = sequelize.define('article', {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
-    prixHT: DataTypes.DOUBLE
+    prixHT: DataTypes.DOUBLE,
+    prixTTC: DataTypes.DOUBLE
 });
 const Energie = sequelize.define('energie', {
     id: {

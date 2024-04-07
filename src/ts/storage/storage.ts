@@ -134,19 +134,25 @@ function afficherBarreRecherche() {
 }
 
 // Fonction pour initialiser les données pour l'onglet Énergie
-function initEnergie() {
+async function initEnergie() {
     viderListes();
+    const response = await fetch(`/voirEnergies`);
+    const energies = await response.json();
+
+
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Energie';
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomEnergie" + i, "prixHT " + i, "prixTTC" + i , "quantite" + i);
-        }
-        for (let i = 0; i < 50; i++) {
-            ajouterReappro("idEnergie" + i, "date" + i, "produit" + i, "quantite" + i, "prix" + i);
-        }
+
+        energies.forEach((energy: { id: number, unite: string, article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number } }, index: number) => {
+            const { nom, prixHT, prixTTC, quantite } = energy.article;
+            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString());
+            ajouterReappro(energy.id.toString(), "date" + index, nom, quantite.toString(), prixTTC.toString());
+        });
+
     }
 }
+
 
 // Fonction pour initialiser les données pour l'onglet Boutique
 function initBoutique() {
