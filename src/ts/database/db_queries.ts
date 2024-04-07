@@ -99,8 +99,8 @@ export async function declarerIncident(nom: string, description: string, niveau:
 }
 
 // Gérer un incident
-export async function gererIncident(description: string, idEmploye: number, date: Date, heure: string): Promise<void> {
-    await SolutionIncident.create({ desc: description, employe_id: idEmploye, date, heure });
+export async function gererIncident(id_incident: number, description: string, idEmploye: number, date: Date, heure: string): Promise<void> {
+    await SolutionIncident.create({ id_incident: id_incident, desc: description, employe_id: idEmploye, date, heure });
 }
 
 // Voir tout les incidents
@@ -144,8 +144,9 @@ export async function recupererCarteCCE(): Promise<typeof CCE[]> {
 }
 
 // Enregistrer un paiement
-export async function enregistrerPaiement(montant: number, idTransaction: number, idMoyenDePaiement: number, idClient: number): Promise<void> {
-    await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: idClient });
+export async function enregistrerPaiement(montant: number, idTransaction: number, idMoyenDePaiement: number, numCarte: number): Promise<void> {
+    const id_client = await Carte.findByPk(numCarte, { attributes: ['id_client'] });
+    await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: id_client });
 }
 
 // Imprimer une facture
@@ -187,10 +188,10 @@ export async function voirReapproProduit(categorie: string): Promise<typeof Reap
 }
 
 // Voir les réappros énergie
-export async function voirReapproEnergie(categorie: string): Promise<typeof Reappro[]> {
+export async function voirReapproEnergie(): Promise<typeof Reappro[]> {
     return await Reappro.findAll({
         include: [
-            { model: Transaction, include: [{ model: Mouvement, include: { model: Produit, include: { model: Article, where: { catégorie: categorie } } } }] }
+            { model: Transaction, include: [{ model: Mouvement, include: { model: Energie, include: { model: Article} } }] }
         ]
     });
 }

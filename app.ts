@@ -25,8 +25,6 @@ app.use(express.json());
 const tsPath = path.join(__dirname, 'src', 'ts');
 app.use('/ts', express.static(tsPath));
 
-app.use(express.json());
-
   // Route to handle JavaScript file requests
   app.get('/ts/:dir/:file', (req, res) => {
     const { dir, file } = req.params;
@@ -307,12 +305,13 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
 
   // Gérer un incident
   app.post('/gererIncident', async (req, res) => {
+    const id_incident = req.body.id_incident;
     const description = req.body.description;
     const idEmploye = req.body.idEmploye;
     const date = req.body.date;
     const heure = req.body.heure;
     try {
-      await db.gererIncident(description, idEmploye, date, heure);
+      await db.gererIncident(id_incident, description, idEmploye, date, heure);
       res.send({ message: 'Incident géré avec succès' });
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });
@@ -409,9 +408,9 @@ app.get('/getCardCCE', async (req, res) => {
     const montant = req.body.montant;
     const idTransaction = req.body.idTransaction;
     const idMoyenDePaiement = req.body.idMoyenDePaiement;
-    const idClient = req.body.idClient;
+    const numCarte = req.body.numCarte;
     try {
-      await db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, idClient);
+      await db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte);
       res.send({ message: 'Paiement enregistré avec succès' });
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });
@@ -485,10 +484,9 @@ app.get('/voirArticles', async (req, res) => {
   });
 
   // Voir les réappros énergie
-  app.get('/voirReapproEnergie/:categorie', async (req, res) => {
-    const categorie = req.params.categorie;
+  app.get('/voirReapproEnergie', async (req, res) => {
     try {
-      const reappros = await db.voirReapproEnergie(categorie);
+      const reappros = await db.voirReapproEnergie();
       res.send(reappros);
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });
