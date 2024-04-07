@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var _a, _b, _c;
 const productSearched = document.getElementById('search-product-scrollable');
 const productList = document.getElementById('products-list-scrollable');
 const pumpScrollable = document.getElementById('pumps-station-scrollable');
@@ -101,12 +102,13 @@ function getMemberCard() {
         const memberId = memberIdInput.value;
         try {
             const response = yield fetch(`/getMemberCard`);
-            const allMembers = yield response.json();
-            const member = allMembers.find((m) => m.id === memberId);
+            const allCards = yield response.json();
+            console.log(allCards);
+            const member = allCards.find((m) => m.num === parseInt(memberId));
             if (member) {
                 const memberIdParagraph = document.getElementById('member-card-client-id');
                 const memberPointsParagraph = document.getElementById('member-card-client-points');
-                memberIdParagraph.textContent = 'Client : ' + member.id;
+                memberIdParagraph.textContent = 'Client : ' + member.num;
                 memberPointsParagraph.textContent = 'Points de fidélité : ' + member.ptsMembre;
             }
             else {
@@ -114,6 +116,32 @@ function getMemberCard() {
                 const memberPointsParagraph = document.getElementById('member-card-client-points');
                 memberIdParagraph.textContent = 'Aucun membre trouvé avec l\'ID ' + memberId;
                 memberPointsParagraph.textContent = '';
+            }
+        }
+        catch (error) {
+            console.error('Une erreur est survenue lors de la récupération des membres:', error);
+        }
+    });
+}
+function getCardCCE() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const cceIdInput = document.getElementById('id-cce');
+        const cceId = cceIdInput.value;
+        try {
+            const response = yield fetch(`/getCardCCE`);
+            const allCards = yield response.json();
+            const member = allCards.find((m) => m.num === parseInt(cceId));
+            if (member) {
+                const cceIdParagraph = document.getElementById('energy-card-id-answer');
+                const ccePointsParagraph = document.getElementById('amount-cce-answer');
+                cceIdParagraph.textContent = member.num;
+                ccePointsParagraph.textContent = member.credit;
+            }
+            else {
+                const cceIdParagraph = document.getElementById('member-card-client-id');
+                const ccePointsParagraph = document.getElementById('member-card-client-points');
+                cceIdParagraph.textContent = 'Aucun membre trouvé avec l\'ID ' + cceId;
+                ccePointsParagraph.textContent = '';
             }
         }
         catch (error) {
@@ -201,3 +229,8 @@ function displayPumps() {
     });
 }
 displayPumps();
+(_a = document.querySelector('#member-card-client-search')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', getMemberCard);
+(_b = document.querySelector('#cce-card-client-search')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', getCardCCE);
+(_c = document.querySelector('#validate')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
+    window.location.href = '/cash_desk/overview';
+});

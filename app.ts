@@ -167,6 +167,7 @@ app.listen(port, () => {
 //API DB
 
 import * as db from './src/ts/database/db_queries'
+import {addAbortSignal} from "node:stream";
 
 app.post('/seConnecter', async (req, res) => {
     const alias = req.body.alias;
@@ -382,14 +383,25 @@ app.get('/getEnergy/:id', async (req, res) => {
 // Recuperer carte membre
 
 app.get('/getMemberCard', async (req, res) => {
-        try {
-        const carte = await db.recupererCarteMembre();
-        res.send(carte);
-        } catch (error) {
+    try {
+      const carte = await db.recupererCarteMembre();
+      res.send(carte);
+    } catch (error) {
         res.status(500).send({error: 'Une erreur est survenue'});
-        }
+    }
 });
-  
+
+// Recuperer carte CCE
+
+app.get('/getCardCCE', async (req, res) => {
+    try {
+      const cce = await db.recupererCarteCCE();
+      res.send(cce);
+    } catch (error) {
+        res.status(500).send({error: 'Une erreur est survenue'});
+    }
+});
+
   // Enregistrer un paiement
   app.post('/enregistrerPaiement', async (req, res) => {
     const montant = req.body.montant;
