@@ -175,9 +175,9 @@ app.post('/seConnecter', async (req, res) => {
       if(mdp === req.body.password){
         res.redirect('/cash_desk');
       }
-        else{
-            res.status(401).send({ error: 'Mot de passe incorrect' });
-        }
+      else{
+        res.status(401).send({ error: 'Mot de passe incorrect' });
+      }
 
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });
@@ -354,6 +354,41 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
+
+  // Récuperer Pompe
+
+app.get('/getPump', async (req, res) => {
+    try {
+      const pompes = await db.recupererPompe();
+      res.send(pompes);
+    } catch (error) {
+      res.status(500).send({error: 'Une erreur est survenue'});
+    }
+});
+
+// Recuperer energie pompe
+
+app.get('/getEnergy/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+    try {
+      const energie = await db.recupererEnergiePompe(id);
+      res.send(energie);
+    } catch (error) {
+      res.status(500).send({error: 'Une erreur est survenue'});
+    }
+});
+
+
+// Recuperer carte membre
+
+app.get('/getMemberCard', async (req, res) => {
+        try {
+        const carte = await db.recupererCarteMembre();
+        res.send(carte);
+        } catch (error) {
+        res.status(500).send({error: 'Une erreur est survenue'});
+        }
+});
   
   // Enregistrer un paiement
   app.post('/enregistrerPaiement', async (req, res) => {

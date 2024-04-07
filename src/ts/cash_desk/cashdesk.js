@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const productSearched = document.getElementById('search-product-scrollable');
 const productList = document.getElementById('products-list-scrollable');
+const pumpScrollable = document.getElementById('pumps-station-scrollable');
 const searchInput = document.getElementById('search-product-input');
 searchInput.addEventListener('input', searchProducts);
 const total = document.getElementById('price-total');
@@ -85,6 +86,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
             if (checkbox.checked) {
                 (_a = checkbox.parentElement) === null || _a === void 0 ? void 0 : _a.classList.add('checked');
                 buttonValidate.disabled = false;
+                associatedInput.disabled = false;
             }
             else {
                 (_b = checkbox.parentElement) === null || _b === void 0 ? void 0 : _b.classList.remove('checked');
@@ -93,3 +95,109 @@ document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         });
     }
 });
+function getMemberCard() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const memberIdInput = document.getElementById('id-member');
+        const memberId = memberIdInput.value;
+        try {
+            const response = yield fetch(`/getMemberCard`);
+            const allMembers = yield response.json();
+            const member = allMembers.find((m) => m.id === memberId);
+            if (member) {
+                const memberIdParagraph = document.getElementById('member-card-client-id');
+                const memberPointsParagraph = document.getElementById('member-card-client-points');
+                memberIdParagraph.textContent = 'Client : ' + member.id;
+                memberPointsParagraph.textContent = 'Points de fidélité : ' + member.ptsMembre;
+            }
+            else {
+                const memberIdParagraph = document.getElementById('member-card-client-id');
+                const memberPointsParagraph = document.getElementById('member-card-client-points');
+                memberIdParagraph.textContent = 'Aucun membre trouvé avec l\'ID ' + memberId;
+                memberPointsParagraph.textContent = '';
+            }
+        }
+        catch (error) {
+            console.error('Une erreur est survenue lors de la récupération des membres:', error);
+        }
+    });
+}
+function getArticles() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(`/voirArticles`);
+            return yield response.json();
+        }
+        catch (error) {
+            console.error('Une erreur est survenue lors de la récupération des articles:', error);
+            return [];
+        }
+    });
+}
+function getEnergies() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(`/voirEnergies`);
+            return yield response.json();
+        }
+        catch (error) {
+            console.error('Une erreur est survenue lors de la récupération des énergies:', error);
+            return [];
+        }
+    });
+}
+function getPumps() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(`/getPump`);
+            return yield response.json();
+        }
+        catch (error) {
+            console.error('Une erreur est survenue lors de la récupération des pompes:', error);
+            return [];
+        }
+    });
+}
+function displayPumps() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const articles = yield getArticles();
+        const energies = yield getEnergies();
+        const pumps = yield getPumps();
+        if (pumpScrollable) {
+            pumps.forEach((pump) => {
+                const pumpDiv = document.createElement('div');
+                const pumpName = document.createElement('div');
+                const pumpEnergy = document.createElement('p');
+                const pumpQuantity = document.createElement('p');
+                const pumpStatut = document.createElement('p');
+                const energy = energies.find((energy) => energy.id === pump.id);
+                const article = articles.find((article) => article.id === pump.id);
+                if (article && energy) {
+                    pumpName.textContent = "POMPE N°" + pump.id;
+                    pumpName.className = 'pump-name';
+                    pumpEnergy.textContent = article.nom;
+                    pumpQuantity.textContent = 'Quantite dispo : ' + article.quantite + '/' + pump.stockage_max + energy.unite;
+                    pumpStatut.textContent = 'Statut : ' + pump.statut;
+                    pumpDiv.appendChild(pumpName);
+                    pumpDiv.appendChild(pumpEnergy);
+                    pumpDiv.appendChild(pumpQuantity);
+                    pumpDiv.appendChild(pumpStatut);
+                    pumpDiv.className = 'pump-div';
+                    pumpDiv.addEventListener('click', () => {
+                        document.querySelectorAll('.pump-div').forEach((element) => {
+                            element.classList.remove('selected');
+                        });
+                        pumpDiv.classList.add('selected');
+                    });
+                    pumpScrollable.appendChild(pumpDiv);
+                }
+                else {
+                    console.error('Article not found for pump:', pump);
+                }
+            });
+        }
+        else {
+            console.error('Element with ID "pumps-station-scrollable" not found.');
+        }
+    });
+}
+displayPumps();

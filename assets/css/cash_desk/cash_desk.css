@@ -48,22 +48,27 @@
 }
 
 #search-product-button{
-    width: 17%;
-    height: 5vh;
-    font-size: 15px;
+    width: 20%;
+    height: 4.5vh;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #0FD274;
-    box-shadow: 0 0 10px #494949;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px #494949;
+    margin: 10px;
 
 }
 
 #search-product-button:hover{
-    background-color: #105408;
+    background-color: #f1e3a4;
     cursor: pointer;
 }
 
+#member-card-client-top, #cce-card-client-top{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
 
 #calculator{
     width: 25%;
@@ -94,20 +99,46 @@
     width: 25%;
     height: 25vh;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #0FD274;
     box-shadow: 0 0 10px #494949;
 
 }
+#id-member{
+    width: 5vw;
+    height: 5vh;
+    margin-right: -2vw;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 0 10px #494949;
+}
 
-#member-card-client > button{
-    margin-top: 5vh;
+#id-cce{
+    width: 5vw;
+    height: 4vh;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 0 10px #494949;
+}
+
+#member-card-client-search{
+    width: 5vw;
+    height: 5vh;
+    font-size: 18px;
+    box-shadow: 0 0 10px #494949;
+}
+#cce-card-client-search{
+    width: 3vw;
+    height: 4vh;
+    font-size: 14px;
+    box-shadow: 0 0 10px #494949;
 }
 
 #payment-checkbox{
     display: flex;
+    width: 35vw;
     justify-content: space-between;
     align-items: start;
     margin-right: 10px;
@@ -132,18 +163,36 @@
 
 
 #energy-card-client{
-    width: 45%;
+    width: 100%;
     height: 15vh;
     padding: 10px;
-    font-size: 20px;
-    border-radius: 10px;
-    background-color: #0FD274;
-    box-shadow: 0 0 10px #494949;
+    font-size: 18px;
+
 
 }
 
-#energy-card-client> button{
-    margin-top: 1vh;
+#energy-card-client-add {
+    height: 15vh;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px #494949;
+    cursor: pointer;
+}
+
+#energy-card{
+    display: flex;
+    width: 45vw;
+    justify-content: space-between;
+    flex-direction: row;
+    border-radius: 10px;
+    background-color: #0FD274;
+    box-shadow: 0 0 10px #494949;
+    align-items: center;
+    margin-bottom: 5px;
+
+
 }
 
 
@@ -229,8 +278,27 @@
     overflow-y: auto;
     height: 16vh;
     margin-bottom: 10px;
-    background-color: #FFFFFF;
+    background-color: #0FD274;
     border-radius: 0.5em;
+}
+
+.pump-div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 0.5em;
+}
+
+.pump-name{
+    font-size: 20px;
+    color: #000000;
+    display: block;
+    background: #0FD274;
+    padding: 5px;
+    margin: 2px;
 
 }
 
