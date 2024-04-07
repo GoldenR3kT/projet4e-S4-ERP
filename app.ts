@@ -25,22 +25,23 @@ app.use(express.json());
 const tsPath = path.join(__dirname, 'src', 'ts');
 app.use('/ts', express.static(tsPath));
 
-// Route to handle JavaScript file requests
-app.get('/ts/:dir/:file', (req, res) => {
-  const { dir, file } = req.params;
-  const jsFilePath = path.join(__dirname, 'src', 'js', dir, `${file}.js`);
+app.use(express.json());
 
-  // Check if the JavaScript file exists
-  fs.access(jsFilePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      res.status(404).send('File not found');
-      return;
-    }
-    // Serve the compiled JavaScript file
-    res.sendFile(jsFilePath);
+  // Route to handle JavaScript file requests
+  app.get('/ts/:dir/:file', (req, res) => {
+    const { dir, file } = req.params;
+    const jsFilePath = path.join(__dirname, 'src', 'js', dir, `${file}.js`);
+
+    // Check if the JavaScript file exists
+    fs.access(jsFilePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        res.status(404).send('File not found');
+        return;
+      }
+      // Serve the compiled JavaScript file
+      res.sendFile(jsFilePath);
+    });
   });
-});
-
 
 //dossier des vues à utiliser
 app.set('views', htmlPath);
@@ -102,7 +103,7 @@ app.get('/incidents/announce', (req, res) => {
     res.sendFile(path.join(htmlPath, 'incidents', 'announce_incident.html'));
 });
 
-app.get('/incidents/adjust', (req, res) => {
+app.get('/incidents/adjust/:id', (req, res) => {
     res.sendFile(path.join(htmlPath, 'incidents', 'adjust_incident.html'));
 });
 
@@ -196,7 +197,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les infos
   app.get('/voirInfosEmployeProfil/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
@@ -207,7 +208,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Modif infos
   app.put('/modifierInfosEmployeProfil', async (req, res) => {
     const idEmploye = req.body.idEmploye;
@@ -220,7 +221,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir edt
   app.get('/voirEdtProfil/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
@@ -231,7 +232,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les aides
   app.get('/voirAides', async (req, res) => {
     try {
@@ -241,7 +242,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir une aide
   app.get('/voirAide/:idAide', async (req, res) => {
     const idAide = +req.params.idAide;
@@ -252,7 +253,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Rédiger une aide
   app.post('/redigerAide', async (req, res) => {
     const titre = req.body.titre;
@@ -265,7 +266,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Supprimer une aide
   app.delete('/supprimerAide/:idAide', async (req, res) => {
     const idAide = +req.params.idAide;
@@ -276,7 +277,7 @@ app.put('/modifierMotDePasse', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
 // Voir les derniers incidents (non réglés)
 app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
     try {
@@ -286,7 +287,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Déclarer un incident
   app.post('/declarerIncident', async (req, res) => {
     const nom = req.body.nom;
@@ -302,7 +303,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Gérer un incident
   app.post('/gererIncident', async (req, res) => {
     const description = req.body.description;
@@ -316,7 +317,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir tout les incidents
   app.get('/voirTousIncidents', async (req, res) => {
     try {
@@ -326,7 +327,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les détails d'un incident
   app.get('/voirDetailsIncident/:idIncident', async (req, res) => {
     const idIncident = +req.params.idIncident;
@@ -337,9 +338,9 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // CAISSE
-  
+
   // Encaisser
   app.post('/encaisser', async (req, res) => {
     const date = req.body.date;
@@ -354,7 +355,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Enregistrer un paiement
   app.post('/enregistrerPaiement', async (req, res) => {
     const montant = req.body.montant;
@@ -368,7 +369,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
 // Voir historique des transactions
 app.get('/voirHistoriqueTransactions', async (req, res) => {
     try {
@@ -379,7 +380,7 @@ app.get('/voirHistoriqueTransactions', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir le détail d'une transaction
   app.get('/voirDetailTransaction/:idTransaction', async (req, res) => {
     const idTransaction = +req.params.idTransaction;
@@ -390,7 +391,7 @@ app.get('/voirHistoriqueTransactions', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // STOCKAGE
 
 app.get('/voirArticles', async (req, res) => {
@@ -402,7 +403,7 @@ app.get('/voirArticles', async (req, res) => {
   }
 });
 
-  
+
   // Voir les produits
   app.get('/voirProduits/:categorie', async (req, res) => {
     const categorie = req.params.categorie;
@@ -413,7 +414,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les énergies
   app.get('/voirEnergies', async (req, res) => {
     try {
@@ -423,7 +424,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les réappros produit
   app.get('/voirReapproProduit/:categorie', async (req, res) => {
     const categorie = req.params.categorie;
@@ -434,7 +435,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les réappros énergie
   app.get('/voirReapproEnergie/:categorie', async (req, res) => {
     const categorie = req.params.categorie;
@@ -445,7 +446,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Modifier un article
   app.put('/modifierArticle', async (req, res) => {
     const idArticle = req.body.idArticle;
@@ -457,7 +458,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Lancer un réappro
   app.post('/lancerReappro', async (req, res) => {
     const idArticle = req.body.idArticle;
@@ -469,7 +470,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Annuler un réappro
   app.delete('/annulerReappro/:idReappro', async (req, res) => {
     const idReappro = +req.params.idReappro;
@@ -480,7 +481,7 @@ app.get('/voirArticles', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
 // Enregistrer la réception d'un réappro
 app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
     const idReappro = +req.params.idReappro;
@@ -491,9 +492,9 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // RESSOURCES HUMAINES
-  
+
   // Voir tout les employés
   app.get('/voirTousEmployes', async (req, res) => {
     try {
@@ -503,7 +504,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les infos
   app.get('/voirInfosEmploye/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
@@ -514,7 +515,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Modif infos
   app.put('/modifierInfosEmploye', async (req, res) => {
     const idEmploye = req.body.idEmploye;
@@ -526,7 +527,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir edt
   app.get('/voirEdt/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
@@ -537,7 +538,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Modif edt
   app.put('/modifierEdt', async (req, res) => {
     const idPeriode = req.body.idPeriode;
@@ -549,9 +550,9 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // CLIENT / CARTE
-  
+
   // Voir les clients
   app.get('/voirClients', async (req, res) => {
     try {
@@ -561,7 +562,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les détails d'un client
   app.get('/voirDetailsClient/:idClient', async (req, res) => {
     const idClient = +req.params.idClient;
@@ -572,7 +573,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
 // Créer un client
 app.post('/creerClient', async (req, res) => {
     const nom = req.body.nom;
@@ -589,7 +590,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Ajouter une carte
   app.post('/ajouterCarte', async (req, res) => {
     const idClient = req.body.idClient;
@@ -600,7 +601,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Supprimer un client
   app.delete('/supprimerClient/:idClient', async (req, res) => {
     const idClient = +req.params.idClient;
@@ -611,7 +612,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Supprimer une carte
   app.delete('/supprimerCarte/:numCarte', async (req, res) => {
     const numCarte = +req.params.numCarte;
@@ -622,7 +623,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Associer une carte à un client
   app.put('/associerCarteClient', async (req, res) => {
     const numCarte = req.body.numCarte;
@@ -634,7 +635,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Modifier un client
   app.put('/modifierClient', async (req, res) => {
     const idClient = req.body.idClient;
@@ -646,9 +647,9 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // CALENDRIER
-  
+
   // Voir les promotions
   app.get('/voirPromotions', async (req, res) => {
     try {
@@ -658,7 +659,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Voir les évènements
   app.get('/voirEvenements', async (req, res) => {
     try {
@@ -668,7 +669,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Créer une promotion
   app.post('/creerPromotion', async (req, res) => {
     const debut = req.body.debut;
@@ -682,7 +683,7 @@ app.post('/creerClient', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
 // Modifier une promotion
 app.put('/modifierPromotion', async (req, res) => {
     const idPeriode = req.body.idPeriode;
@@ -694,7 +695,7 @@ app.put('/modifierPromotion', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Créer un évènement
   app.post('/creerEvenement', async (req, res) => {
     const debut = req.body.debut;
@@ -707,7 +708,7 @@ app.put('/modifierPromotion', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
   // Modifier un évènement
   app.put('/modifierEvenement', async (req, res) => {
     const idPeriode = req.body.idPeriode;
@@ -719,5 +720,5 @@ app.put('/modifierPromotion', async (req, res) => {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
-  
+
 

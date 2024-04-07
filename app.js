@@ -47,12 +47,13 @@ const cssPath = path_1.default.join(__dirname, 'assets', 'css');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use('/css', express_1.default.static(cssPath));
-// Middleware pour parser le corps des requêtes POST
 app.use(express_1.default.urlencoded({ extended: true }));
+//Parser JSON
 app.use(express_1.default.json());
 // Serve TypeScript files from the 'ts' directory
 const tsPath = path_1.default.join(__dirname, 'src', 'ts');
 app.use('/ts', express_1.default.static(tsPath));
+app.use(express_1.default.json());
 // Route to handle JavaScript file requests
 app.get('/ts/:dir/:file', (req, res) => {
     const { dir, file } = req.params;
@@ -108,7 +109,7 @@ app.get('/incidents', (req, res) => {
 app.get('/incidents/announce', (req, res) => {
     res.sendFile(path_1.default.join(htmlPath, 'incidents', 'announce_incident.html'));
 });
-app.get('/incidents/adjust', (req, res) => {
+app.get('/incidents/adjust/:id', (req, res) => {
     res.sendFile(path_1.default.join(htmlPath, 'incidents', 'adjust_incident.html'));
 });
 //MANAGEMENT

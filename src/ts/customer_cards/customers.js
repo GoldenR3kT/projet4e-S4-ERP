@@ -1,8 +1,9 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var listCustomers = document.querySelector('.list-customers');
-    var infoCustomer = document.querySelector('.info-customer');
+"use strict";
+document.addEventListener("DOMContentLoaded", () => {
+    const listCustomers = document.querySelector('.list-customers');
+    const infoCustomer = document.querySelector('.info-customer');
     // Données des clients (simulées)
-    var customersData = [
+    const customersData = [
         { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", cce: "", cm: "cm1" },
         { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", cce: "cce2", cm: "" },
         { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", cce: "cce3", cm: "cm3" },
@@ -17,46 +18,46 @@ document.addEventListener("DOMContentLoaded", function () {
     //refreshCustomerList();
     // Fonction pour supprimer et réafficher la liste des employés
     function refreshCustomerList() {
-        var listCustomers = document.getElementById('list-customers');
+        const listCustomers = document.getElementById('list-customers');
         if (!listCustomers)
             return;
         // Efface tout le contenu de list-customers
         listCustomers.innerHTML = '';
         // Réaffiche toute la liste
-        customersData.forEach(function (customer) {
-            var customerElement = createCustomerElement(customer);
+        customersData.forEach(customer => {
+            const customerElement = createCustomerElement(customer);
             listCustomers.appendChild(customerElement);
         });
     }
     // Fonction pour créer un élément d'employé
     function createCustomerElement(customer) {
-        var customerDiv = document.createElement('div');
+        const customerDiv = document.createElement('div');
         customerDiv.classList.add('customer');
         // Informations de l'employé (à gauche)
-        var infoDiv = document.createElement('div');
+        const infoDiv = document.createElement('div');
         infoDiv.classList.add('customer-info');
         customerDiv.appendChild(infoDiv);
-        var img = document.createElement('img');
+        const img = document.createElement('img');
         img.setAttribute('src', 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'1.25\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3\'/%3E%3Ccircle cx=\'12\' cy=\'10\' r=\'3\'/%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E');
         img.setAttribute('alt', 'Customer Image');
         infoDiv.appendChild(img);
-        var span = document.createElement('span');
+        const span = document.createElement('span');
         span.textContent = customer.nom + " " + customer.prenom + " " + customer.email;
         infoDiv.appendChild(span);
         // Boutons (à droite)
-        var buttonsDiv = document.createElement('div');
+        const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('customer-buttons');
         customerDiv.appendChild(buttonsDiv);
-        var modifierButton = document.createElement('button');
+        const modifierButton = document.createElement('button');
         modifierButton.textContent = "Modifier le client";
-        modifierButton.addEventListener('click', function () {
+        modifierButton.addEventListener('click', () => {
             showCustomerInfo(customer);
         });
         modifierButton.classList.add('customer-button');
         buttonsDiv.appendChild(modifierButton);
-        var supprimerButton = document.createElement('button');
+        const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer le client";
-        supprimerButton.addEventListener('click', function () {
+        supprimerButton.addEventListener('click', () => {
             removeCustomer(customerDiv, customer);
         });
         supprimerButton.classList.add('customer-button');
@@ -65,32 +66,75 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Fonction pour afficher les informations de l'employé sélectionné
     function showCustomerInfo(customer) {
-        var customerInfoHTML = "\n            <h2>Modification Informations du client : <span id=\"customer_id\">".concat(customer.id, "</span>\n            </h2>\n            <form action=\"#\" method=\"POST\">\n                <fieldset>\n                    <legend>INFORMATIONS</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"nom\">Nom :</label>\n                            <input type=\"text\" id=\"nom\" name=\"nom\" value=\"").concat(customer.nom, "\" required>\n                        </div>\n                        <div class=\"input-container\">\n                            <label for=\"prenom\">Pr\u00E9nom :</label>\n                            <input type=\"text\" id=\"prenom\" name=\"prenom\" value=\"").concat(customer.prenom, "\" required>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"tel\">Num\u00E9ro de t\u00E9l\u00E9phone :</label>\n                            <input type=\"tel\" id=\"tel\" name=\"tel\" value=\"").concat(customer.tel, "\" required>\n                        </div>\n                        <div class=\"input-container\">\n                            <label for=\"email\">Adresse email :</label>\n                            <input type=\"email\" id=\"email\" name=\"email\" value=\"").concat(customer.email, "\" required>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"adresse\">Adresse :</label>\n                            <textarea id=\"adresse\" name=\"adresse\" rows=\"4\" required>").concat(customer.adresse, "</textarea>\n                        </div>\n                    </div>\n                    <br><br>\n                </fieldset>\n                <fieldset>\n                    <legend>CARTES</legend>\n                    <div class=\"line-input\">\n                        ").concat(renderCardInput(customer, 'cce'), "\n                        ").concat(renderCardInput(customer, 'cm'), "\n                    </div>\n                </fieldset>\n                <input id=\"modif-submit-button\" type=\"submit\" value=\"Confirmer les modifications\">\n            </form>\n        ");
+        const customerInfoHTML = `
+            <h2>Modification Informations du client : <span id="customer_id">${customer.id}</span>
+            </h2>
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>INFORMATIONS</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="nom">Nom :</label>
+                            <input type="text" id="nom" name="nom" value="${customer.nom}" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="prenom">Prénom :</label>
+                            <input type="text" id="prenom" name="prenom" value="${customer.prenom}" required>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="tel">Numéro de téléphone :</label>
+                            <input type="tel" id="tel" name="tel" value="${customer.tel}" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="email">Adresse email :</label>
+                            <input type="email" id="email" name="email" value="${customer.email}" required>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="adresse">Adresse :</label>
+                            <textarea id="adresse" name="adresse" rows="4" required>${customer.adresse}</textarea>
+                        </div>
+                    </div>
+                    <br><br>
+                </fieldset>
+                <fieldset>
+                    <legend>CARTES</legend>
+                    <div class="line-input">
+                        ${renderCardInput(customer, 'cce')}
+                        ${renderCardInput(customer, 'cm')}
+                    </div>
+                </fieldset>
+                <input id="modif-submit-button" type="submit" value="Confirmer les modifications">
+            </form>
+        `;
         if (infoCustomer) {
             infoCustomer.innerHTML = customerInfoHTML;
         }
-        var modifSubmitButton = document.querySelector('form');
+        const modifSubmitButton = document.querySelector('form');
         if (modifSubmitButton) {
-            modifSubmitButton.addEventListener("submit", function (event) {
+            modifSubmitButton.addEventListener("submit", (event) => {
                 handleModifyCustomerFormSubmit(event);
             });
         }
         // Ajouter un écouteur d'événements pour les boutons d'ajout de carte
-        var addCceButton = document.getElementById('add-cce-button');
-        var addCmButton = document.getElementById('add-cm-button');
+        const addCceButton = document.getElementById('add-cce-button');
+        const addCmButton = document.getElementById('add-cm-button');
         if (addCceButton) {
-            addCceButton.addEventListener('click', function () {
+            addCceButton.addEventListener('click', () => {
                 // Générer une valeur aléatoire pour cce
-                var randomValue = Math.random().toString(36).substring(7);
+                const randomValue = Math.random().toString(36).substring(7);
                 customer.cce = randomValue;
                 // Mettre à jour l'affichage des informations client
                 showCustomerInfo(customer);
             });
         }
         if (addCmButton) {
-            addCmButton.addEventListener('click', function () {
+            addCmButton.addEventListener('click', () => {
                 // Générer une valeur aléatoire pour cm
-                var randomValue = Math.random().toString(36).substring(7);
+                const randomValue = Math.random().toString(36).substring(7);
                 customer.cm = randomValue;
                 // Mettre à jour l'affichage des informations client
                 showCustomerInfo(customer);
@@ -101,17 +145,26 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderCardInput(customer, cardType) {
         // Si le client a déjà une carte de ce type, afficher la valeur dans un champ de texte
         if (customer[cardType]) {
-            return "\n                <div class=\"input-container\">\n                    <label for=\"".concat(cardType, "\">Carte ").concat(cardType.toUpperCase(), " :</label>\n                    <input type=\"text\" id=\"").concat(cardType, "\" name=\"").concat(cardType, "\" value=\"").concat(customer[cardType], "\" required><br><br>\n                </div>\n            ");
+            return `
+                <div class="input-container">
+                    <label for="${cardType}">Carte ${cardType.toUpperCase()} :</label>
+                    <input type="text" id="${cardType}" name="${cardType}" value="${customer[cardType]}" required><br><br>
+                </div>
+            `;
         }
         else {
             // Sinon, afficher uniquement le bouton pour ajouter la carte
-            return "\n                <div class=\"input-container\">\n                    <button id=\"add-".concat(cardType, "-button\">Ajouter la carte ").concat(cardType.toUpperCase(), "</button>\n                </div>\n            ");
+            return `
+                <div class="input-container">
+                    <button id="add-${cardType}-button">Ajouter la carte ${cardType.toUpperCase()}</button>
+                </div>
+            `;
         }
     }
     // Fonction pour supprimer un employé de la liste et du tableau
     function removeCustomer(customerElement, customer) {
         // Retirer l'élément de la liste des employés
-        var index = customersData.findIndex(function (emp) { return emp.id === customer.id; });
+        const index = customersData.findIndex(emp => emp.id === customer.id);
         if (index !== -1) {
             customersData.splice(index, 1);
             listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(customerElement);
@@ -121,17 +174,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleModifyCustomerFormSubmit(event) {
         var _a;
         event.preventDefault();
-        var form = event.target;
-        var customerId = parseInt(((_a = document.getElementById("customer_id")) === null || _a === void 0 ? void 0 : _a.textContent) || "");
-        var nom = form.elements.namedItem("nom");
-        var prenom = form.elements.namedItem("prenom");
-        var tel = form.elements.namedItem("tel");
-        var email = form.elements.namedItem("email");
-        var adresse = form.elements.namedItem("adresse");
-        var cce = form.elements.namedItem("cce");
-        var cm = form.elements.namedItem("cm");
+        const form = event.target;
+        const customerId = parseInt(((_a = document.getElementById("customer_id")) === null || _a === void 0 ? void 0 : _a.textContent) || "");
+        const nom = form.elements.namedItem("nom");
+        const prenom = form.elements.namedItem("prenom");
+        const tel = form.elements.namedItem("tel");
+        const email = form.elements.namedItem("email");
+        const adresse = form.elements.namedItem("adresse");
+        const cce = form.elements.namedItem("cce");
+        const cm = form.elements.namedItem("cm");
         // Mettez à jour les informations de l'employé dans la liste
-        var updatedCustomer = customersData.find(function (customer) { return customer.id === customerId; });
+        const updatedCustomer = customersData.find(customer => customer.id === customerId);
         if (updatedCustomer) {
             updatedCustomer.nom = nom.value;
             updatedCustomer.prenom = prenom.value;
@@ -141,11 +194,11 @@ document.addEventListener("DOMContentLoaded", function () {
             updatedCustomer.cce = cce.value;
             updatedCustomer.cm = cm.value;
             // Mettez à jour l'affichage de l'employé dans la liste
-            var customerElement = document.querySelector(".customer[data-id=\"".concat(customerId, "\"]"));
+            const customerElement = document.querySelector(`.customer[data-id="${customerId}"]`);
             if (customerElement) {
-                var infoDiv = customerElement.querySelector('.customer-info');
+                const infoDiv = customerElement.querySelector('.customer-info');
                 if (infoDiv) {
-                    infoDiv.textContent = "".concat(updatedCustomer.nom, " ").concat(updatedCustomer.prenom, " ").concat(updatedCustomer.email, " ").concat(updatedCustomer.cce);
+                    infoDiv.textContent = `${updatedCustomer.nom} ${updatedCustomer.prenom} ${updatedCustomer.email} ${updatedCustomer.cce}`;
                 }
             }
         }
@@ -156,15 +209,15 @@ document.addEventListener("DOMContentLoaded", function () {
         // Rafraîchir la liste des employés
         refreshCustomerList();
     }
-    var addCustomerButton = document.getElementById("add-customer-button");
-    var infoCustomerSection = document.querySelector(".info-customer");
+    const addCustomerButton = document.getElementById("add-customer-button");
+    const infoCustomerSection = document.querySelector(".info-customer");
     if (addCustomerButton) {
         addCustomerButton.addEventListener("click", handleAddCustomerClick);
     }
     // Spécification du type de 'event' comme MouseEvent
     function handleAddCustomerClick(event, customer) {
         event.preventDefault();
-        var newCustomer;
+        let newCustomer;
         if (!customer) {
             newCustomer = {
                 id: customersData.length + 1, // Générez un nouvel identifiant unique
@@ -181,29 +234,77 @@ document.addEventListener("DOMContentLoaded", function () {
             newCustomer = customer;
         }
         // Construction du formulaire à afficher dans la section info-customer
-        var formHTML = "\n            <form action=\"#\" method=\"POST\">\n                <h2>Ajouter un client : \n                    <input id=\"add-client\" type=\"submit\" value=\"Confirmer l'ajout\">\n                </h2>\n                <fieldset>\n                    <legend>INFORMATIONS</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"nom\">Nom :</label>\n                            <input type=\"text\" id=\"nom\" name=\"nom\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"prenom\">Pr\u00E9nom :</label>\n                            <input type=\"text\" id=\"prenom\" name=\"prenom\" required>\n                        </div>\n                    </div>\n                    \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"tel\">Num\u00E9ro de t\u00E9l\u00E9phone :</label>\n                            <input type=\"tel\" id=\"tel\" name=\"tel\" required>\n                        </div>\n                    \n                        <div class=\"input-container\">\n                            <label for=\"email\">Adresse email :</label>\n                            <input type=\"email\" id=\"email\" name=\"email\" required>\n                        </div>\n                    </div>\n                    \n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"adresse\">Adresse :</label>\n                            <textarea id=\"adresse\" name=\"adresse\" rows=\"4\" required></textarea>\n                        </div>\n                    </div>\n                </fieldset>\n                <fieldset>\n                    <legend>CARTES</legend>\n                    <div class=\"line-input\">\n                        ".concat(renderCardInput(newCustomer, 'cce'), "\n                        ").concat(renderCardInput(newCustomer, 'cm'), "\n                    </div>\n                    \n                    <br><br>\n                </fieldset>\n            </form>\n        ");
+        const formHTML = `
+            <form action="#" method="POST">
+                <h2>Ajouter un client : 
+                    <input id="add-client" type="submit" value="Confirmer l'ajout">
+                </h2>
+                <fieldset>
+                    <legend>INFORMATIONS</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="nom">Nom :</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="prenom">Prénom :</label>
+                            <input type="text" id="prenom" name="prenom" required>
+                        </div>
+                    </div>
+                    
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="tel">Numéro de téléphone :</label>
+                            <input type="tel" id="tel" name="tel" required>
+                        </div>
+                    
+                        <div class="input-container">
+                            <label for="email">Adresse email :</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="adresse">Adresse :</label>
+                            <textarea id="adresse" name="adresse" rows="4" required></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>CARTES</legend>
+                    <div class="line-input">
+                        ${renderCardInput(newCustomer, 'cce')}
+                        ${renderCardInput(newCustomer, 'cm')}
+                    </div>
+                    
+                    <br><br>
+                </fieldset>
+            </form>
+        `;
         // Affichage du formulaire dans la section info-customer
         if (infoCustomerSection) {
             infoCustomerSection.innerHTML = formHTML;
         }
         // Récupération du bouton de soumission et attachement du gestionnaire d'événements
-        var addSubmitButton = document.querySelector('form');
+        const addSubmitButton = document.querySelector('form');
         if (addSubmitButton) {
-            addSubmitButton.addEventListener("submit", function (event) {
+            addSubmitButton.addEventListener("submit", (event) => {
                 handleAddCustomerFormSubmit(event, newCustomer);
             });
         }
         // Récupération des boutons d'ajout de carte et ajout des écouteurs d'événements
-        var addCceButton = document.getElementById('add-cce-button');
-        var addCmButton = document.getElementById('add-cm-button');
+        const addCceButton = document.getElementById('add-cce-button');
+        const addCmButton = document.getElementById('add-cm-button');
         if (addCceButton) {
-            addCceButton.addEventListener('click', function () {
+            addCceButton.addEventListener('click', () => {
                 newCustomer.cce = Math.random().toString(36).substring(7);
                 handleAddCustomerClick(event, newCustomer);
             });
         }
         if (addCmButton) {
-            addCmButton.addEventListener('click', function () {
+            addCmButton.addEventListener('click', () => {
                 newCustomer.cm = Math.random().toString(36).substring(7);
                 handleAddCustomerClick(event, newCustomer);
             });
@@ -211,13 +312,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     function handleAddCustomerFormSubmit(event, customer) {
         event.preventDefault();
-        var form = event.target;
+        const form = event.target;
         // Récupérez les valeurs du formulaire
-        var nom = form.elements.namedItem("nom").value;
-        var prenom = form.elements.namedItem("prenom").value;
-        var tel = form.elements.namedItem("tel").value;
-        var email = form.elements.namedItem("email").value;
-        var adresse = form.elements.namedItem("adresse").value;
+        const nom = form.elements.namedItem("nom").value;
+        const prenom = form.elements.namedItem("prenom").value;
+        const tel = form.elements.namedItem("tel").value;
+        const email = form.elements.namedItem("email").value;
+        const adresse = form.elements.namedItem("adresse").value;
         // Assigner les valeurs au client
         customer.nom = nom;
         customer.prenom = prenom;
@@ -234,12 +335,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     // Récupérer les éléments de recherche par nom et par ID
-    var searchByNameInput = document.getElementById('search-by-name');
-    var searchByIdInput = document.getElementById('search-by-id');
+    const searchByNameInput = document.getElementById('search-by-name');
+    const searchByIdInput = document.getElementById('search-by-id');
     // Ajouter des écouteurs d'événements pour les champs de recherche
-    searchByNameInput.addEventListener('keypress', function (event) {
+    searchByNameInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            var searchText = searchByNameInput.value.trim().toLowerCase();
+            const searchText = searchByNameInput.value.trim().toLowerCase();
             if (searchText === '') {
                 displayCustomers(customersData);
             }
@@ -248,9 +349,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-    searchByIdInput.addEventListener('keypress', function (event) {
+    searchByIdInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            var searchId = parseInt(searchByIdInput.value.trim());
+            const searchId = parseInt(searchByIdInput.value.trim());
             if (!isNaN(searchId)) {
                 filterCustomersById(searchId);
             }
@@ -261,38 +362,38 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // Fonction pour filtrer les employés par nom
     function filterCustomersByName(name) {
-        var filteredCustomers = customersData.filter(function (customer) {
-            var fullName = "".concat(customer.nom, " ").concat(customer.prenom).toLowerCase();
+        const filteredCustomers = customersData.filter(customer => {
+            const fullName = `${customer.nom} ${customer.prenom}`.toLowerCase();
             return fullName.includes(name);
         });
         displayCustomers(filteredCustomers);
     }
     // Fonction pour filtrer les employés par ID
     function filterCustomersById(id) {
-        var filteredCustomers = customersData.filter(function (customer) { return customer.id === id; });
+        const filteredCustomers = customersData.filter(customer => customer.id === id);
         displayCustomers(filteredCustomers);
     }
     // Fonction pour afficher les employés
     function displayCustomers(customers) {
-        var listCustomers = document.getElementById('list-customers');
+        const listCustomers = document.getElementById('list-customers');
         if (!listCustomers)
             return;
         // Effacer tout le contenu de list-customers
         listCustomers.innerHTML = '';
         // Réafficher les employés filtrés
-        customers.forEach(function (customer) {
-            var customerElement = createCustomerElement(customer);
+        customers.forEach(customer => {
+            const customerElement = createCustomerElement(customer);
             listCustomers.appendChild(customerElement);
         });
     }
     // Fonction pour vider le contenu de la section info-customer
     function clearInfoCustomer() {
-        var infoCustomer = document.querySelector('.info-customer');
+        const infoCustomer = document.querySelector('.info-customer');
         if (infoCustomer) {
             infoCustomer.innerHTML = '';
         }
     }
-    var cardsData = [
+    const cardsData = [
         { id: 1, type: "cce", ptsMembre: 1, credit: 11, dernierCredit: "01/04/2024", montantDernierCredit: 10, idClient: "" },
         { id: 2, type: "cm", ptsMembre: 2, credit: 22, dernierCredit: "02/04/2024", montantDernierCredit: 20, idClient: "" },
         { id: 3, type: "cce", ptsMembre: 3, credit: 33, dernierCredit: "03/04/2024", montantDernierCredit: 30, idClient: "" },
@@ -306,46 +407,46 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
     // Fonction pour supprimer et réafficher la liste des employés
     function refreshCardList() {
-        var listCards = document.getElementById('list-customers');
+        const listCards = document.getElementById('list-customers');
         if (!listCards)
             return;
         // Efface tout le contenu de list-customers
         listCards.innerHTML = '';
         // Réaffiche toute la liste
-        cardsData.forEach(function (card) {
-            var cardElement = createCardElement(card);
+        cardsData.forEach(card => {
+            const cardElement = createCardElement(card);
             listCards.appendChild(cardElement);
         });
     }
     // Fonction pour créer un élément d'employé
     function createCardElement(card) {
-        var cardDiv = document.createElement('div');
+        const cardDiv = document.createElement('div');
         cardDiv.classList.add('customer');
         // Informations de l'employé (à gauche)
-        var infoDiv = document.createElement('div');
+        const infoDiv = document.createElement('div');
         infoDiv.classList.add('customer-info');
         cardDiv.appendChild(infoDiv);
-        var img = document.createElement('img');
+        const img = document.createElement('img');
         img.setAttribute('src', 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'1.25\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3\'/%3E%3Ccircle cx=\'12\' cy=\'10\' r=\'3\'/%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E');
         img.setAttribute('alt', 'Card Image');
         infoDiv.appendChild(img);
-        var span = document.createElement('span');
+        const span = document.createElement('span');
         span.textContent = card.id + " " + card.idClient + " " + card.ptsMembre + card.credit;
         infoDiv.appendChild(span);
         // Boutons (à droite)
-        var buttonsDiv = document.createElement('div');
+        const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('customer-buttons');
         cardDiv.appendChild(buttonsDiv);
-        var modifierButton = document.createElement('button');
+        const modifierButton = document.createElement('button');
         modifierButton.textContent = "Modifier la carte";
-        modifierButton.addEventListener('click', function () {
+        modifierButton.addEventListener('click', () => {
             showCardInfo(card);
         });
         modifierButton.classList.add('customer-button');
         buttonsDiv.appendChild(modifierButton);
-        var supprimerButton = document.createElement('button');
+        const supprimerButton = document.createElement('button');
         supprimerButton.textContent = "Supprimer la carte";
-        supprimerButton.addEventListener('click', function () {
+        supprimerButton.addEventListener('click', () => {
             removeCard(cardDiv, card);
         });
         supprimerButton.classList.add('customer-button');
@@ -354,20 +455,68 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Fonction pour afficher les informations de la carte sélectionnée
     function showCardInfo(card) {
-        var cardInfoHTML = "\n            <h2>Modification Informations de la Carte : <span id=\"card_id\">".concat(card.id, "</span></h2>\n            <form action=\"#\" method=\"POST\">\n                <fieldset>\n                    <legend>INFORMATIONS</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"type\">Type de carte :</label>\n                            <input type=\"text\" id=\"type\" name=\"type\" value=\"").concat(card.type, "\" readonly>\n                        </div>\n                    </div>\n        ");
+        let cardInfoHTML = `
+            <h2>Modification Informations de la Carte : <span id="card_id">${card.id}</span></h2>
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>INFORMATIONS</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="type">Type de carte :</label>
+                            <input type="text" id="type" name="type" value="${card.type}" readonly>
+                        </div>
+                    </div>
+        `;
         if (card.type === 'cce') {
-            cardInfoHTML += "\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"credit\">Cr\u00E9dit :</label>\n                            <input type=\"text\" id=\"credit\" name=\"credit\" value=\"".concat(card.credit, "\" required>\n                        </div>\n                        <div class=\"input-container\">\n                            <label for=\"montantDernierCredit\">Montant du dernier cr\u00E9dit :</label>\n                            <input type=\"text\" id=\"montantDernierCredit\" name=\"montantDernierCredit\" value=\"").concat(card.montantDernierCredit, "\" required>\n                        </div>\n                    </div>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"dernierCredit\">Dernier cr\u00E9dit :</label>\n                            <input type=\"text\" id=\"dernierCredit\" name=\"dernierCredit\" value=\"").concat(card.dernierCredit, "\" required>\n                        </div>\n                    </div>\n            ");
+            cardInfoHTML += `
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="credit">Crédit :</label>
+                            <input type="text" id="credit" name="credit" value="${card.credit}" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="montantDernierCredit">Montant du dernier crédit :</label>
+                            <input type="text" id="montantDernierCredit" name="montantDernierCredit" value="${card.montantDernierCredit}" required>
+                        </div>
+                    </div>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="dernierCredit">Dernier crédit :</label>
+                            <input type="text" id="dernierCredit" name="dernierCredit" value="${card.dernierCredit}" required>
+                        </div>
+                    </div>
+            `;
         }
         else if (card.type === 'cm') {
-            cardInfoHTML += "\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"ptsMembre\">Points Membre :</label>\n                            <input type=\"text\" id=\"ptsMembre\" name=\"ptsMembre\" value=\"".concat(card.ptsMembre, "\" required>\n                        </div>\n                    </div>\n            ");
+            cardInfoHTML += `
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="ptsMembre">Points Membre :</label>
+                            <input type="text" id="ptsMembre" name="ptsMembre" value="${card.ptsMembre}" required>
+                        </div>
+                    </div>
+            `;
         }
-        cardInfoHTML += "\n                </fieldset>\n                <fieldset>\n                    <legend>CLIENT</legend>\n                    <div class=\"line-input\">\n                        <div class=\"input-container\">\n                            <label for=\"idClient\">Id du Client :</label>\n                            <input type=\"text\" id=\"idClient\" name=\"idClient\" value=\"".concat(card.idClient, "\">\n                        </div>\n                    </div>\n                </fieldset>\n                <input id=\"modif-submit-button\" type=\"submit\" value=\"Confirmer les modifications\">\n            </form>\n        ");
+        cardInfoHTML += `
+                </fieldset>
+                <fieldset>
+                    <legend>CLIENT</legend>
+                    <div class="line-input">
+                        <div class="input-container">
+                            <label for="idClient">Id du Client :</label>
+                            <input type="text" id="idClient" name="idClient" value="${card.idClient}">
+                        </div>
+                    </div>
+                </fieldset>
+                <input id="modif-submit-button" type="submit" value="Confirmer les modifications">
+            </form>
+        `;
         if (infoCustomer) {
             infoCustomer.innerHTML = cardInfoHTML;
         }
-        var modifSubmitButton = document.querySelector('form');
+        const modifSubmitButton = document.querySelector('form');
         if (modifSubmitButton) {
-            modifSubmitButton.addEventListener("submit", function (event) {
+            modifSubmitButton.addEventListener("submit", (event) => {
                 handleModifyCardFormSubmit(event);
             });
         }
@@ -375,7 +524,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fonction pour supprimer une carte de la liste et du tableau
     function removeCard(cardElement, card) {
         // Retirer l'élément de la liste des cartes
-        var index = cardsData.findIndex(function (emp) { return emp.id === card.id; });
+        const index = cardsData.findIndex(emp => emp.id === card.id);
         if (index !== -1) {
             cardsData.splice(index, 1);
             listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(cardElement);
@@ -385,16 +534,16 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleModifyCardFormSubmit(event) {
         var _a;
         event.preventDefault();
-        var form = event.target;
-        var cardId = parseInt(((_a = document.getElementById("card_id")) === null || _a === void 0 ? void 0 : _a.textContent) || "");
-        var type = form.elements.namedItem("type");
-        var updatedCard;
+        const form = event.target;
+        const cardId = parseInt(((_a = document.getElementById("card_id")) === null || _a === void 0 ? void 0 : _a.textContent) || "");
+        const type = form.elements.namedItem("type");
+        let updatedCard;
         // Mettre à jour les informations de la carte dans la liste
         if (type.value === 'cce') {
-            var credit = form.elements.namedItem("credit");
-            var montantDernierCredit = form.elements.namedItem("montantDernierCredit");
-            var dernierCredit = form.elements.namedItem("dernierCredit");
-            updatedCard = cardsData.find(function (card) { return card.id === cardId; });
+            const credit = form.elements.namedItem("credit");
+            const montantDernierCredit = form.elements.namedItem("montantDernierCredit");
+            const dernierCredit = form.elements.namedItem("dernierCredit");
+            updatedCard = cardsData.find(card => card.id === cardId);
             if (updatedCard) {
                 updatedCard.credit = parseFloat(credit.value);
                 updatedCard.montantDernierCredit = parseFloat(montantDernierCredit.value);
@@ -402,14 +551,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
         else if (type.value === 'cm') {
-            var ptsMembre = form.elements.namedItem("ptsMembre");
-            updatedCard = cardsData.find(function (card) { return card.id === cardId; });
+            const ptsMembre = form.elements.namedItem("ptsMembre");
+            updatedCard = cardsData.find(card => card.id === cardId);
             if (updatedCard) {
                 updatedCard.ptsMembre = parseFloat(ptsMembre.value);
             }
         }
-        var idClient = form.elements.namedItem("idClient");
-        updatedCard = cardsData.find(function (card) { return card.id === cardId; });
+        const idClient = form.elements.namedItem("idClient");
+        updatedCard = cardsData.find(card => card.id === cardId);
         if (updatedCard && idClient.value) {
             updatedCard.idClient = idClient.value;
         }
@@ -421,7 +570,7 @@ document.addEventListener("DOMContentLoaded", function () {
         refreshCardList();
     }
     // Récupérer le bouton d'ajout de carte
-    var addCardButton = document.getElementById("add-card-button");
+    const addCardButton = document.getElementById("add-card-button");
     // Ajouter un écouteur d'événements au bouton d'ajout de carte
     if (addCardButton) {
         addCardButton.addEventListener("click", handleAddCardClick);
@@ -430,7 +579,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleAddCardClick(event, card) {
         event.preventDefault();
         // Générer une nouvelle carte avec des valeurs par défaut ou vides
-        var newCard;
+        let newCard;
         if (!card) {
             newCard = {
                 id: 0,
@@ -446,19 +595,30 @@ document.addEventListener("DOMContentLoaded", function () {
             newCard = card;
         }
         // Afficher un formulaire dans la section info-customer pour créer une nouvelle carte
-        var formHTML = "\n            <h2>Cr\u00E9er une carte</h2>\n            <form id=\"add-card-form\" action=\"#\" method=\"POST\">\n                <div class=\"line-input\">\n                    ".concat(newCard.id !== 0 ? "<input type=\"text\" id=\"card-id\" name=\"card-id\" value=\"".concat(newCard.id, "\" disabled>") : "<button id=\"generate-id-button\">Scanner une carte</button>", "\n                </div>\n                <div class=\"line-input\">\n                    <button id=\"create-member-card-button\" ").concat(newCard.id == 0 ? 'disabled' : '', ">Cr\u00E9er une carte membre</button>\n                    <button id=\"create-energy-credit-card-button\" ").concat(newCard.id == 0 ? 'disabled' : '', ">Cr\u00E9er une carte cr\u00E9dit \u00E9nergie</button>\n                </div>\n            </form>\n        ");
+        const formHTML = `
+            <h2>Créer une carte</h2>
+            <form id="add-card-form" action="#" method="POST">
+                <div class="line-input">
+                    ${newCard.id !== 0 ? `<input type="text" id="card-id" name="card-id" value="${newCard.id}" disabled>` : `<button id="generate-id-button">Scanner une carte</button>`}
+                </div>
+                <div class="line-input">
+                    <button id="create-member-card-button" ${newCard.id == 0 ? 'disabled' : ''}>Créer une carte membre</button>
+                    <button id="create-energy-credit-card-button" ${newCard.id == 0 ? 'disabled' : ''}>Créer une carte crédit énergie</button>
+                </div>
+            </form>
+        `;
         // Afficher le formulaire dans la section info-customer
         if (infoCustomer) {
             infoCustomer.innerHTML = formHTML;
         }
         // Ajouter des écouteurs d'événements pour les boutons du formulaire
-        var generateIdButton = document.getElementById('generate-id-button');
-        var createMemberCardButton = document.getElementById('create-member-card-button');
-        var createEnergyCreditCardButton = document.getElementById('create-energy-credit-card-button');
+        const generateIdButton = document.getElementById('generate-id-button');
+        const createMemberCardButton = document.getElementById('create-member-card-button');
+        const createEnergyCreditCardButton = document.getElementById('create-energy-credit-card-button');
         if (generateIdButton) {
-            generateIdButton.addEventListener('click', function () {
+            generateIdButton.addEventListener('click', () => {
                 // Générer un identifiant aléatoire pour la nouvelle carte
-                var randomId = Math.floor(Math.random() * 1000000);
+                const randomId = Math.floor(Math.random() * 1000000);
                 newCard.id = randomId;
                 newCard.type = "";
                 // Afficher le formulaire pour le type de carte
@@ -466,18 +626,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
         if (createMemberCardButton) {
-            createMemberCardButton.addEventListener('click', function () {
+            createMemberCardButton.addEventListener('click', () => {
                 newCard.type = "cm";
-                var cardId = document.getElementById('card-id');
+                const cardId = document.getElementById('card-id');
                 newCard.id = parseFloat(cardId.value);
                 cardsData.push(newCard);
                 refreshCardList();
             });
         }
         if (createEnergyCreditCardButton) {
-            createEnergyCreditCardButton.addEventListener('click', function () {
+            createEnergyCreditCardButton.addEventListener('click', () => {
                 newCard.type = "cce";
-                var cardId = document.getElementById('card-id');
+                const cardId = document.getElementById('card-id');
                 newCard.id = parseFloat(cardId.value);
                 cardsData.push(newCard);
                 refreshCardList();
@@ -485,17 +645,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     // Sélectionnez les boutons par leur ID
-    var customerButton = document.getElementById("customer-button");
-    var cardButton = document.getElementById("card-button");
+    const customerButton = document.getElementById("customer-button");
+    const cardButton = document.getElementById("card-button");
     // Ajoutez des écouteurs d'événements pour chaque bouton
     if (customerButton) {
-        customerButton.addEventListener("click", function () {
+        customerButton.addEventListener("click", () => {
             clearInfoCustomer();
             refreshCustomerList();
         });
     }
     if (cardButton) {
-        cardButton.addEventListener("click", function () {
+        cardButton.addEventListener("click", () => {
             clearInfoCustomer();
             refreshCardList();
         });
