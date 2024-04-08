@@ -53,7 +53,6 @@ app.use(express_1.default.json());
 // Serve TypeScript files from the 'ts' directory
 const tsPath = path_1.default.join(__dirname, 'src', 'ts');
 app.use('/ts', express_1.default.static(tsPath));
-app.use(express_1.default.json());
 // Route to handle JavaScript file requests
 app.get('/ts/:dir/:file', (req, res) => {
     const { dir, file } = req.params;
@@ -270,6 +269,16 @@ app.get('/voirDerniersIncidentsNonRegles', (req, res) => __awaiter(void 0, void 
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
+// Voir les derniers incidents (réglés)
+app.get('/voirDerniersIncidentsRegles', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const incidents = yield db.voirDerniersIncidentsRegles();
+        res.send(incidents);
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
 // Déclarer un incident
 app.post('/declarerIncident', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const nom = req.body.nom;
@@ -288,12 +297,13 @@ app.post('/declarerIncident', (req, res) => __awaiter(void 0, void 0, void 0, fu
 }));
 // Gérer un incident
 app.post('/gererIncident', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id_incident = req.body.id_incident;
     const description = req.body.description;
     const idEmploye = req.body.idEmploye;
     const date = req.body.date;
     const heure = req.body.heure;
     try {
-        yield db.gererIncident(description, idEmploye, date, heure);
+        yield db.gererIncident(id_incident, description, idEmploye, date, heure);
         res.send({ message: 'Incident géré avec succès' });
     }
     catch (error) {
@@ -383,9 +393,9 @@ app.post('/enregistrerPaiement', (req, res) => __awaiter(void 0, void 0, void 0,
     const montant = req.body.montant;
     const idTransaction = req.body.idTransaction;
     const idMoyenDePaiement = req.body.idMoyenDePaiement;
-    const idClient = req.body.idClient;
+    const numCarte = req.body.numCarte;
     try {
-        yield db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, idClient);
+        yield db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte);
         res.send({ message: 'Paiement enregistré avec succès' });
     }
     catch (error) {
@@ -457,10 +467,9 @@ app.get('/voirReapproProduit/:categorie', (req, res) => __awaiter(void 0, void 0
     }
 }));
 // Voir les réappros énergie
-app.get('/voirReapproEnergie/:categorie', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const categorie = req.params.categorie;
+app.get('/voirReapproEnergie', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const reappros = yield db.voirReapproEnergie(categorie);
+        const reappros = yield db.voirReapproEnergie();
         res.send(reappros);
     }
     catch (error) {

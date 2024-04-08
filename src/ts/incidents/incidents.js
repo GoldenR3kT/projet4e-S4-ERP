@@ -85,11 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch('/voirTousIncidents');
-            const incidents = yield response.json(); // Utilisation de l'interface Incident
-            const incidentsRegles = incidents.filter(incident => incident.regle === true);
+            const response = yield fetch('/voirDerniersIncidentsRegles');
+            const incidents = yield response.json();
             // Parcourir les incidents récupérés
-            incidentsRegles.forEach(incident => {
+            incidents.forEach(incident => {
                 const nomEmploye = incident.nom;
                 const heure = incident.heure;
                 const libelle = incident.niveau;
