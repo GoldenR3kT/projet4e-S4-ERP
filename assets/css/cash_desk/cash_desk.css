@@ -377,7 +377,24 @@ div > button:hover{
     z-index: 1001;
 }
 
-#toast-pump-form {
+#toast-energy-quantity {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: 40vh;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    background-color: #0FD274;
+    border: 1px solid black;
+    box-shadow: 0 0 10px #494949;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    z-index: 1001;
+}
+
+#toast-pump-form, #toast-energy-form {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -386,7 +403,20 @@ div > button:hover{
     margin-top: 10vh;
 }
 
-#label-toast{
+
+
+#quantity-energy{
+    width: 20vw;
+    height: 10vh;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px #494949;
+    margin: 10px;
+}
+
+#label-toast, #label-toast-energy{
     font-size: 24px;
     font-weight: bold;
     color: #ffffff;
@@ -394,7 +424,7 @@ div > button:hover{
 
 
 
-#toast-pump-answer {
+#toast-pump-answer, #toast-energy-answer {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -402,7 +432,7 @@ div > button:hover{
     margin-top: 10vh;
 }
 
-#toast-pump-answer button {
+#toast-pump-answer button, #toast-energy-answer button {
     margin: 10px;
     width: 20vw;
     height: 10vh;

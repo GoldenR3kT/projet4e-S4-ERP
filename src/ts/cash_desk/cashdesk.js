@@ -39,20 +39,59 @@ function searchProducts() {
                         const productName = document.createElement('p');
                         const productPrice = document.createElement('p');
                         productName.textContent = produit.nom;
-                        productPrice.textContent = produit.prixHT + ' €';
+                        productPrice.textContent = produit.prixTTC + ' €';
                         productDiv.textContent = produit.nom;
                         buttonAdd.textContent = 'Ajouter';
-                        divNamePrice.appendChild(productName);
-                        divNamePrice.appendChild(productPrice);
                         divNamePrice.className = 'div-namePrice';
                         productDiv.className = 'product-div';
                         buttonAdd.className = 'add-product-button';
                         buttonAdd.addEventListener('click', () => {
+                            var _a, _b, _c, _d;
                             const productToAdd = divNamePrice.cloneNode(true);
-                            totalPrice += produit.prixHT;
-                            total.textContent = totalPrice + ' €';
                             disableAllCheckboxes();
-                            productList === null || productList === void 0 ? void 0 : productList.appendChild(productToAdd);
+                            if (((_a = productName.textContent) === null || _a === void 0 ? void 0 : _a.includes("Diesel")) || ((_b = productName.textContent) === null || _b === void 0 ? void 0 : _b.includes("Sans Plomb")) || ((_c = productName.textContent) === null || _c === void 0 ? void 0 : _c.includes("Electricite")) || ((_d = productName.textContent) === null || _d === void 0 ? void 0 : _d.includes("Gaz"))) {
+                                let toAskQEnergy = document.getElementById('toast-energy-quantity');
+                                toAskQEnergy.style.display = 'block';
+                                toAskQEnergy.style.zIndex = '1000';
+                                let previousPumpOkClickHandler;
+                                let pumpOkClickHandler;
+                                let pumpOk = document.getElementById('toask-energy-button');
+                                pumpOkClickHandler = () => __awaiter(this, void 0, void 0, function* () {
+                                    let energyInput = document.getElementById("quantity-energy");
+                                    toAskQEnergy.style.display = 'none';
+                                    toAskQEnergy.style.zIndex = '0';
+                                    console.log(energyInput.value);
+                                    let modifiedProductName = document.createElement('p');
+                                    modifiedProductName.textContent = productName.textContent + " X " + energyInput.value;
+                                    let newProductToAdd = document.createElement('div').cloneNode(true);
+                                    newProductToAdd.className = 'product-div';
+                                    newProductToAdd.appendChild(modifiedProductName);
+                                    newProductToAdd.appendChild(productPrice);
+                                    totalPrice += produit.prixTTC * parseInt(energyInput.value);
+                                    total.textContent = totalPrice + ' €';
+                                    productList === null || productList === void 0 ? void 0 : productList.appendChild(newProductToAdd);
+                                    if (pumpOkClickHandler) {
+                                        pumpOk.removeEventListener('click', pumpOkClickHandler);
+                                    }
+                                });
+                                pumpOk.addEventListener('click', pumpOkClickHandler);
+                                const pumpCancel = document.getElementById('toask-energy-cancel');
+                                pumpCancel.addEventListener('click', () => {
+                                    toAskQEnergy.style.display = 'none';
+                                    toAskQEnergy.style.zIndex = '0';
+                                });
+                            }
+                            else {
+                                totalPrice += produit.prixTTC;
+                                total.textContent = totalPrice + ' €';
+                                const newProductToAdd = document.createElement('div').cloneNode(true);
+                                const productNameClone = productName.cloneNode(true);
+                                const productPriceClone = productPrice.cloneNode(true);
+                                newProductToAdd.className = 'product-div';
+                                newProductToAdd.appendChild(productNameClone);
+                                newProductToAdd.appendChild(productPriceClone);
+                                productList === null || productList === void 0 ? void 0 : productList.appendChild(newProductToAdd);
+                            }
                         });
                         productDiv.appendChild(buttonAdd);
                         productSearched.appendChild(productDiv);
