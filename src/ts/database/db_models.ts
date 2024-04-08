@@ -185,7 +185,6 @@ const Energie = sequelize.define('energie', {
 
 Energie.belongsTo(Article, { foreignKey: 'id' });
 
-
 const Produit = sequelize.define('produit', {
   image: DataTypes.STRING(100),
   catégorie: DataTypes.STRING(20)
