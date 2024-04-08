@@ -93,6 +93,11 @@ export async function voirDerniersIncidentsNonRegles(): Promise<typeof Incident[
     return await Incident.findAll({ where: { en_cours: true } });
 }
 
+// Voir les derniers incidents (réglés)
+export async function voirDerniersIncidentsRegles(): Promise<typeof Incident[]> {
+    return await Incident.findAll({ where: { en_cours: false } });
+}
+
 // Déclarer un incident
 export async function declarerIncident(nom: string, description: string, niveau: string, idEmploye: number, date: Date, heure: string): Promise<void> {
     await Incident.create({ nom, desc: description, niveau, employe_id: idEmploye, date, heure, en_cours: true });
@@ -101,7 +106,7 @@ export async function declarerIncident(nom: string, description: string, niveau:
 // Gérer un incident
 export async function gererIncident(id_incident: number, description: string, idEmploye: number, date: Date, heure: string): Promise<void> {
     await SolutionIncident.create({ id_incident: id_incident, desc: description, employe_id: idEmploye, date, heure });
-    await Incident.update({ en_cours: 0 }, { where: { incident_id: id_incident } });
+    await Incident.update({ en_cours: 0 }, { where: { id: id_incident } });
 }
 
 // Voir tout les incidents

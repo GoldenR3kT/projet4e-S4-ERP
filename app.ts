@@ -287,6 +287,16 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
     }
   });
 
+  // Voir les derniers incidents (réglés)
+app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
+  try {
+    const incidents = await db.voirDerniersIncidentsRegles();
+    res.send(incidents);
+  } catch (error) {
+    res.status(500).send({ error: 'Une erreur est survenue' });
+  }
+});
+
   // Déclarer un incident
   app.post('/declarerIncident', async (req, res) => {
     const nom = req.body.nom;
