@@ -18,20 +18,20 @@ function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD, idArticle) {
     name.textContent = nameBDD;
     stock.appendChild(name);
     const prixHT = document.createElement("p");
-    prixHT.textContent = prixHTBDD; // Remplacez cela par la vraie valeur de l'adresse du fournisseur
+    prixHT.textContent = prixHTBDD.toString(); // Remplacez cela par la vraie valeur de l'adresse du fournisseur
     stock.appendChild(prixHT);
     const prixTTC = document.createElement("p");
     prixTTC.textContent = prixTTCBDD; // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(prixTTC);
     const quantite = document.createElement("p");
-    quantite.textContent = quantiteBDD; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    quantite.textContent = quantiteBDD.toString(); // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(quantite);
     // Créer le bouton avec la même classe et texte
     const btnReappro = document.createElement("button");
     btnReappro.className = "reappro-button";
     btnReappro.innerHTML = "Réappro";
     btnReappro.addEventListener('click', function () {
-        requeteReappro(idArticle, quantiteBDD);
+        requeteReappro(idArticle, quantiteBDD, prixHTBDD);
         btnReappro.classList.add('bouton-reappro-inactif');
         stock.classList.add('ligne-reappro-active');
     });
@@ -130,7 +130,7 @@ function initEnergie() {
             categorieTitle.textContent = 'Energie';
             energies.forEach((energy, index) => {
                 const { id, nom, prixHT, prixTTC, quantite } = energy.article;
-                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+                ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
             });
             reappros.forEach((reappro, index) => {
                 const { id_transaction, transaction: { date, mouvements } } = reappro;
@@ -167,7 +167,7 @@ function initBoutique() {
             categorieTitle.textContent = 'Boutique';
             boutique.forEach((produit, index) => {
                 const { id, nom, prixHT, prixTTC, quantite } = produit.article;
-                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+                ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
             });
             reappros.forEach((reappro, index) => {
                 const { id_transaction, transaction: { date, mouvements } } = reappro;
@@ -203,7 +203,7 @@ function initAtelier() {
             categorieTitle.textContent = 'Atelier';
             boutique.forEach((produit, index) => {
                 const { id, nom, prixHT, prixTTC, quantite } = produit.article;
-                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+                ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
             });
             reappros.forEach((reappro, index) => {
                 const { id_transaction, transaction: { date, mouvements } } = reappro;
@@ -236,7 +236,7 @@ function initRestaurant() {
         if (categorieTitle) {
             restaurant.forEach((ingredient, index) => {
                 const { id, nom, prixHT, prixTTC, quantite } = ingredient.article;
-                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+                ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
             });
             categorieTitle.textContent = 'Restaurant';
             modifierInterfaceRestaurant();
@@ -314,7 +314,7 @@ function modifierElementMenu(li) {
 function supprimerElementMenu(li) {
     li.remove(); // Supprime l'élément de la liste
 }
-function requeteReappro(idArticle, quantite) {
+function requeteReappro(idArticle, quantite, prixHT) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield fetch('/lancerReappro', {
@@ -322,7 +322,7 @@ function requeteReappro(idArticle, quantite) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ idArticle: idArticle, quantite: quantite })
+                body: JSON.stringify({ idArticle: idArticle, quantite: 1000, date: Date.now(), totalHT: quantite * prixHT, TVA: 0.2 })
             });
             if (response.ok) {
                 const responseData = yield response.json();

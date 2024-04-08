@@ -1,4 +1,4 @@
-function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, quantiteBDD: string, idArticle :number): void {
+function ajouterStock(nameBDD: string, prixHTBDD: number, prixTTCBDD: string, quantiteBDD: number, idArticle :number): void {
     // Sélectionner l'ul
     const listeStocks = document.getElementById("liste-stocks");
 
@@ -11,7 +11,7 @@ function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, qu
     stock.appendChild(name);
 
     const prixHT = document.createElement("p");
-    prixHT.textContent = prixHTBDD; // Remplacez cela par la vraie valeur de l'adresse du fournisseur
+    prixHT.textContent = prixHTBDD.toString(); // Remplacez cela par la vraie valeur de l'adresse du fournisseur
     stock.appendChild(prixHT);
 
     const prixTTC = document.createElement("p");
@@ -19,7 +19,7 @@ function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, qu
     stock.appendChild(prixTTC);
 
     const quantite = document.createElement("p");
-    quantite.textContent = quantiteBDD; // Remplacez cela par la vraie valeur de l'email du fournisseur
+    quantite.textContent = quantiteBDD.toString(); // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(quantite);
 
     // Créer le bouton avec la même classe et texte
@@ -27,7 +27,7 @@ function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, qu
     btnReappro.className = "reappro-button";
     btnReappro.innerHTML = "Réappro";
     btnReappro.addEventListener('click', function() {
-        requeteReappro(idArticle, quantiteBDD);
+        requeteReappro(idArticle, quantiteBDD,prixHTBDD);
         btnReappro.classList.add('bouton-reappro-inactif');
         stock.classList.add('ligne-reappro-active');
     });
@@ -157,7 +157,7 @@ async function initEnergie() {
             article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
         }, index: number) => {
             const {id,nom, prixHT, prixTTC, quantite} = energy.article;
-            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
         });
 
         reappros.forEach((reappro: {
@@ -210,7 +210,7 @@ async function initBoutique() {
             article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
         }, index: number) => {
             const {id,nom, prixHT, prixTTC, quantite} = produit.article;
-            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
         });
 
         reappros.forEach((reappro: {
@@ -263,7 +263,7 @@ async function initAtelier() {
             article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
         }, index: number) => {
             const {id,nom, prixHT, prixTTC, quantite} = produit.article;
-            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
         });
 
         reappros.forEach((reappro: {
@@ -311,7 +311,7 @@ async function initRestaurant() {
             article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
         }, index: number) => {
             const {id,nom, prixHT, prixTTC, quantite} = ingredient.article;
-            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
         });
 
         categorieTitle.textContent = 'Restaurant';
@@ -401,14 +401,14 @@ function supprimerElementMenu(li: HTMLElement) {
     li.remove(); // Supprime l'élément de la liste
 }
 
-async function requeteReappro(idArticle :number, quantite :string) {
+async function requeteReappro(idArticle :number, quantite :number, prixHT :number) {
     try {
         const response = await fetch('/lancerReappro', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idArticle: idArticle, quantite: quantite })
+            body: JSON.stringify({ idArticle: idArticle, quantite: 1000, date: Date.now(),totalHT: quantite * prixHT, TVA: 0.2 })
         });
 
         if (response.ok) {
