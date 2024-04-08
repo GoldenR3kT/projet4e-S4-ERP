@@ -118,6 +118,7 @@ const Transaction = sequelize.define('transaction', {
   TVA: DataTypes.DOUBLE
 });
 
+
 const MoyenDePaiement = sequelize.define('moyenDePaiement', {
   id: {
     type: DataTypes.INTEGER,
@@ -268,6 +269,7 @@ const Mouvement = sequelize.define('mouvement', {
 
 Mouvement.belongsTo(Article, { foreignKey: 'article_id' });
 Mouvement.belongsTo(Transaction, { foreignKey: 'transaction_id' });
+Transaction.hasMany(Mouvement, { foreignKey: 'transaction_id' });
 
 const Carte = sequelize.define('carte', {
   num: {

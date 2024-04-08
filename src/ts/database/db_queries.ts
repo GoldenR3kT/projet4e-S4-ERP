@@ -234,21 +234,7 @@ export async function voirTousEmployes(): Promise<typeof Employe[]> {
 // Voir les infos
 export async function voirInfosEmploye(idEmploye: number): Promise<typeof Employe | null> {
     return await Employe.findByPk(idEmploye, { include: [
-        {
-          model: Personne,
-          include: [
-            {
-              model: Partenaire,
-              include: [
-                {
-                  model: Contact,
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    });
+        { model: Personne, include: [ { model: Partenaire, include: [ { model: Contact,} ]} ]} ]} );
 }
 
 // Modif infos
