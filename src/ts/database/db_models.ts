@@ -184,6 +184,7 @@ const Energie = sequelize.define('energie', {
 });
 
 Energie.belongsTo(Article, { foreignKey: 'id' });
+Article.has(Energie, { foreignKey: 'id' });
 
 const Produit = sequelize.define('produit', {
   image: DataTypes.STRING(100),
@@ -195,6 +196,7 @@ const Produit = sequelize.define('produit', {
 });
 
 Produit.belongsTo(Article, { foreignKey: 'id' });
+Article.has(Produit, { foreignKey: 'id' });
 
 const Menu = sequelize.define('menu', {
   id: {
