@@ -181,7 +181,8 @@ export async function voirProduits(categorie: string): Promise<typeof Produit[]>
 
 // Voir les énergies
 export async function voirEnergies(): Promise<typeof Energie[]> {
-    return await Energie.findAll({ include: { model: Article } });
+    return await Energie.
+    ({ include: { model: Article } });
 }
 
 // Voir les réappros produit
