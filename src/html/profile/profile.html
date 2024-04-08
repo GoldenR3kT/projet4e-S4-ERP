@@ -2,8 +2,6 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/profile/profile.css">
         <title>Planergy</title>
@@ -26,7 +24,7 @@
                     <p id="nom" class="informations-utilisateur">Doe</p>
                     <div class="conteneur-rang">
                         <p>Rang</p>
-                    </div id="rang">
+                    </div>
                 </div>
     
                 <div id="informations-personnelles">
@@ -72,24 +70,7 @@
 
         <script src="/ts/nav/nav-call.js"></script>
         <script src="/ts/incidents/open-incidents.js"></script>
-        <script>
-            window.onload = function() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const formDataString = urlParams.get('formData');
-    
-                if (formDataString) {
-                    const decodedData = decodeURIComponent(formDataString);
-                    const formData = JSON.parse(decodedData);
-    
-                    // Remplissez les champs de profil avec les données reçues
-                    document.getElementById('nom').innerText = formData.nom;
-                    document.getElementById('prenom').innerText = formData.prenom;
-                    document.getElementById('email').innerText = formData.email;
-                    document.getElementById('telephone').innerText = formData.telephone;
-                    document.getElementById('adresse').innerText = formData.adresse;
-                }
-            }
-        </script>
+        <script src="/ts/profile/profile.js"> </script>
 
     </body>
 </html>
