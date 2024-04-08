@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
-exports.modifierEvenement = void 0;
+exports.voirFournisseurs = exports.modifierEvenement = void 0;
 const models = require("./db_models");
 const Sequelize = require('sequelize');
 const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDePaiement, Paiement, Article, Energie, Produit, Menu, ProduitMenu, Pompe, Mouvement, Carte, CM, CCE, GestionCce, Bonus, CceBonus, Employe, Periode, ActiviteEdt, Promo, Evenement, Incident, SolutionIncident, Aide, AchatClient, Reappro } = models;
@@ -268,9 +268,9 @@ function modifierArticle(idArticle, nouvellesValeurs) {
 }
 exports.modifierArticle = modifierArticle;
 // Lancer un réappro
-function lancerReappro(idArticle, quantite) {
+function lancerReappro(date, totalHT, TVA, idArticle, quantite) {
     return __awaiter(this, void 0, void 0, function* () {
-        const transaction = yield Transaction.create({});
+        const transaction = yield Transaction.create({ date, totalHT, TVA });
         yield Mouvement.create({ article_id: idArticle, transaction_id: transaction.id, quantite });
         yield Reappro.create({ id_transaction: transaction.id });
     });
@@ -437,3 +437,9 @@ function modifierEvenement(idPeriode, nouvelIntitule) {
     });
 }
 exports.modifierEvenement = modifierEvenement;
+function voirFournisseurs() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield Fournisseur.findAll();
+    });
+}
+exports.voirFournisseurs = voirFournisseurs;

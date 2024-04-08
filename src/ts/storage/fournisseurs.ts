@@ -62,10 +62,27 @@ function modifierProfil(nom: string, adresse: string, email: string): void {
     profilBtn.textContent = "Modifier profil";
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    for (let i = 0; i < 20; i++) {
-        ajouterFournisseur("Fournisseur" + i, "Adresse " + i, "email" + i + "@gmail.com");
+async function initFournisseurs() {
+    // Effacer la liste des fournisseurs avant de les charger à nouveau
+    const listeFournisseurs = document.getElementById("liste-fournisseurs");
+    if (listeFournisseurs) {
+        listeFournisseurs.innerHTML = "";
     }
+
+    // Récupérer les données des fournisseurs depuis l'API
+    const response = await fetch(`/voirFournisseurs`);
+    const fournisseurs = await response.json();
+    console.log(fournisseurs);
+
+    // Parcourir les données des fournisseurs et les ajouter à la liste
+    fournisseurs.forEach((fournisseur: { nom: string, adresse: string, email: string }) => {
+        ajouterFournisseur(fournisseur.nom, fournisseur.adresse, fournisseur.email);
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    initFournisseurs()
 
     const btnAjouter = document.getElementById("btn_ajouter") as HTMLButtonElement;
     const nomInput = document.getElementById("nom") as HTMLInputElement;

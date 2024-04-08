@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
-import { exec } from 'child_process';
+import {exec} from 'child_process';
 import {Sequelize} from "sequelize";
 
 const app = express();
@@ -16,7 +16,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use('/css', express.static(cssPath));
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 //Parser JSON
 app.use(express.json());
@@ -25,21 +25,21 @@ app.use(express.json());
 const tsPath = path.join(__dirname, 'src', 'ts');
 app.use('/ts', express.static(tsPath));
 
-  // Route to handle JavaScript file requests
-  app.get('/ts/:dir/:file', (req, res) => {
-    const { dir, file } = req.params;
+// Route to handle JavaScript file requests
+app.get('/ts/:dir/:file', (req, res) => {
+    const {dir, file} = req.params;
     const jsFilePath = path.join(__dirname, 'src', 'js', dir, `${file}.js`);
 
     // Check if the JavaScript file exists
     fs.access(jsFilePath, fs.constants.F_OK, (err) => {
-      if (err) {
-        res.status(404).send('File not found');
-        return;
-      }
-      // Serve the compiled JavaScript file
-      res.sendFile(jsFilePath);
+        if (err) {
+            res.status(404).send('File not found');
+            return;
+        }
+        // Serve the compiled JavaScript file
+        res.sendFile(jsFilePath);
     });
-  });
+});
 
 //dossier des vues à utiliser
 app.set('views', htmlPath);
@@ -71,7 +71,6 @@ app.get('/cash_desk/invoicelist', (req, res) => {
 app.get('/cash_desk/transaction', (req, res) => {
     res.sendFile(path.join(htmlPath, 'cash_desk', 'transaction-history.html'));
 });
-
 
 
 //CUSTOMER/CARDS
@@ -141,17 +140,16 @@ app.get('/storage/fournisseurs', (req, res) => {
 });
 
 
-
 //TEMPORARY
 app.get('/topbar', (req, res) => {
     res.sendFile(path.join(htmlPath, 'top-bar.html'));
 });
 
-app.get('/navigation', (req, res) =>{
+app.get('/navigation', (req, res) => {
     res.sendFile(path.join(htmlPath, 'navigation.html'))
 });
 
-app.get('/topbar-incidents', (req, res) =>{
+app.get('/topbar-incidents', (req, res) => {
     res.sendFile(path.join(htmlPath, 'top-bar-incidents.html'))
 });
 
@@ -159,8 +157,6 @@ app.get('/topbar-incidents', (req, res) =>{
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
 });
-
-
 
 
 //API DB
@@ -171,16 +167,15 @@ import {addAbortSignal} from "node:stream";
 app.post('/seConnecter', async (req, res) => {
     const alias = req.body.alias;
     try {
-      const mdp = await db.seConnecter(alias);
-      if(mdp === req.body.password){
-        res.redirect('/cash_desk');
-      }
-      else{
-        res.status(401).send({ error: 'Mot de passe incorrect' });
-      }
+        const mdp = await db.seConnecter(alias);
+        if (mdp === req.body.password) {
+            res.redirect('/cash_desk');
+        } else {
+            res.status(401).send({error: 'Mot de passe incorrect'});
+        }
 
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
 });
 
@@ -190,115 +185,115 @@ app.put('/modifierMotDePasse', async (req, res) => {
     const alias = req.body.alias;
     const nouveauMotDePasse = req.body.nouveauMotDePasse;
     try {
-      await db.modifierMotDePasse(alias, nouveauMotDePasse);
-      res.send({ message: 'Mot de passe modifié avec succès' });
+        await db.modifierMotDePasse(alias, nouveauMotDePasse);
+        res.send({message: 'Mot de passe modifié avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les infos
-  app.get('/voirInfosEmployeProfil/:idEmploye', async (req, res) => {
+// Voir les infos
+app.get('/voirInfosEmployeProfil/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
     try {
-      const employe = await db.voirInfosEmployeProfil(idEmploye);
-      res.send(employe);
+        const employe = await db.voirInfosEmployeProfil(idEmploye);
+        res.send(employe);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Modif infos
-  app.put('/modifierInfosEmployeProfil', async (req, res) => {
+// Modif infos
+app.put('/modifierInfosEmployeProfil', async (req, res) => {
     const idEmploye = req.body.idEmploye;
     const colonne = req.body.colonne;
     const nouvelleValeur = req.body.nouvelleValeur;
     try {
-      await db.modifierInfosEmployeProfil(idEmploye, colonne, nouvelleValeur);
-      res.send({ message: 'Informations modifiées avec succès' });
+        await db.modifierInfosEmployeProfil(idEmploye, colonne, nouvelleValeur);
+        res.send({message: 'Informations modifiées avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir edt
-  app.get('/voirEdtProfil/:idEmploye', async (req, res) => {
+// Voir edt
+app.get('/voirEdtProfil/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
     try {
-      const edt = await db.voirEdtProfil(idEmploye);
-      res.send(edt);
+        const edt = await db.voirEdtProfil(idEmploye);
+        res.send(edt);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les aides
-  app.get('/voirAides', async (req, res) => {
+// Voir les aides
+app.get('/voirAides', async (req, res) => {
     try {
-      const aides = await db.voirAides();
-      res.send(aides);
+        const aides = await db.voirAides();
+        res.send(aides);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir une aide
-  app.get('/voirAide/:idAide', async (req, res) => {
+// Voir une aide
+app.get('/voirAide/:idAide', async (req, res) => {
     const idAide = +req.params.idAide;
     try {
-      const aide = await db.voirAide(idAide);
-      res.send(aide);
+        const aide = await db.voirAide(idAide);
+        res.send(aide);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Rédiger une aide
-  app.post('/redigerAide', async (req, res) => {
+// Rédiger une aide
+app.post('/redigerAide', async (req, res) => {
     const titre = req.body.titre;
     const corps = req.body.corps;
     const categorie = req.body.categorie;
     try {
-      await db.redigerAide(titre, corps, categorie);
-      res.send({ message: 'Aide rédigée avec succès' });
+        await db.redigerAide(titre, corps, categorie);
+        res.send({message: 'Aide rédigée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Supprimer une aide
-  app.delete('/supprimerAide/:idAide', async (req, res) => {
+// Supprimer une aide
+app.delete('/supprimerAide/:idAide', async (req, res) => {
     const idAide = +req.params.idAide;
     try {
-      await db.supprimerAide(idAide);
-      res.send({ message: 'Aide supprimée avec succès' });
+        await db.supprimerAide(idAide);
+        res.send({message: 'Aide supprimée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
 // Voir les derniers incidents (non réglés)
 app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
     try {
-      const incidents = await db.voirDerniersIncidentsNonRegles();
-      res.send(incidents);
+        const incidents = await db.voirDerniersIncidentsNonRegles();
+        res.send(incidents);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
-
-  // Voir les derniers incidents (réglés)
-app.get('/voirDerniersIncidentsRegles', async (req, res) => {
-  try {
-    const incidents = await db.voirDerniersIncidentsRegles();
-    res.send(incidents);
-  } catch (error) {
-    res.status(500).send({ error: 'Une erreur est survenue' });
-  }
 });
 
-  // Déclarer un incident
-  app.post('/declarerIncident', async (req, res) => {
+// Voir les derniers incidents (réglés)
+app.get('/voirDerniersIncidentsRegles', async (req, res) => {
+    try {
+        const incidents = await db.voirDerniersIncidentsRegles();
+        res.send(incidents);
+    } catch (error) {
+        res.status(500).send({error: 'Une erreur est survenue'});
+    }
+});
+
+// Déclarer un incident
+app.post('/declarerIncident', async (req, res) => {
     const nom = req.body.nom;
     const description = req.body.description;
     const niveau = req.body.niveau;
@@ -306,75 +301,75 @@ app.get('/voirDerniersIncidentsRegles', async (req, res) => {
     const date = req.body.date;
     const heure = req.body.heure;
     try {
-      await db.declarerIncident(nom, description, niveau, idEmploye, date, heure);
-      res.send({ message: 'Incident déclaré avec succès' });
+        await db.declarerIncident(nom, description, niveau, idEmploye, date, heure);
+        res.send({message: 'Incident déclaré avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Gérer un incident
-  app.post('/gererIncident', async (req, res) => {
+// Gérer un incident
+app.post('/gererIncident', async (req, res) => {
     const id_incident = req.body.id_incident;
     const description = req.body.description;
     const idEmploye = req.body.idEmploye;
     const date = req.body.date;
     const heure = req.body.heure;
     try {
-      await db.gererIncident(id_incident, description, idEmploye, date, heure);
-      res.send({ message: 'Incident géré avec succès' });
+        await db.gererIncident(id_incident, description, idEmploye, date, heure);
+        res.send({message: 'Incident géré avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir tout les incidents
-  app.get('/voirTousIncidents', async (req, res) => {
+// Voir tout les incidents
+app.get('/voirTousIncidents', async (req, res) => {
     try {
-      const incidents = await db.voirTousIncidents();
-      res.send(incidents);
+        const incidents = await db.voirTousIncidents();
+        res.send(incidents);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les détails d'un incident
-  app.get('/voirDetailsIncident/:idIncident', async (req, res) => {
+// Voir les détails d'un incident
+app.get('/voirDetailsIncident/:idIncident', async (req, res) => {
     const idIncident = +req.params.idIncident;
     try {
-      const incident = await db.voirDetailsIncident(idIncident);
-      res.send(incident);
+        const incident = await db.voirDetailsIncident(idIncident);
+        res.send(incident);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // CAISSE
+// CAISSE
 
-  // Encaisser
-  app.post('/encaisser', async (req, res) => {
+// Encaisser
+app.post('/encaisser', async (req, res) => {
     const date = req.body.date;
     const totalHT = req.body.totalHT;
     const TVA = req.body.TVA;
     const idArticles = req.body.idArticles;
     const quantites = req.body.quantites;
     try {
-      await db.encaisser(date, totalHT, TVA, idArticles, quantites);
-      res.send({ message: 'Encaissement effectué avec succès' });
+        await db.encaisser(date, totalHT, TVA, idArticles, quantites);
+        res.send({message: 'Encaissement effectué avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
 
-  // Récuperer Pompe
+// Récuperer Pompe
 
 app.get('/getPump', async (req, res) => {
     try {
-      const pompes = await db.recupererPompe();
-      res.send(pompes);
+        const pompes = await db.recupererPompe();
+        res.send(pompes);
     } catch (error) {
-      res.status(500).send({error: 'Une erreur est survenue'});
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
 });
 
@@ -384,10 +379,10 @@ app.put('/changerEtatPompe', async (req, res) => {
     const idPompe = req.body.idPompe;
     const etat = req.body.etat;
     try {
-      await db.changerEtatPompe(idPompe, etat);
-      res.send({ message: 'Etat de la pompe modifié avec succès' });
+        await db.changerEtatPompe(idPompe, etat);
+        res.send({message: 'Etat de la pompe modifié avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
 
 });
@@ -397,8 +392,8 @@ app.put('/changerEtatPompe', async (req, res) => {
 
 app.get('/getMemberCard', async (req, res) => {
     try {
-      const carte = await db.recupererCarteMembre();
-      res.send(carte);
+        const carte = await db.recupererCarteMembre();
+        res.send(carte);
     } catch (error) {
         res.status(500).send({error: 'Une erreur est survenue'});
     }
@@ -408,239 +403,239 @@ app.get('/getMemberCard', async (req, res) => {
 
 app.get('/getCardCCE', async (req, res) => {
     try {
-      const cce = await db.recupererCarteCCE();
-      res.send(cce);
+        const cce = await db.recupererCarteCCE();
+        res.send(cce);
     } catch (error) {
         res.status(500).send({error: 'Une erreur est survenue'});
     }
 });
 
-  // Enregistrer un paiement
-  app.post('/enregistrerPaiement', async (req, res) => {
+// Enregistrer un paiement
+app.post('/enregistrerPaiement', async (req, res) => {
     const montant = req.body.montant;
     const idTransaction = req.body.idTransaction;
     const idMoyenDePaiement = req.body.idMoyenDePaiement;
     const numCarte = req.body.numCarte;
     try {
-      await db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte);
-      res.send({ message: 'Paiement enregistré avec succès' });
+        await db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte);
+        res.send({message: 'Paiement enregistré avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
 // Voir historique des transactions
 app.get('/voirHistoriqueTransactions', async (req, res) => {
     try {
-      const transactions = await db.voirHistoriqueTransactions();
-      res.send(transactions);
+        const transactions = await db.voirHistoriqueTransactions();
+        res.send(transactions);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log(error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir le détail d'une transaction
-  app.get('/voirDetailTransaction/:idTransaction', async (req, res) => {
+// Voir le détail d'une transaction
+app.get('/voirDetailTransaction/:idTransaction', async (req, res) => {
     const idTransaction = +req.params.idTransaction;
     try {
-      const transaction = await db.voirDetailTransaction(idTransaction);
-      res.send(transaction);
+        const transaction = await db.voirDetailTransaction(idTransaction);
+        res.send(transaction);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // STOCKAGE
+// STOCKAGE
 
 app.get('/voirArticles', async (req, res) => {
-  try {
-    const produits = await db.voirArticles();
-    res.send(produits);
-  } catch (error) {
-    res.status(500).send({ error: 'Une erreur est survenue' });
-  }
+    try {
+        const produits = await db.voirArticles();
+        res.send(produits);
+    } catch (error) {
+        res.status(500).send({error: 'Une erreur est survenue'});
+    }
 });
 
 
-  // Voir les produits
-  app.get('/voirProduits/:categorie', async (req, res) => {
+// Voir les produits
+app.get('/voirProduits/:categorie', async (req, res) => {
     const categorie = req.params.categorie;
     try {
-      const produits = await db.voirProduits(categorie);
-      res.send(produits);
+        const produits = await db.voirProduits(categorie);
+        res.send(produits);
     } catch (error) {
-      console.log('voirProduits' + error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log('voirProduits' + error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les énergies
-  app.get('/voirEnergies', async (req, res) => {
+// Voir les énergies
+app.get('/voirEnergies', async (req, res) => {
     try {
-      const energies = await db.voirEnergies();
-      res.send(energies);
+        const energies = await db.voirEnergies();
+        res.send(energies);
     } catch (error) {
-      console.log('voirEnergies' + error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log('voirEnergies' + error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les réappros produit
-  app.get('/voirReapproProduit/:categorie', async (req, res) => {
+// Voir les réappros produit
+app.get('/voirReapproProduit/:categorie', async (req, res) => {
     const categorie = req.params.categorie;
     try {
-      const reappros = await db.voirReapproProduit(categorie);
-      res.send(reappros);
+        const reappros = await db.voirReapproProduit(categorie);
+        res.send(reappros);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log(error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les réappros énergie
-  app.get('/voirReapproEnergie', async (req, res) => {
+// Voir les réappros énergie
+app.get('/voirReapproEnergie', async (req, res) => {
     try {
-      const reappros = await db.voirReapproEnergie();
-      res.send(reappros);
+        const reappros = await db.voirReapproEnergie();
+        res.send(reappros);
     } catch (error) {
-        console.log('voirReapproEnergie'+error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log('voirReapproEnergie' + error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Modifier un article
-  app.put('/modifierArticle', async (req, res) => {
+// Modifier un article
+app.put('/modifierArticle', async (req, res) => {
     const idArticle = req.body.idArticle;
     const nouvellesValeurs = req.body.nouvellesValeurs;
     try {
-      await db.modifierArticle(idArticle, nouvellesValeurs);
-      res.send({ message: 'Article modifié avec succès' });
+        await db.modifierArticle(idArticle, nouvellesValeurs);
+        res.send({message: 'Article modifié avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Lancer un réappro
-  app.post('/lancerReappro', async (req, res) => {
+// Lancer un réappro
+app.post('/lancerReappro', async (req, res) => {
     const date = req.body.date;
     const totalHT = req.body.totalHT;
     const TVA = req.body.TVA;
     const idArticle = req.body.idArticle;
     const quantite = req.body.quantite;
     try {
-      await db.lancerReappro(date, totalHT, TVA, idArticle, quantite);
-      res.send({ message: 'Réappro lancé avec succès' });
+        await db.lancerReappro(date, totalHT, TVA, idArticle, quantite);
+        res.send({message: 'Réappro lancé avec succès'});
     } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log(error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Annuler un réappro
-  app.delete('/annulerReappro/:idReappro', async (req, res) => {
+// Annuler un réappro
+app.delete('/annulerReappro/:idReappro', async (req, res) => {
     const idReappro = +req.params.idReappro;
     try {
-      await db.annulerReappro(idReappro);
-      res.send({ message: 'Réappro annulé avec succès' });
+        await db.annulerReappro(idReappro);
+        res.send({message: 'Réappro annulé avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
 // Enregistrer la réception d'un réappro
 app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
     const idReappro = +req.params.idReappro;
     try {
-      await db.enregistrerReceptionReappro(idReappro);
-      res.send({ message: 'Réception du réappro enregistrée avec succès' });
+        await db.enregistrerReceptionReappro(idReappro);
+        res.send({message: 'Réception du réappro enregistrée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // RESSOURCES HUMAINES
+// RESSOURCES HUMAINES
 
-  // Voir tout les employés
-  app.get('/voirTousEmployes', async (req, res) => {
+// Voir tout les employés
+app.get('/voirTousEmployes', async (req, res) => {
     try {
-      const employes = await db.voirTousEmployes();
-      res.send(employes);
+        const employes = await db.voirTousEmployes();
+        res.send(employes);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les infos
-  app.get('/voirInfosEmploye/:idEmploye', async (req, res) => {
+// Voir les infos
+app.get('/voirInfosEmploye/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
     try {
-      const employe = await db.voirInfosEmploye(idEmploye);
-      res.send(employe);
+        const employe = await db.voirInfosEmploye(idEmploye);
+        res.send(employe);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log(error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Modif infos
-  app.put('/modifierInfosEmploye', async (req, res) => {
+// Modif infos
+app.put('/modifierInfosEmploye', async (req, res) => {
     const idEmploye = req.body.idEmploye;
     const nouvellesInfos = req.body.nouvellesInfos;
     try {
-      await db.modifierInfosEmploye(idEmploye, nouvellesInfos);
-      res.send({ message: 'Informations de l\'employé modifiées avec succès' });
+        await db.modifierInfosEmploye(idEmploye, nouvellesInfos);
+        res.send({message: 'Informations de l\'employé modifiées avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir edt
-  app.get('/voirEdt/:idEmploye', async (req, res) => {
+// Voir edt
+app.get('/voirEdt/:idEmploye', async (req, res) => {
     const idEmploye = +req.params.idEmploye;
     try {
-      const edt = await db.voirEdt(idEmploye);
-      res.send(edt);
+        const edt = await db.voirEdt(idEmploye);
+        res.send(edt);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Modif edt
-  app.put('/modifierEdt', async (req, res) => {
+// Modif edt
+app.put('/modifierEdt', async (req, res) => {
     const idPeriode = req.body.idPeriode;
     const nouvellesValeurs = req.body.nouvellesValeurs;
     try {
-      await db.modifierEdt(idPeriode, nouvellesValeurs);
-      res.send({ message: 'EDT modifié avec succès' });
+        await db.modifierEdt(idPeriode, nouvellesValeurs);
+        res.send({message: 'EDT modifié avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // CLIENT / CARTE
+// CLIENT / CARTE
 
-  // Voir les clients
-  app.get('/voirClients', async (req, res) => {
+// Voir les clients
+app.get('/voirClients', async (req, res) => {
     try {
-      const clients = await db.voirClients();
-      res.send(clients);
+        const clients = await db.voirClients();
+        res.send(clients);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        console.log(error);
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les détails d'un client
-  app.get('/voirDetailsClient/:idClient', async (req, res) => {
+// Voir les détails d'un client
+app.get('/voirDetailsClient/:idClient', async (req, res) => {
     const idClient = +req.params.idClient;
     try {
-      const client = await db.voirDetailsClient(idClient);
-      res.send(client);
+        const client = await db.voirDetailsClient(idClient);
+        res.send(client);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
 // Créer un client
 app.post('/creerClient', async (req, res) => {
@@ -652,141 +647,149 @@ app.post('/creerClient', async (req, res) => {
     const codePostal = req.body.codePostal;
     const pays = req.body.pays;
     try {
-      await db.creerClient(nom, prenom, courriel, tel, adresse, codePostal, pays);
-      res.send({ message: 'Client créé avec succès' });
+        await db.creerClient(nom, prenom, courriel, tel, adresse, codePostal, pays);
+        res.send({message: 'Client créé avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Ajouter une carte
-  app.post('/ajouterCarte', async (req, res) => {
+// Ajouter une carte
+app.post('/ajouterCarte', async (req, res) => {
     const idClient = req.body.idClient;
     try {
-      await db.ajouterCarte(idClient);
-      res.send({ message: 'Carte ajoutée avec succès' });
+        await db.ajouterCarte(idClient);
+        res.send({message: 'Carte ajoutée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Supprimer un client
-  app.delete('/supprimerClient/:idClient', async (req, res) => {
+// Supprimer un client
+app.delete('/supprimerClient/:idClient', async (req, res) => {
     const idClient = +req.params.idClient;
     try {
-      await db.supprimerClient(idClient);
-      res.send({ message: 'Client supprimé avec succès' });
+        await db.supprimerClient(idClient);
+        res.send({message: 'Client supprimé avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Supprimer une carte
-  app.delete('/supprimerCarte/:numCarte', async (req, res) => {
+// Supprimer une carte
+app.delete('/supprimerCarte/:numCarte', async (req, res) => {
     const numCarte = +req.params.numCarte;
     try {
-      await db.supprimerCarte(numCarte);
-      res.send({ message: 'Carte supprimée avec succès' });
+        await db.supprimerCarte(numCarte);
+        res.send({message: 'Carte supprimée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Associer une carte à un client
-  app.put('/associerCarteClient', async (req, res) => {
+// Associer une carte à un client
+app.put('/associerCarteClient', async (req, res) => {
     const numCarte = req.body.numCarte;
     const idClient = req.body.idClient;
     try {
-      await db.associerCarteClient(numCarte, idClient);
-      res.send({ message: 'Carte associée au client avec succès' });
+        await db.associerCarteClient(numCarte, idClient);
+        res.send({message: 'Carte associée au client avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Modifier un client
-  app.put('/modifierClient', async (req, res) => {
+// Modifier un client
+app.put('/modifierClient', async (req, res) => {
     const idClient = req.body.idClient;
     const nouvellesInfos = req.body.nouvellesInfos;
     try {
-      await db.modifierClient(idClient, nouvellesInfos);
-      res.send({ message: 'Informations du client modifiées avec succès' });
+        await db.modifierClient(idClient, nouvellesInfos);
+        res.send({message: 'Informations du client modifiées avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // CALENDRIER
+// CALENDRIER
 
-  // Voir les promotions
-  app.get('/voirPromotions', async (req, res) => {
+// Voir les promotions
+app.get('/voirPromotions', async (req, res) => {
     try {
-      const promotions = await db.voirPromotions();
-      res.send(promotions);
+        const promotions = await db.voirPromotions();
+        res.send(promotions);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Voir les évènements
-  app.get('/voirEvenements', async (req, res) => {
+// Voir les évènements
+app.get('/voirEvenements', async (req, res) => {
     try {
-      const evenements = await db.voirEvenements();
-      res.send(evenements);
+        const evenements = await db.voirEvenements();
+        res.send(evenements);
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Créer une promotion
-  app.post('/creerPromotion', async (req, res) => {
+// Créer une promotion
+app.post('/creerPromotion', async (req, res) => {
     const debut = req.body.debut;
     const fin = req.body.fin;
     const valeur = req.body.valeur;
     const idArticle = req.body.idArticle;
     try {
-      await db.creerPromotion(debut, fin, valeur, idArticle);
-      res.send({ message: 'Promotion créée avec succès' });
+        await db.creerPromotion(debut, fin, valeur, idArticle);
+        res.send({message: 'Promotion créée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
 // Modifier une promotion
 app.put('/modifierPromotion', async (req, res) => {
     const idPeriode = req.body.idPeriode;
     const nouvelleValeur = req.body.nouvelleValeur;
     try {
-      await db.modifierPromotion(idPeriode, nouvelleValeur);
-      res.send({ message: 'Promotion modifiée avec succès' });
+        await db.modifierPromotion(idPeriode, nouvelleValeur);
+        res.send({message: 'Promotion modifiée avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Créer un évènement
-  app.post('/creerEvenement', async (req, res) => {
+// Créer un évènement
+app.post('/creerEvenement', async (req, res) => {
     const debut = req.body.debut;
     const fin = req.body.fin;
     const intitule = req.body.intitule;
     try {
-      await db.creerEvenement(debut, fin, intitule);
-      res.send({ message: 'Évènement créé avec succès' });
+        await db.creerEvenement(debut, fin, intitule);
+        res.send({message: 'Évènement créé avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-  // Modifier un évènement
-  app.put('/modifierEvenement', async (req, res) => {
+// Modifier un évènement
+app.put('/modifierEvenement', async (req, res) => {
     const idPeriode = req.body.idPeriode;
     const nouvelIntitule = req.body.nouvelIntitule;
     try {
-      await db.modifierEvenement(idPeriode, nouvelIntitule);
-      res.send({ message: 'Évènement modifié avec succès' });
+        await db.modifierEvenement(idPeriode, nouvelIntitule);
+        res.send({message: 'Évènement modifié avec succès'});
     } catch (error) {
-      res.status(500).send({ error: 'Une erreur est survenue' });
+        res.status(500).send({error: 'Une erreur est survenue'});
     }
-  });
+});
 
-
+app.get('/voirFournisseurs', async (req, res) => {
+    try {
+        const fournisseurs = await db.voirFournisseurs();
+        res.send(fournisseurs);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({error: 'Une erreur est survenue'});
+    }
+});

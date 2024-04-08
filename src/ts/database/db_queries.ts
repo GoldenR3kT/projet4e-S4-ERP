@@ -366,3 +366,8 @@ export async function creerEvenement(debut: Date, fin: Date, intitule: string): 
 export async function modifierEvenement(idPeriode: number, nouvelIntitule: string): Promise<void> {
     await Evenement.update({ intitule: nouvelIntitule }, { where: { periode_id: idPeriode } });
 }
+
+export async function voirFournisseurs(): Promise<typeof Fournisseur[]> {
+    return await Fournisseur.findAll();
+
+}

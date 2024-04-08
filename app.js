@@ -495,13 +495,17 @@ app.put('/modifierArticle', (req, res) => __awaiter(void 0, void 0, void 0, func
 }));
 // Lancer un réappro
 app.post('/lancerReappro', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const date = req.body.date;
+    const totalHT = req.body.totalHT;
+    const TVA = req.body.TVA;
     const idArticle = req.body.idArticle;
     const quantite = req.body.quantite;
     try {
-        yield db.lancerReappro(idArticle, quantite);
+        yield db.lancerReappro(date, totalHT, TVA, idArticle, quantite);
         res.send({ message: 'Réappro lancé avec succès' });
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
@@ -751,6 +755,16 @@ app.put('/modifierEvenement', (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.send({ message: 'Évènement modifié avec succès' });
     }
     catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
+app.get('/voirFournisseurs', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const fournisseurs = yield db.voirFournisseurs();
+        res.send(fournisseurs);
+    }
+    catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));

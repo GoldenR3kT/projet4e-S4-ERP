@@ -81,6 +81,15 @@ const Fournisseur = sequelize.define('fournisseur', {
   nom: {
     type: DataTypes.STRING(100),
     allowNull: false
+  },
+  adresse: {
+    type: DataTypes.STRING(255),
+    allowNull: false
+  },
+    email: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+
   }
 }, {
   foreignKeyConstraints: true,
