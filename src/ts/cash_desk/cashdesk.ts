@@ -36,21 +36,80 @@ async function searchProducts() {
                     const productPrice = document.createElement('p');
 
                     productName.textContent = produit.nom;
-                    productPrice.textContent = produit.prixHT + ' €';
+                    productPrice.textContent = produit.prixTTC + ' €';
                     productDiv.textContent = produit.nom;
                     buttonAdd.textContent = 'Ajouter';
-                    divNamePrice.appendChild(productName);
-                    divNamePrice.appendChild(productPrice);
 
                     divNamePrice.className = 'div-namePrice';
                     productDiv.className = 'product-div';
                     buttonAdd.className = 'add-product-button';
                     buttonAdd.addEventListener('click', () => {
                         const productToAdd = divNamePrice.cloneNode(true);
-                        totalPrice += produit.prixHT;
-                        total.textContent = totalPrice + ' €';
                         disableAllCheckboxes();
-                        productList?.appendChild(productToAdd);
+
+                        if (productName.textContent?.includes("Diesel") || productName.textContent?.includes("Sans Plomb") || productName.textContent?.includes("Electricite") || productName.textContent?.includes("Gaz")) {
+                            let toAskQEnergy = document.getElementById('toast-energy-quantity') as HTMLElement;
+                            toAskQEnergy.style.display = 'block';
+                            toAskQEnergy.style.zIndex = '1000';
+
+                            let previousPumpOkClickHandler: () => void
+                            let pumpOkClickHandler: () => void;
+
+
+                            let pumpOk = document.getElementById('toask-energy-button') as HTMLInputElement;
+
+
+                            pumpOkClickHandler = async () => {
+                                let energyInput = document.getElementById("quantity-energy") as HTMLInputElement;
+
+                                toAskQEnergy.style.display = 'none';
+                                toAskQEnergy.style.zIndex = '0';
+                                console.log(energyInput.value);
+
+                                let modifiedProductName = document.createElement('p');
+                                modifiedProductName.textContent = productName.textContent + " X " + energyInput.value;
+
+                                let newProductToAdd = document.createElement('div').cloneNode(true) as HTMLDivElement;
+                                newProductToAdd.className = 'product-div';
+                                newProductToAdd.appendChild(modifiedProductName);
+                                newProductToAdd.appendChild(productPrice);
+                                totalPrice += produit.prixTTC * parseInt(energyInput.value)
+                                total.textContent = totalPrice + ' €';
+                                productList?.appendChild(newProductToAdd);
+
+                                if (pumpOkClickHandler) {
+                                    pumpOk.removeEventListener('click', pumpOkClickHandler);
+                                }
+                            };
+
+                            pumpOk.addEventListener('click', pumpOkClickHandler);
+
+
+
+
+
+
+                            const pumpCancel = document.getElementById('toask-energy-cancel') as HTMLInputElement;
+                            pumpCancel.addEventListener('click', () => {
+                                toAskQEnergy.style.display = 'none';
+                                toAskQEnergy.style.zIndex = '0';
+                            });
+                        }
+                        else{
+                            totalPrice += produit.prixTTC;
+                            total.textContent = totalPrice + ' €';
+
+
+                            const newProductToAdd = document.createElement('div').cloneNode(true) as HTMLDivElement;
+                            const productNameClone = productName.cloneNode(true) as HTMLParagraphElement;
+                            const productPriceClone = productPrice.cloneNode(true) as HTMLParagraphElement;
+
+                            newProductToAdd.className = 'product-div';
+                            newProductToAdd.appendChild(productNameClone);
+                            newProductToAdd.appendChild(productPriceClone);
+                            productList?.appendChild(newProductToAdd);
+                        }
+
                     });
 
                     productDiv.appendChild(buttonAdd);
