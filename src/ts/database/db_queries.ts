@@ -101,6 +101,7 @@ export async function declarerIncident(nom: string, description: string, niveau:
 // Gérer un incident
 export async function gererIncident(id_incident: number, description: string, idEmploye: number, date: Date, heure: string): Promise<void> {
     await SolutionIncident.create({ id_incident: id_incident, desc: description, employe_id: idEmploye, date, heure });
+    await Incident.update({ en_cours: 0 }, { where: { incident_id: id_incident } });
 }
 
 // Voir tout les incidents
