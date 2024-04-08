@@ -188,7 +188,7 @@ export async function voirEnergies(): Promise<typeof Energie[]> {
 export async function voirReapproProduit(categorie: string): Promise<typeof Reappro[]> {
     return await Reappro.findAll({
         include: [
-            { model: Transaction, include: [{ model: Mouvement, include: { model: Produit, include: { model: Article, where: { catégorie: categorie } } } }] }
+            { model: Transaction, include: [{ model: Mouvement, include: { model: Article, include: { model: Produit, where: { catégorie: categorie } } } }] }
         ]
     });
 }
@@ -197,7 +197,7 @@ export async function voirReapproProduit(categorie: string): Promise<typeof Reap
 export async function voirReapproEnergie(): Promise<typeof Reappro[]> {
     return await Reappro.findAll({
         include: [
-            { model: Transaction, include: [{ model: Mouvement, include: { model: Energie, include: { model: Article} } }] }
+            { model: Transaction, include: [{ model: Mouvement, include: { model: Article, include: { model: Energie} } }] }
         ]
     });
 }

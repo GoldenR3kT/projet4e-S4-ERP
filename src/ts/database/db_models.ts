@@ -247,6 +247,7 @@ const Pompe = sequelize.define('pompe', {
 });
 
 Pompe.belongsTo(Energie, { foreignKey: 'id_energie' });
+Energie.hasMany(Pompe, { foreignKey: 'id_energie' });
 
 const Mouvement = sequelize.define('mouvement', {
   id: {
@@ -269,6 +270,7 @@ const Mouvement = sequelize.define('mouvement', {
 
 Mouvement.belongsTo(Article, { foreignKey: 'article_id' });
 Mouvement.belongsTo(Transaction, { foreignKey: 'transaction_id' });
+Article.belongsTo(Mouvement, { foreignKey: 'article_id' });
 Transaction.hasMany(Mouvement, { foreignKey: 'transaction_id' });
 
 const Carte = sequelize.define('carte', {
