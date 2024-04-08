@@ -175,10 +175,10 @@ export async function voirDetailTransaction(idTransaction: number): Promise<type
 
 export async function voirArticles(): Promise<typeof Article[]> {
     return await Article.findAll();
-
 }
+
 export async function voirProduits(categorie: string): Promise<typeof Produit[]> {
-    return await Produit.findAll({ include: { model: Article, where: { catégorie: categorie } } });
+    return await Produit.findAll({ include: { model: Article }, where: { catégorie: categorie } });
 }
 
 // Voir les énergies

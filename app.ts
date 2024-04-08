@@ -491,7 +491,7 @@ app.get('/voirArticles', async (req, res) => {
     const categorie = req.params.categorie;
     try {
       const reappros = await db.voirReapproProduit(categorie);
-      res.send('voirReapproProduit'+reappros);
+      res.send(reappros);
     } catch (error) {
       console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });

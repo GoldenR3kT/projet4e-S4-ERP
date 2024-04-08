@@ -173,6 +173,10 @@ const Article = sequelize.define('article', {
 });
 
 const Energie = sequelize.define('energie', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+  },
   unite: {
     type: DataTypes.STRING(20),
     allowNull: false
@@ -183,9 +187,14 @@ const Energie = sequelize.define('energie', {
   onDelete: 'CASCADE'
 });
 
-Energie.belongsTo(Article, { foreignKey: 'id' });
+Energie.belongsTo(Article, { foreignKey: { name: 'id', allowNull: false }, targetKey: 'id' });
+Article.hasOne(Energie, { foreignKey: 'id' });
 
 const Produit = sequelize.define('produit', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+  },
   image: DataTypes.STRING(100),
   catégorie: DataTypes.STRING(20)
 }, {
@@ -194,7 +203,8 @@ const Produit = sequelize.define('produit', {
   onDelete: 'CASCADE'
 });
 
-Produit.belongsTo(Article, { foreignKey: 'id' });
+Produit.belongsTo(Article, { foreignKey: { name: 'id', allowNull: false }, targetKey: 'id' });
+Article.hasOne(Produit, { foreignKey: 'id' });
 
 const Menu = sequelize.define('menu', {
   id: {
@@ -262,7 +272,7 @@ const Mouvement = sequelize.define('mouvement', {
 
 Mouvement.belongsTo(Article, { foreignKey: 'article_id' });
 Mouvement.belongsTo(Transaction, { foreignKey: 'transaction_id' });
-Article.belongsTo(Mouvement, { foreignKey: 'article_id' });
+Article.belongsTo(Mouvement, { foreignKey: 'id' });
 Transaction.hasMany(Mouvement, { foreignKey: 'transaction_id' });
 
 const Carte = sequelize.define('carte', {

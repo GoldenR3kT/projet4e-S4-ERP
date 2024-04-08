@@ -463,7 +463,7 @@ app.get('/voirReapproProduit/:categorie', (req, res) => __awaiter(void 0, void 0
     const categorie = req.params.categorie;
     try {
         const reappros = yield db.voirReapproProduit(categorie);
-        res.send('voirReapproProduit' + reappros);
+        res.send(reappros);
     }
     catch (error) {
         console.log(error);

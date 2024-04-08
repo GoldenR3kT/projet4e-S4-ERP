@@ -531,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rang = form.elements.namedItem("rang").value;
         // Créez un nouvel objet employé avec les valeurs du formulaire
         const newEmployee = {
-            id: employeesData.length + 1, // Générez un nouvel identifiant unique
+            id: employeesData.length + 1,
             nom: nom,
             prenom: prenom,
             tel: tel,

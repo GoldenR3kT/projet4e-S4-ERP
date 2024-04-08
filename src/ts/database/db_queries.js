@@ -196,7 +196,7 @@ function voirArticles() {
 exports.voirArticles = voirArticles;
 function voirProduits(categorie) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield Produit.findAll({ include: { model: Article, where: { catégorie: categorie } } });
+        return yield Produit.findAll({ include: { model: Article }, where: { catégorie: categorie } });
     });
 }
 exports.voirProduits = voirProduits;

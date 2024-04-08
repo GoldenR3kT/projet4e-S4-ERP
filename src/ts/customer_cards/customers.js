@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let newCustomer;
         if (!customer) {
             newCustomer = {
-                id: customersData.length + 1, // Générez un nouvel identifiant unique
+                id: customersData.length + 1,
                 nom: "",
                 prenom: "",
                 tel: "",
