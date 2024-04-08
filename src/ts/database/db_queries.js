@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
 exports.modifierEvenement = void 0;
 const models = require("./db_models");
+const Sequelize = require('sequelize');
 const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDePaiement, Paiement, Article, Energie, Produit, Menu, ProduitMenu, Pompe, Mouvement, Carte, CM, CCE, GestionCce, Bonus, CceBonus, Employe, Periode, ActiviteEdt, Promo, Evenement, Incident, SolutionIncident, Aide, AchatClient, Reappro } = models;
 // AUTHENTIFICATION
 // Se connecter
@@ -212,7 +213,37 @@ function voirReapproProduit(categorie) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield Reappro.findAll({
             include: [
-                { model: Transaction, include: [{ model: Mouvement, include: { model: Article, include: { model: Produit, where: { catégorie: categorie } } } }] }
+                {
+                    model: Transaction,
+                    include: [
+                        {
+                            model: Mouvement,
+                            include: [
+                                {
+                                    model: Article,
+                                    include: [
+                                        {
+                                            model: Produit,
+                                            where: {
+                                                catégorie: categorie
+                                            },
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    // Ajoutez cette condition pour filtrer les réappros correspondants
+                    where: Sequelize.literal(`EXISTS (
+                  SELECT 1
+                  FROM mouvement
+                  JOIN article ON mouvement.article_id = article.id
+                  JOIN produit ON article.id = produit.id
+                  WHERE reappro.id_transaction = transaction.id
+                  AND mouvement.transaction_id = transaction.id
+                  AND produit.catégorie = '${categorie}'
+                )`)
+                }
             ]
         });
     });
