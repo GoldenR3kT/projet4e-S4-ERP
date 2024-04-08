@@ -346,12 +346,13 @@ app.get('/getPump', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
-// Recuperer energie pompe
-app.get('/getEnergy/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = parseInt(req.params.id);
+// Changer etat pompe
+app.put('/changerEtatPompe', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idPompe = req.body.idPompe;
+    const etat = req.body.etat;
     try {
-        const energie = yield db.recupererEnergiePompe(id);
-        res.send(energie);
+        yield db.changerEtatPompe(idPompe, etat);
+        res.send({ message: 'Etat de la pompe modifié avec succès' });
     }
     catch (error) {
         res.status(500).send({ error: 'Une erreur est survenue' });

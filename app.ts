@@ -367,16 +367,18 @@ app.get('/getPump', async (req, res) => {
     }
 });
 
-// Recuperer energie pompe
+// Changer etat pompe
 
-app.get('/getEnergy/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
+app.put('/changerEtatPompe', async (req, res) => {
+    const idPompe = req.body.idPompe;
+    const etat = req.body.etat;
     try {
-      const energie = await db.recupererEnergiePompe(id);
-      res.send(energie);
+      await db.changerEtatPompe(idPompe, etat);
+      res.send({ message: 'Etat de la pompe modifié avec succès' });
     } catch (error) {
-      res.status(500).send({error: 'Une erreur est survenue'});
+      res.status(500).send({ error: 'Une erreur est survenue' });
     }
+
 });
 
 

@@ -360,37 +360,50 @@ div > button:hover{
     width: 100%;
 }
 
-.toast-middle-center {
-    background: #0FD274 !important;
-    border: #0FD274 !important;
-    color: #fff !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: auto !important;
-    max-width: 80% !important;
-}
-
-#toast-form {
-    background: #0FD274;
+#toask-pump {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: 35vh;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    background-color: #0FD274;
+    border: 1px solid black;
+    box-shadow: 0 0 10px #494949;
+    border-radius: 10px;
+    padding: 20px;
     text-align: center;
-    align-items: center;
+    z-index: 1001;
 }
 
-.button-container {
+#toast-pump-form {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 10vh;
 }
 
-#yes-button, #no-button {
-    margin: 0 10px;
+#label-toast{
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
 }
 
-.center-toast {
+
+
+#toast-pump-answer {
     display: flex;
     justify-content: center;
+    flex-direction: row;
     align-items: center;
-    background: #0FD274;
+    margin-top: 10vh;
+}
 
+#toast-pump-answer button {
+    margin: 10px;
+    width: 20vw;
+    height: 10vh;
 }

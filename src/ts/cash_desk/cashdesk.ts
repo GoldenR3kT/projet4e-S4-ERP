@@ -187,7 +187,7 @@ async function displayPumps() {
     const pumps = await getPumps();
 
     if (pumpScrollable) {
-        pumps.forEach((pump: any) => {
+        for (const pump of pumps) {
             const pumpDiv = document.createElement('div');
             const pumpName = document.createElement('div');
             const pumpEnergy = document.createElement('p');
@@ -201,33 +201,109 @@ async function displayPumps() {
                 pumpName.className = 'pump-name';
 
                 pumpEnergy.textContent = article.nom;
-                pumpQuantity.textContent = 'Quantite dispo : ' +article.quantite+'/'+ pump.stockage_max + energy.unite;
-                pumpStatut.textContent = 'Statut : ' + pump.statut;
+                pumpQuantity.textContent = 'Quantite dispo : ' + article.quantite + '/' + pump.stockage_max + energy.unite;
 
+                // Gérer le cas où la quantité est nulle
+                if (article.quantite === 0) {
+                    pumpStatut.textContent = 'Statut : Indisponible';
+                    pumpDiv.style.backgroundColor = 'red';
+                    pumpName.style.backgroundColor = 'red';
 
+                    // Fonction asynchrone pour mettre à jour l'état dans la base de données
+                    const updateState = async () => {
+                        try {
+                            const response = await fetch('/changerEtatPompe', {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    idPompe: pump.id,
+                                    etat: 'Indisponible'
+                                })
+                            });
+                            const data = await response.json();
+                            console.log(data.message);
+                        } catch (error) {
+                            console.error('Une erreur est survenue lors de la mise à jour de l\'état de la pompe:', error);
+                        }
+                    };
 
+                    await updateState(); // Appel de la fonction pour mettre à jour l'état dans la base de données
+                } else {
+                    pumpStatut.textContent = 'Statut : ' + pump.statut;
+                }
 
                 pumpDiv.appendChild(pumpName);
                 pumpDiv.appendChild(pumpEnergy);
                 pumpDiv.appendChild(pumpQuantity);
                 pumpDiv.appendChild(pumpStatut);
                 pumpDiv.className = 'pump-div';
+
                 pumpDiv.addEventListener('click', () => {
                     document.querySelectorAll('.pump-div').forEach((element) => {
                         element.classList.remove('selected');
                     });
+                    document.querySelectorAll('.pump-name').forEach((element) => {
+                        element.classList.remove('selected');
+                    });
                     pumpDiv.classList.add('selected');
+                    pumpName.classList.add('selected');
+                    const toAskPump = document.getElementById('toask-pump') as HTMLElement;
+                    toAskPump.style.display = 'block';
+                    toAskPump.style.zIndex = '1000';
+
+                    const pumpOk = document.getElementById('toask-pump-button') as HTMLInputElement;
+                    pumpOk.addEventListener('click', async () => {
+                        try {
+                            let newEtat;
+                            if (pump.statut === 'Prêt à l\'emploi') {
+                                newEtat = 'En cours d util.';
+                            } else {
+                                newEtat = 'Prêt à l\'emploi';
+                            }
+                            const response = await fetch('/changerEtatPompe', {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    idPompe: pump.id,
+                                    etat: newEtat
+                                })
+                            });
+                            const data = await response.json();
+                            console.log(data.message);
+                            toAskPump.style.display = 'none';
+                            toAskPump.style.zIndex = '0';
+                            pump.statut = newEtat;
+                            pumpStatut.textContent = 'Statut : ' + pump.statut;
+                            pumpDiv.classList.remove('selected');
+                            pumpName.classList.remove('selected');
+                        } catch (error) {
+                            console.error('Une erreur est survenue:', error);
+                        }
+                    });
+
+                    const pumpCancel = document.getElementById('toask-pump-cancel') as HTMLInputElement;
+                    pumpCancel.addEventListener('click', () => {
+                        toAskPump.style.display = 'none';
+                        toAskPump.style.zIndex = '0';
+                        pumpDiv.classList.remove('selected');
+                    });
                 });
 
                 pumpScrollable.appendChild(pumpDiv);
             } else {
                 console.error('Article not found for pump:', pump);
             }
-        });
+        }
     } else {
         console.error('Element with ID "pumps-station-scrollable" not found.');
     }
 }
+
+
 
 displayPumps();
 

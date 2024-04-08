@@ -129,9 +129,11 @@ export async function encaisser(date: Date, totalHT: number, TVA: number, idArti
 export async function recupererPompe(): Promise<typeof Pompe[]> {
     return await Pompe.findAll();
 }
-// Recuperer Energie Pompe
-export async function recupererEnergiePompe(idPompe: number): Promise<typeof Pompe | null> {
-    return await Pompe.findByPk(idPompe, { include: { model: Energie } });
+
+// changer etat pompe
+
+export async function changerEtatPompe(idPompe: number, statut: string): Promise<void> {
+    await Pompe.update({ statut }, { where: { id: idPompe } });
 }
 
 //recuperer carteM
