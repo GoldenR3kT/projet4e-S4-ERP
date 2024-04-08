@@ -260,8 +260,8 @@ const Mouvement = sequelize.define('mouvement', {
   onDelete: 'CASCADE'
 });
 
-Mouvement.belongsTo(Article, { foreignKey: 'id_client' });
-Mouvement.belongsTo(Transaction, { foreignKey: 'id_transaction' });
+Mouvement.belongsTo(Article, { foreignKey: 'article_id' });
+Mouvement.belongsTo(Transaction, { foreignKey: 'transaction_id' });
 
 const Carte = sequelize.define('carte', {
   num: {
