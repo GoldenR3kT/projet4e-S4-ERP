@@ -253,7 +253,13 @@ const Mouvement = sequelize.define('mouvement', {
     primaryKey: true,
     autoIncrement: true
   },
-  quantite: DataTypes.INTEGER
+  quantite: DataTypes.INTEGER,
+  article_id: {
+    type: DataTypes.INTEGER
+  },
+  transaction_id: {
+    type: DataTypes.INTEGER
+  }
 }, {
   foreignKeyConstraints: true,
   onUpdate: 'CASCADE',

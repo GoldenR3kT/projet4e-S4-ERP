@@ -233,7 +233,7 @@ export async function voirTousEmployes(): Promise<typeof Employe[]> {
 
 // Voir les infos
 export async function voirInfosEmploye(idEmploye: number): Promise<typeof Employe | null> {
-    return await Employe.findByPk(idEmploye, { include: [Personne, Contact] });
+    return await Employe.findByPk(idEmploye, { include: [Personne, Partenaire, Contact] });
 }
 
 // Modif infos
