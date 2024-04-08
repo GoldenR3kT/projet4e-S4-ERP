@@ -288,7 +288,7 @@ app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
   });
 
   // Voir les derniers incidents (réglés)
-app.get('/voirDerniersIncidentsNonRegles', async (req, res) => {
+app.get('/voirDerniersIncidentsRegles', async (req, res) => {
   try {
     const incidents = await db.voirDerniersIncidentsRegles();
     res.send(incidents);

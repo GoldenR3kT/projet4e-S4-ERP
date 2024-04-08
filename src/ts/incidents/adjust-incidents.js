@@ -58,8 +58,12 @@ if (adjustButton) {
         return __awaiter(this, void 0, void 0, function* () {
             const solutionInput = document.getElementById("solution");
             const solution = solutionInput ? solutionInput.value : '';
+            console.log("incidentId", incidentId);
+            console.log("solution", solution);
+            console.log("getCurrentDate2", getCurrentDate2());
+            console.log("getCurrentTime2", getCurrentTime2());
             const requestBody = {
-                idIncident: incidentId,
+                id_incident: incidentId,
                 description: solution,
                 idEmploye: 1,
                 date: getCurrentDate2(),
@@ -74,7 +78,7 @@ if (adjustButton) {
                     body: JSON.stringify(requestBody)
                 });
                 if (response.ok) {
-                    redirectionIncidents();
+                    redirectionAnnounce2();
                 }
                 else {
                     console.error("Une erreur s'est produite lors de la gestion de l'incident :", response.status);

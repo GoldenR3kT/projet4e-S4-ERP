@@ -97,13 +97,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 document.addEventListener("DOMContentLoaded", async function() {
     try {
-        const response = await fetch('/voirTousIncidents');
-        const incidents: Incident[] = await response.json(); // Utilisation de l'interface Incident
-
-        const incidentsRegles = incidents.filter(incident => incident.regle === true);
+        const response = await fetch('/voirDerniersIncidentsRegles');
+        const incidents: Incident[] = await response.json();
 
         // Parcourir les incidents récupérés
-        incidentsRegles.forEach(incident => {
+        incidents.forEach(incident => {
             const nomEmploye: string = incident.nom;
             const heure: string = incident.heure;
             const libelle: string = incident.niveau;
