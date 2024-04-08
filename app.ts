@@ -523,10 +523,13 @@ app.get('/voirArticles', async (req, res) => {
 
   // Lancer un réappro
   app.post('/lancerReappro', async (req, res) => {
+    const date = req.body.date;
+    const totalHT = req.body.totalHT;
+    const TVA = req.body.TVA;
     const idArticle = req.body.idArticle;
     const quantite = req.body.quantite;
     try {
-      await db.lancerReappro(idArticle, quantite);
+      await db.lancerReappro(date, totalHT, TVA, idArticle, quantite);
       res.send({ message: 'Réappro lancé avec succès' });
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });

@@ -242,8 +242,8 @@ export async function modifierArticle(idArticle: number, nouvellesValeurs: Parti
 }
 
 // Lancer un réappro
-export async function lancerReappro(idArticle: number, quantite: number): Promise<void> {
-    const transaction = await Transaction.create({});
+export async function lancerReappro(date: Date, totalHT: number, TVA: number, idArticle: number, quantite: number): Promise<void> {
+    const transaction = await Transaction.create({ date, totalHT, TVA });
     await Mouvement.create({ article_id: idArticle, transaction_id: transaction.id, quantite });
     await Reappro.create({ id_transaction: transaction.id });
 }
