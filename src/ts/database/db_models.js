@@ -44,6 +44,7 @@ const Personne = sequelize.define('personne', {
     onDelete: 'CASCADE'
 });
 Personne.belongsTo(Partenaire, { foreignKey: 'id' });
+Partenaire.belongsTo(Personne, { foreignKey: 'id' });
 const Contact = sequelize.define('contact', {
     partenaire_id: {
         type: DataTypes.INTEGER,
@@ -63,6 +64,7 @@ const Contact = sequelize.define('contact', {
     onDelete: 'CASCADE'
 });
 Contact.belongsTo(Partenaire, { foreignKey: 'partenaire_id' });
+Partenaire.hasOne(Contact, { foreignKey: 'partenaire_id' });
 const Fournisseur = sequelize.define('fournisseur', {
     id: {
         type: DataTypes.INTEGER,
@@ -78,6 +80,7 @@ const Fournisseur = sequelize.define('fournisseur', {
     onDelete: 'CASCADE'
 });
 Fournisseur.belongsTo(Partenaire, { foreignKey: 'id' });
+Partenaire.hasOne(Fournisseur, { foreignKey: 'id' });
 const Client = sequelize.define('client', {
     id: {
         type: DataTypes.INTEGER,
@@ -89,6 +92,7 @@ const Client = sequelize.define('client', {
     onDelete: 'CASCADE'
 });
 Client.belongsTo(Personne, { foreignKey: 'id' });
+Personne.belongsTo(Client, { foreignKey: 'id' });
 const Transaction = sequelize.define('transaction', {
     id: {
         type: DataTypes.INTEGER,

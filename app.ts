@@ -622,6 +622,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       const clients = await db.voirClients();
       res.send(clients);
     } catch (error) {
+      console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });

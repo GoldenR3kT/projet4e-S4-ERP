@@ -301,14 +301,18 @@ exports.modifierEdt = modifierEdt;
 // Voir les clients
 function voirClients() {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield Client.findAll({ include: [Personne, Contact] });
+        return yield Client.findAll({ include: [
+                { model: Personne, include: [{ model: Partenaire, include: [{ model: Contact, }] }] }
+            ] });
     });
 }
 exports.voirClients = voirClients;
 // Voir les détails d'un client
 function voirDetailsClient(idClient) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield Client.findByPk(idClient, { include: [Personne, Contact] });
+        return yield Client.findByPk(idClient, { include: [
+                { model: Personne, include: [{ model: Partenaire, include: [{ model: Contact, }] }] }
+            ] });
     });
 }
 exports.voirDetailsClient = voirDetailsClient;

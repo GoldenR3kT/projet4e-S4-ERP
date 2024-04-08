@@ -593,6 +593,7 @@ app.get('/voirClients', (req, res) => __awaiter(void 0, void 0, void 0, function
         res.send(clients);
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));

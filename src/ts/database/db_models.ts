@@ -49,6 +49,7 @@ const Personne = sequelize.define('personne', {
 });
 
 Personne.belongsTo(Partenaire, { foreignKey: 'id' });
+Partenaire.belongsTo(Personne, { foreignKey: 'id' });
 
 const Contact = sequelize.define('contact', {
   partenaire_id: {
@@ -70,6 +71,7 @@ const Contact = sequelize.define('contact', {
 });
 
 Contact.belongsTo(Partenaire, { foreignKey: 'partenaire_id' });
+Partenaire.hasOne(Contact, { foreignKey: 'partenaire_id' });
 
 const Fournisseur = sequelize.define('fournisseur', {
   id: {
@@ -87,6 +89,7 @@ const Fournisseur = sequelize.define('fournisseur', {
 });
 
 Fournisseur.belongsTo(Partenaire, { foreignKey: 'id' });
+Partenaire.hasOne(Fournisseur, { foreignKey: 'id' });
 
 const Client = sequelize.define('client', {
   id: {
@@ -100,6 +103,7 @@ const Client = sequelize.define('client', {
 });
 
 Client.belongsTo(Personne, { foreignKey: 'id' });
+Personne.belongsTo(Client, { foreignKey: 'id' });
 
 const Transaction = sequelize.define('transaction', {
   id: {

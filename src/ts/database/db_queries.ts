@@ -258,12 +258,14 @@ export async function modifierEdt(idPeriode: number, nouvellesValeurs: Partial<t
 
 // Voir les clients
 export async function voirClients(): Promise<typeof Client[]> {
-    return await Client.findAll({ include: [Personne, Contact] });
+    return await Client.findAll({ include: [
+        { model: Personne, include: [ { model: Partenaire, include: [ { model: Contact,} ]} ]} ]} );
 }
 
 // Voir les détails d'un client
 export async function voirDetailsClient(idClient: number): Promise<typeof Client | null> {
-    return await Client.findByPk(idClient, { include: [Personne, Contact] });
+    return await Client.findByPk(idClient, { include: [
+        { model: Personne, include: [ { model: Partenaire, include: [ { model: Contact,} ]} ]} ]} );
 }
 
 // Créer un client
