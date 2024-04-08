@@ -173,14 +173,6 @@ const Article = sequelize.define('article', {
 });
 
 const Energie = sequelize.define('energie', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    references: {
-      model: Article,
-      key: 'id'
-    }
-  },
   unite: {
     type: DataTypes.STRING(20),
     allowNull: false
@@ -194,14 +186,6 @@ const Energie = sequelize.define('energie', {
 Energie.belongsTo(Article, { foreignKey: 'id' });
 
 const Produit = sequelize.define('produit', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    references: {
-      model: Article,
-      key: 'id'
-    }
-  },
   image: DataTypes.STRING(100),
   catégorie: DataTypes.STRING(20)
 }, {
