@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD) {
+function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD, idArticle) {
     // Sélectionner l'ul
     const listeStocks = document.getElementById("liste-stocks");
     // Créer un nouvel élément li
@@ -30,6 +30,11 @@ function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD) {
     const btnReappro = document.createElement("button");
     btnReappro.className = "reappro-button";
     btnReappro.innerHTML = "Réappro";
+    btnReappro.addEventListener('click', function () {
+        requeteReappro(idArticle, quantiteBDD);
+        btnReappro.classList.add('bouton-reappro-inactif');
+        stock.classList.add('ligne-reappro-active');
+    });
     stock.appendChild(btnReappro);
     // Ajouter le nouvel élément li à l'ul
     listeStocks === null || listeStocks === void 0 ? void 0 : listeStocks.appendChild(stock);
@@ -123,15 +128,28 @@ function initEnergie() {
         const categorieTitle = document.getElementById('categorie_title');
         if (categorieTitle) {
             categorieTitle.textContent = 'Energie';
-            console.log(reappros);
             energies.forEach((energy, index) => {
-                const { nom, prixHT, prixTTC, quantite } = energy.article;
-                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString());
+                const { id, nom, prixHT, prixTTC, quantite } = energy.article;
+                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
             });
-            /*reappros.forEach((reappro: { id: number, date: string, article: { id: number, nom: string, quantite: number, prix: number } }, index: number) => {
-                const { date, article: { nom, quantite, prix } } = reappro;
-                //ajouterReappro(nom, date, quantite.toString(), prix.toString());
-            });*/
+            reappros.forEach((reappro, index) => {
+                const { id_transaction, transaction: { date, mouvements } } = reappro;
+                // Conversion de la date en objet Date
+                const formattedDate = new Date(date);
+                // Formatage de la date en "DD/MM/YY"
+                const formattedDateString = formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+                const produits = mouvements.map(mouvement => {
+                    return {
+                        id: mouvement.article_id,
+                        nom: `Produit ${mouvement.article_id}`,
+                        quantite: mouvement.quantite,
+                        prix: 0 // Mettez ici le prix correspondant si vous avez l'information
+                    };
+                });
+                produits.forEach(produit => {
+                    ajouterReappro(id_transaction.toString(), formattedDateString, produit.nom, produit.quantite.toString(), produit.prix.toString());
+                });
+            });
         }
     });
 }
@@ -139,58 +157,91 @@ function initEnergie() {
 function initBoutique() {
     return __awaiter(this, void 0, void 0, function* () {
         viderListes();
-        const response = yield fetch(`/voirProduits/CATEGORIE 1`);
-        const energies = yield response.json();
-        console.log(energies);
+        const response = yield fetch(`/voirProduits/Boutique`);
+        const boutique = yield response.json();
+        console.log(boutique);
+        const response2 = yield fetch(`/voirReapproProduit/Boutique`);
+        const reappros = yield response2.json();
         const categorieTitle = document.getElementById('categorie_title');
         if (categorieTitle) {
             categorieTitle.textContent = 'Boutique';
-            for (let i = 0; i < 50; i++) {
-                ajouterStock("nomProduit" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
-            }
-            try {
-                const response = yield fetch('/voirReapproProduit/' + 'CATEGORIE 1');
-                const reappros = yield response.json();
-                console.log(reappros);
-                for (let i = 0; i < reappros.length; i++) {
-                    ajouterReappro(reappros[i].idProduit, reappros[i].date, reappros[i].produit, reappros[i].quantite, reappros[i].prix);
-                }
-            }
-            catch (error) {
-                console.error('Une erreur est survenue lors de la récupération des réapprovisionnements.', error);
-                // Gérer l'erreur de manière appropriée
-            }
+            boutique.forEach((produit, index) => {
+                const { id, nom, prixHT, prixTTC, quantite } = produit.article;
+                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            });
+            reappros.forEach((reappro, index) => {
+                const { id_transaction, transaction: { date, mouvements } } = reappro;
+                // Conversion de la date en objet Date
+                const formattedDate = new Date(date);
+                // Formatage de la date en "DD/MM/YY"
+                const formattedDateString = formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+                const produits = mouvements.map(mouvement => {
+                    return {
+                        id: mouvement.article_id,
+                        nom: `Produit ${mouvement.article_id}`,
+                        quantite: mouvement.quantite,
+                        prix: 0 // Mettez ici le prix correspondant si vous avez l'information
+                    };
+                });
+                produits.forEach(produit => {
+                    ajouterReappro(id_transaction.toString(), formattedDateString, produit.nom, produit.quantite.toString(), produit.prix.toString());
+                });
+            });
         }
     });
 }
 // Fonction pour initialiser les données pour l'onglet Atelier
 function initAtelier() {
-    viderListes();
-    const categorieTitle = document.getElementById('categorie_title');
-    if (categorieTitle) {
-        categorieTitle.textContent = 'Atelier';
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomOutil" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
+    return __awaiter(this, void 0, void 0, function* () {
+        viderListes();
+        const response = yield fetch(`/voirProduits/Atelier`);
+        const boutique = yield response.json();
+        const response2 = yield fetch(`/voirReapproProduit/Atelier`);
+        const reappros = yield response2.json();
+        const categorieTitle = document.getElementById('categorie_title');
+        if (categorieTitle) {
+            categorieTitle.textContent = 'Atelier';
+            boutique.forEach((produit, index) => {
+                const { id, nom, prixHT, prixTTC, quantite } = produit.article;
+                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            });
+            reappros.forEach((reappro, index) => {
+                const { id_transaction, transaction: { date, mouvements } } = reappro;
+                // Conversion de la date en objet Date
+                const formattedDate = new Date(date);
+                // Formatage de la date en "DD/MM/YY"
+                const formattedDateString = formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+                const produits = mouvements.map(mouvement => {
+                    return {
+                        id: mouvement.article_id,
+                        nom: `Produit ${mouvement.article_id}`,
+                        quantite: mouvement.quantite,
+                        prix: 0 // Mettez ici le prix correspondant si vous avez l'information
+                    };
+                });
+                produits.forEach(produit => {
+                    ajouterReappro(id_transaction.toString(), formattedDateString, produit.nom, produit.quantite.toString(), produit.prix.toString());
+                });
+            });
         }
-        for (let i = 0; i < 50; i++) {
-            ajouterReappro("idOutil" + i, "date" + i, "produit" + i, "quantite" + i, "prix" + i);
-        }
-    }
+    });
 }
 // Fonction pour initialiser les données pour l'onglet Restaurant
 function initRestaurant() {
-    viderListes();
-    const categorieTitle = document.getElementById('categorie_title');
-    if (categorieTitle) {
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomAliment" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
+    return __awaiter(this, void 0, void 0, function* () {
+        viderListes();
+        const response = yield fetch(`/voirProduits/Restaurant`);
+        const restaurant = yield response.json();
+        const categorieTitle = document.getElementById('categorie_title');
+        if (categorieTitle) {
+            restaurant.forEach((ingredient, index) => {
+                const { id, nom, prixHT, prixTTC, quantite } = ingredient.article;
+                ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+            });
+            categorieTitle.textContent = 'Restaurant';
+            modifierInterfaceRestaurant();
         }
-        for (let i = 0; i < 50; i++) {
-            ajouterMenu("plat" + i, "prix" + i, "ingredients" + i);
-        }
-        categorieTitle.textContent = 'Restaurant';
-        modifierInterfaceRestaurant();
-    }
+    });
 }
 // Fonction pour mettre à jour la vue en fonction de l'ancrage dans l'URL
 function updateView() {
@@ -262,6 +313,29 @@ function modifierElementMenu(li) {
 }
 function supprimerElementMenu(li) {
     li.remove(); // Supprime l'élément de la liste
+}
+function requeteReappro(idArticle, quantite) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch('/lancerReappro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ idArticle: idArticle, quantite: quantite })
+            });
+            if (response.ok) {
+                const responseData = yield response.json();
+                console.log(responseData.message);
+            }
+            else {
+                console.error('Erreur lors de la requête : ', response.status);
+            }
+        }
+        catch (error) {
+            console.error('Une erreur est survenue : ', error);
+        }
+    });
 }
 // Écouter l'événement hashchange pour mettre à jour la vue lorsque le lien change
 window.addEventListener("hashchange", updateView);

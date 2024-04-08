@@ -532,6 +532,7 @@ app.get('/voirArticles', async (req, res) => {
       await db.lancerReappro(date, totalHT, TVA, idArticle, quantite);
       res.send({ message: 'Réappro lancé avec succès' });
     } catch (error) {
+      console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });

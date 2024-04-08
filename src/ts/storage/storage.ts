@@ -1,4 +1,4 @@
-function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, quantiteBDD: string): void {
+function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, quantiteBDD: string, idArticle :number): void {
     // Sélectionner l'ul
     const listeStocks = document.getElementById("liste-stocks");
 
@@ -26,6 +26,11 @@ function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, qu
     const btnReappro = document.createElement("button");
     btnReappro.className = "reappro-button";
     btnReappro.innerHTML = "Réappro";
+    btnReappro.addEventListener('click', function() {
+        requeteReappro(idArticle, quantiteBDD);
+        btnReappro.classList.add('bouton-reappro-inactif');
+        stock.classList.add('ligne-reappro-active');
+    });
     stock.appendChild(btnReappro);
 
     // Ajouter le nouvel élément li à l'ul
@@ -138,28 +143,49 @@ async function initEnergie() {
     viderListes();
     const response = await fetch(`/voirEnergies`);
     const energies = await response.json();
-    console.log(energies)
-
+    console.log(energies);
     const response2 = await fetch(`/voirReapproEnergie`);
     const reappros = await response2.json();
 
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Energie';
-        console.log(reappros);
+
         energies.forEach((energy: {
             id: number,
             unite: string,
             article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
         }, index: number) => {
-            const {nom, prixHT, prixTTC, quantite} = energy.article;
-            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString());
+            const {id,nom, prixHT, prixTTC, quantite} = energy.article;
+            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
         });
 
-        /*reappros.forEach((reappro: { id: number, date: string, article: { id: number, nom: string, quantite: number, prix: number } }, index: number) => {
-            const { date, article: { nom, quantite, prix } } = reappro;
-            //ajouterReappro(nom, date, quantite.toString(), prix.toString());
-        });*/
+        reappros.forEach((reappro: {
+            id_transaction: number,
+            transaction: { date: string, mouvements: { quantite: number, article_id: number }[] }
+        }, index: number) => {
+            const { id_transaction, transaction: { date, mouvements } } = reappro;
+
+            // Conversion de la date en objet Date
+            const formattedDate = new Date(date);
+
+            // Formatage de la date en "DD/MM/YY"
+            const formattedDateString = formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+
+            const produits = mouvements.map(mouvement => {
+                return {
+                    id: mouvement.article_id,
+                    nom: `Produit ${mouvement.article_id}`,
+                    quantite: mouvement.quantite,
+                    prix: 0 // Mettez ici le prix correspondant si vous avez l'information
+                };
+            });
+            produits.forEach(produit => {
+                ajouterReappro(id_transaction.toString(), formattedDateString, produit.nom, produit.quantite.toString(), produit.prix.toString());
+            });
+        });
+
+
     }
 }
 
@@ -168,59 +194,126 @@ async function initEnergie() {
 async function initBoutique() {
     viderListes();
 
-    const response = await fetch(`/voirProduits/CATEGORIE 1`);
-    const energies = await response.json();
-    console.log(energies)
+    const response = await fetch(`/voirProduits/Boutique`);
+    const boutique = await response.json();
+    console.log(boutique);
+    const response2 = await fetch(`/voirReapproProduit/Boutique`);
+    const reappros = await response2.json();
 
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Boutique';
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomProduit" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
-        }
 
-        try {
-            const response = await fetch('/voirReapproProduit/' + 'CATEGORIE 1');
-            const reappros = await response.json();
-            console.log(reappros);
-            for (let i = 0; i < reappros.length; i++) {
-                ajouterReappro(reappros[i].idProduit, reappros[i].date, reappros[i].produit, reappros[i].quantite, reappros[i].prix);
-            }
-        } catch (error) {
-            console.error('Une erreur est survenue lors de la récupération des réapprovisionnements.', error);
-            // Gérer l'erreur de manière appropriée
-        }
+        boutique.forEach((produit: {
+            id: number,
+            unite: string,
+            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
+        }, index: number) => {
+            const {id,nom, prixHT, prixTTC, quantite} = produit.article;
+            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+        });
+
+        reappros.forEach((reappro: {
+            id_transaction: number,
+            transaction: { date: string, mouvements: { quantite: number, article_id: number }[] }
+        }, index: number) => {
+            const { id_transaction, transaction: { date, mouvements } } = reappro;
+
+            // Conversion de la date en objet Date
+            const formattedDate = new Date(date);
+
+            // Formatage de la date en "DD/MM/YY"
+            const formattedDateString = formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+
+            const produits = mouvements.map(mouvement => {
+                return {
+                    id: mouvement.article_id,
+                    nom: `Produit ${mouvement.article_id}`,
+                    quantite: mouvement.quantite,
+                    prix: 0 // Mettez ici le prix correspondant si vous avez l'information
+                };
+            });
+            produits.forEach(produit => {
+                ajouterReappro(id_transaction.toString(), formattedDateString, produit.nom, produit.quantite.toString(), produit.prix.toString());
+            });
+        });
+
+
     }
 }
 
 
 // Fonction pour initialiser les données pour l'onglet Atelier
-function initAtelier() {
+async function initAtelier() {
     viderListes();
+
+    const response = await fetch(`/voirProduits/Atelier`);
+    const boutique = await response.json();
+
+    const response2 = await fetch(`/voirReapproProduit/Atelier`);
+    const reappros = await response2.json();
+
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Atelier';
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomOutil" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
-        }
 
-        for (let i = 0; i < 50; i++) {
-            ajouterReappro("idOutil" + i, "date" + i, "produit" + i, "quantite" + i, "prix" + i);
-        }
+        boutique.forEach((produit: {
+            id: number,
+            unite: string,
+            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
+        }, index: number) => {
+            const {id,nom, prixHT, prixTTC, quantite} = produit.article;
+            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+        });
+
+        reappros.forEach((reappro: {
+            id_transaction: number,
+            transaction: { date: string, mouvements: { quantite: number, article_id: number }[] }
+        }, index: number) => {
+            const { id_transaction, transaction: { date, mouvements } } = reappro;
+
+            // Conversion de la date en objet Date
+            const formattedDate = new Date(date);
+
+            // Formatage de la date en "DD/MM/YY"
+            const formattedDateString = formattedDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+
+            const produits = mouvements.map(mouvement => {
+                return {
+                    id: mouvement.article_id,
+                    nom: `Produit ${mouvement.article_id}`,
+                    quantite: mouvement.quantite,
+                    prix: 0 // Mettez ici le prix correspondant si vous avez l'information
+                };
+            });
+            produits.forEach(produit => {
+                ajouterReappro(id_transaction.toString(), formattedDateString, produit.nom, produit.quantite.toString(), produit.prix.toString());
+            });
+        });
+
+
     }
 }
 
 // Fonction pour initialiser les données pour l'onglet Restaurant
-function initRestaurant() {
+async function initRestaurant() {
     viderListes();
+
+    const response = await fetch(`/voirProduits/Restaurant`);
+    const restaurant = await response.json();
+
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomAliment" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
-        }
-        for (let i = 0; i < 50; i++) {
-            ajouterMenu("plat" + i, "prix" + i, "ingredients" + i);
-        }
+
+        restaurant.forEach((ingredient: {
+            id: number,
+            unite: string,
+            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
+        }, index: number) => {
+            const {id,nom, prixHT, prixTTC, quantite} = ingredient.article;
+            ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString(), id);
+        });
+
         categorieTitle.textContent = 'Restaurant';
         modifierInterfaceRestaurant();
     }
@@ -306,6 +399,27 @@ function modifierElementMenu(li: HTMLElement) {
 
 function supprimerElementMenu(li: HTMLElement) {
     li.remove(); // Supprime l'élément de la liste
+}
+
+async function requeteReappro(idArticle :number, quantite :string) {
+    try {
+        const response = await fetch('/lancerReappro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ idArticle: idArticle, quantite: quantite })
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData.message);
+        } else {
+            console.error('Erreur lors de la requête : ', response.status);
+        }
+    } catch (error) {
+        console.error('Une erreur est survenue : ', error);
+    }
 }
 
 

@@ -155,3 +155,12 @@ body {
     background-color: #faf1b2;
     font-size: 16px;
 }
+
+.ligne-reappro-active {
+    background-color: lightgray; /* Couleur de fond de la ligne lorsque le bouton est cliqué */
+}
+
+.bouton-reappro-inactif {
+    pointer-events: none; /* Empêcher le clic sur le bouton */
+    opacity: 0.5; /* Réduire l'opacité pour indiquer qu'il est désactivé */
+}
