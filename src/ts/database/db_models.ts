@@ -175,7 +175,11 @@ const Article = sequelize.define('article', {
 const Energie = sequelize.define('energie', {
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    references: {
+      model: Article,
+      key: 'id'
+    }
   },
   unite: {
     type: DataTypes.STRING(20),
@@ -192,7 +196,11 @@ Energie.belongsTo(Article, { foreignKey: 'id' });
 const Produit = sequelize.define('produit', {
   id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    references: {
+      model: Article,
+      key: 'id'
+    }
   },
   image: DataTypes.STRING(100),
   catégorie: DataTypes.STRING(20)
@@ -411,6 +419,7 @@ const ActiviteEdt = sequelize.define('activite_edt', {
 
 ActiviteEdt.belongsTo(Employe, { foreignKey: 'employe_id' });
 ActiviteEdt.belongsTo(Periode, { foreignKey: 'periode_id' });
+Employe.hasMany(ActiviteEdt, { foreignKey: 'employe_id' });
 
 const Promo = sequelize.define('promo', {
   periode_id: {
@@ -430,6 +439,7 @@ const Promo = sequelize.define('promo', {
 
 Promo.belongsTo(Periode, { foreignKey: 'periode_id' });
 Promo.belongsTo(Article, { foreignKey: 'article_id' });
+Article.hasMany(Promo, { foreignKey: 'article_id' });
 
 const Evenement = sequelize.define('evenement', {
   periode_id: {
