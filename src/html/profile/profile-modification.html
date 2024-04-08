@@ -10,41 +10,40 @@
             <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
         </header>
     </head>
-    <body>
+    <body onload="fillFormData()">
         <div id="conteneur-annuler-bouton">
             <button  id="bouton-annuler-modifications" class="bouton-profil-modification" onclick="window.location.href='/profile'">
                 Annuler
             </button>
         </div>
 
-            <form id="conteneur-modifications" action="" method="post">
-                    <div id="formulaire-modifications">
-                        <div id="informations-label">
-                            <label id="informations">Informations     </label>
-                        </div>
-                        <div class="champ">
-                            <label for="input1">Nom     </label>
-                            <input type="text" id="input1" name="input1" placeholder="Input 1">
-                        </div>
-                        <div class="champ">
-                            <label for="input2">Prénom     </label>
-                            <input type="text" id="input2" name="input2" placeholder="Input 2">
-                        </div>
-                        <div class="champ">
-                            <label for="input3">Email     </label>
-                            <input type="text" id="input3" name="input3" placeholder="Input 3">
-                        </div>
-                        <div class="champ">
-                            <label for="input4">Adresse     </label>
-                            <input type="text" id="input4" name="input4" placeholder="Input 4">
-                        </div>
-                        <div class="champ">
-                            <label for="input5">Téléphone     </label>
-                            <input type="text" id="input5" name="input5" placeholder="Input 5">
-                        </div>
+        <form id="conteneur-modifications" action="" method="post">
+                <div id="formulaire-modifications">
+                    <div id="informations-label">
+                        <label id="informations">Informations</label>
                     </div>
-            </form>
-        </div>
+                    <div class="champ">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" placeholder="Nom">
+                    </div>
+                    <div class="champ">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" placeholder="Prénom">
+                    </div>
+                    <div class="champ">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" placeholder="Email">
+                    </div>
+                    <div class="champ">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" placeholder="Adresse">
+                    </div>
+                    <div class="champ">
+                        <label for="telephone">Téléphone</label>
+                        <input type="text" id="telephone" name="telephone" placeholder="Téléphone">
+                    </div>
+                </div>
+        </form>
 
         <div id="conteneur-valider-bouton">
             <button  id="bouton-valider-modifications" class="bouton-profil-modification" onclick="window.location.href='/profile'">

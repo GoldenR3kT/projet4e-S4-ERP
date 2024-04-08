@@ -89,6 +89,9 @@ html, body {
 
 #bouton-modifier {
     min-width:min-content;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
     background-color: #98E3AD;
     border: 2px solid black;
     border-radius: 10px;
@@ -96,10 +99,19 @@ html, body {
 
 #bouton-deconnexion {
     min-width:min-content;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
     background-color: #0FD274;
     border: 2px solid black;
     border-radius: 10px;
 }
+
+#bouton-modifier:hover,
+#bouton-deconnexion:hover {
+    background-color: #F9EEAC;
+}
+
 
 /* PARTIE EMPLOI DU TEMPS*/
 
@@ -155,6 +167,8 @@ html, body {
 .bouton-profil-modification {
     font-size: 20px;
     min-width: min-content;
+    cursor: pointer;
+    text-decoration: none;
     background-color:#0FD274;
     border: 2px solid black;
     border-radius: 10px;
@@ -184,6 +198,11 @@ html, body {
 #bouton-valider-modifications {
     width: 20%;
     height: 50%;
+}
+
+#bouton-annuler-modifications:hover,
+#bouton-valider-modifications:hover {
+    background-color:#F9EEAC;
 }
 
 #conteneur-modifications {
