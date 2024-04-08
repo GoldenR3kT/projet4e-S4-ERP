@@ -468,6 +468,7 @@ app.get('/voirArticles', async (req, res) => {
       const produits = await db.voirProduits(categorie);
       res.send(produits);
     } catch (error) {
+      console.log('voirProduits' + error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
@@ -478,6 +479,7 @@ app.get('/voirArticles', async (req, res) => {
       const energies = await db.voirEnergies();
       res.send(energies);
     } catch (error) {
+      console.log('voirEnergies' + error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
@@ -487,8 +489,9 @@ app.get('/voirArticles', async (req, res) => {
     const categorie = req.params.categorie;
     try {
       const reappros = await db.voirReapproProduit(categorie);
-      res.send(reappros);
+      res.send('voirReapproProduit'+reappros);
     } catch (error) {
+      console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
@@ -499,6 +502,7 @@ app.get('/voirArticles', async (req, res) => {
       const reappros = await db.voirReapproEnergie();
       res.send(reappros);
     } catch (error) {
+        console.log('voirReapproEnergie'+error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
@@ -568,6 +572,7 @@ app.put('/enregistrerReceptionReappro/:idReappro', async (req, res) => {
       const employe = await db.voirInfosEmploye(idEmploye);
       res.send(employe);
     } catch (error) {
+      console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });

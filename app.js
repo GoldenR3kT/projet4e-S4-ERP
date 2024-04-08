@@ -442,6 +442,7 @@ app.get('/voirProduits/:categorie', (req, res) => __awaiter(void 0, void 0, void
         res.send(produits);
     }
     catch (error) {
+        console.log('voirProduits' + error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
@@ -452,6 +453,7 @@ app.get('/voirEnergies', (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.send(energies);
     }
     catch (error) {
+        console.log('voirEnergies' + error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
@@ -460,9 +462,10 @@ app.get('/voirReapproProduit/:categorie', (req, res) => __awaiter(void 0, void 0
     const categorie = req.params.categorie;
     try {
         const reappros = yield db.voirReapproProduit(categorie);
-        res.send(reappros);
+        res.send('voirReapproProduit' + reappros);
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
@@ -473,6 +476,7 @@ app.get('/voirReapproEnergie', (req, res) => __awaiter(void 0, void 0, void 0, f
         res.send(reappros);
     }
     catch (error) {
+        console.log('voirReapproEnergie' + error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
@@ -541,6 +545,7 @@ app.get('/voirInfosEmploye/:idEmploye', (req, res) => __awaiter(void 0, void 0, 
         res.send(employe);
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));

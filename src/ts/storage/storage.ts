@@ -32,7 +32,7 @@ function ajouterStock(nameBDD: string, prixHTBDD: string, prixTTCBDD: string, qu
     listeStocks?.appendChild(stock);
 }
 
-function ajouterReappro(id: string, dateCommande: string, produit: string, quantite: string, prix: string){
+function ajouterReappro(id: string, dateCommande: string, produit: string, quantite: string, prix: string) {
     // Sélectionner l'ul
     const listeReappro = document.getElementById("liste-reappro");
 
@@ -74,7 +74,7 @@ function ajouterReappro(id: string, dateCommande: string, produit: string, quant
     listeReappro?.appendChild(reappro);
 }
 
-function ajouterMenu(plat: string, prix :string, ingredients :string) {
+function ajouterMenu(plat: string, prix: string, ingredients: string) {
     const listeReappro = document.getElementById("liste-reappro");
     const reappro = document.createElement("li");
 
@@ -97,7 +97,7 @@ function ajouterMenu(plat: string, prix :string, ingredients :string) {
     btnModifier.onclick = () => modifierElementMenu(reappro);
     reappro.appendChild(btnModifier);
 
-    if (listeReappro){
+    if (listeReappro) {
         listeReappro.appendChild(reappro);
     }
 
@@ -138,37 +138,61 @@ async function initEnergie() {
     viderListes();
     const response = await fetch(`/voirEnergies`);
     const energies = await response.json();
+    console.log(energies)
 
+    const response2 = await fetch(`/voirReapproEnergie`);
+    const reappros = await response2.json();
 
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Energie';
-
-        energies.forEach((energy: { id: number, unite: string, article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number } }, index: number) => {
-            const { nom, prixHT, prixTTC, quantite } = energy.article;
+        console.log(reappros);
+        energies.forEach((energy: {
+            id: number,
+            unite: string,
+            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
+        }, index: number) => {
+            const {nom, prixHT, prixTTC, quantite} = energy.article;
             ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString());
-            ajouterReappro(energy.id.toString(), "date" + index, nom, quantite.toString(), prixTTC.toString());
         });
 
+        /*reappros.forEach((reappro: { id: number, date: string, article: { id: number, nom: string, quantite: number, prix: number } }, index: number) => {
+            const { date, article: { nom, quantite, prix } } = reappro;
+            //ajouterReappro(nom, date, quantite.toString(), prix.toString());
+        });*/
     }
 }
 
 
 // Fonction pour initialiser les données pour l'onglet Boutique
-function initBoutique() {
+async function initBoutique() {
     viderListes();
+
+    const response = await fetch(`/voirProduits/CATEGORIE 1`);
+    const energies = await response.json();
+    console.log(energies)
+
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Boutique';
         for (let i = 0; i < 50; i++) {
-            ajouterStock("nomProduit" + i, "prixHT " + i, "prixTTC" + i , "quantite" + i);
+            ajouterStock("nomProduit" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
         }
 
-        for (let i = 0; i < 50; i++) {
-            ajouterReappro("idProduit" + i, "date" + i, "produit" + i, "quantite" + i, "prix" + i);
+        try {
+            const response = await fetch('/voirReapproProduit/' + 'CATEGORIE 1');
+            const reappros = await response.json();
+            console.log(reappros);
+            for (let i = 0; i < reappros.length; i++) {
+                ajouterReappro(reappros[i].idProduit, reappros[i].date, reappros[i].produit, reappros[i].quantite, reappros[i].prix);
+            }
+        } catch (error) {
+            console.error('Une erreur est survenue lors de la récupération des réapprovisionnements.', error);
+            // Gérer l'erreur de manière appropriée
         }
     }
 }
+
 
 // Fonction pour initialiser les données pour l'onglet Atelier
 function initAtelier() {
@@ -177,7 +201,7 @@ function initAtelier() {
     if (categorieTitle) {
         categorieTitle.textContent = 'Atelier';
         for (let i = 0; i < 50; i++) {
-            ajouterStock("nomOutil" + i, "prixHT " + i, "prixTTC" + i , "quantite" + i);
+            ajouterStock("nomOutil" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
         }
 
         for (let i = 0; i < 50; i++) {
@@ -192,7 +216,7 @@ function initRestaurant() {
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         for (let i = 0; i < 50; i++) {
-            ajouterStock("nomAliment" + i, "prixHT " + i, "prixTTC" + i , "quantite" + i);
+            ajouterStock("nomAliment" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
         }
         for (let i = 0; i < 50; i++) {
             ajouterMenu("plat" + i, "prix" + i, "ingredients" + i);
@@ -230,7 +254,7 @@ function updateView() {
 function modifierElementMenu(li: HTMLElement) {
     const elements = li.querySelectorAll('p');
     const placeholders = ['plat', 'prix', 'ingrédient']; // Texte de fond pour chaque input
-    elements.forEach(function(element, index) {
+    elements.forEach(function (element, index) {
         const valeurActuelle = element.textContent;
         const input = document.createElement('input');
         input.type = 'text';
@@ -243,9 +267,9 @@ function modifierElementMenu(li: HTMLElement) {
     const boutonValider = document.createElement('button');
     boutonValider.textContent = 'Valider';
     boutonValider.className = 'modifier-button';
-    boutonValider.addEventListener('click', function() {
+    boutonValider.addEventListener('click', function () {
         const inputs = li.querySelectorAll('.input-modifier');
-        elements.forEach(function(element, index) {
+        elements.forEach(function (element, index) {
             const input = inputs[index] as HTMLInputElement;
             const nouvelleValeur = input.value;
             element.textContent = nouvelleValeur;
@@ -274,7 +298,7 @@ function modifierElementMenu(li: HTMLElement) {
     const boutonSupprimerLigne = document.createElement('button');
     boutonSupprimerLigne.textContent = 'Supprimer';
     boutonSupprimerLigne.className = 'supprimer-button'; // Ajout de la classe
-    boutonSupprimerLigne.addEventListener('click', function() {
+    boutonSupprimerLigne.addEventListener('click', function () {
         supprimerElementMenu(li);
     });
     li.appendChild(boutonSupprimerLigne);
@@ -283,7 +307,6 @@ function modifierElementMenu(li: HTMLElement) {
 function supprimerElementMenu(li: HTMLElement) {
     li.remove(); // Supprime l'élément de la liste
 }
-
 
 
 // Écouter l'événement hashchange pour mettre à jour la vue lorsque le lien change

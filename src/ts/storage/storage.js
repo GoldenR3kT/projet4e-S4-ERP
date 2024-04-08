@@ -117,30 +117,51 @@ function initEnergie() {
         viderListes();
         const response = yield fetch(`/voirEnergies`);
         const energies = yield response.json();
+        console.log(energies);
+        const response2 = yield fetch(`/voirReapproEnergie`);
+        const reappros = yield response2.json();
         const categorieTitle = document.getElementById('categorie_title');
         if (categorieTitle) {
             categorieTitle.textContent = 'Energie';
+            console.log(reappros);
             energies.forEach((energy, index) => {
                 const { nom, prixHT, prixTTC, quantite } = energy.article;
                 ajouterStock(nom, prixHT.toString(), prixTTC.toString(), quantite.toString());
-                ajouterReappro(energy.id.toString(), "date" + index, nom, quantite.toString(), prixTTC.toString());
             });
+            /*reappros.forEach((reappro: { id: number, date: string, article: { id: number, nom: string, quantite: number, prix: number } }, index: number) => {
+                const { date, article: { nom, quantite, prix } } = reappro;
+                //ajouterReappro(nom, date, quantite.toString(), prix.toString());
+            });*/
         }
     });
 }
 // Fonction pour initialiser les données pour l'onglet Boutique
 function initBoutique() {
-    viderListes();
-    const categorieTitle = document.getElementById('categorie_title');
-    if (categorieTitle) {
-        categorieTitle.textContent = 'Boutique';
-        for (let i = 0; i < 50; i++) {
-            ajouterStock("nomProduit" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
+    return __awaiter(this, void 0, void 0, function* () {
+        viderListes();
+        const response = yield fetch(`/voirProduits/CATEGORIE 1`);
+        const energies = yield response.json();
+        console.log(energies);
+        const categorieTitle = document.getElementById('categorie_title');
+        if (categorieTitle) {
+            categorieTitle.textContent = 'Boutique';
+            for (let i = 0; i < 50; i++) {
+                ajouterStock("nomProduit" + i, "prixHT " + i, "prixTTC" + i, "quantite" + i);
+            }
+            try {
+                const response = yield fetch('/voirReapproProduit/' + 'CATEGORIE 1');
+                const reappros = yield response.json();
+                console.log(reappros);
+                for (let i = 0; i < reappros.length; i++) {
+                    ajouterReappro(reappros[i].idProduit, reappros[i].date, reappros[i].produit, reappros[i].quantite, reappros[i].prix);
+                }
+            }
+            catch (error) {
+                console.error('Une erreur est survenue lors de la récupération des réapprovisionnements.', error);
+                // Gérer l'erreur de manière appropriée
+            }
         }
-        for (let i = 0; i < 50; i++) {
-            ajouterReappro("idProduit" + i, "date" + i, "produit" + i, "quantite" + i, "prix" + i);
-        }
-    }
+    });
 }
 // Fonction pour initialiser les données pour l'onglet Atelier
 function initAtelier() {
