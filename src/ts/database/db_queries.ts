@@ -1,5 +1,7 @@
 const models = require("./db_models");
 
+const Sequelize = require('sequelize');
+
 const {
     Partenaire,
     Personne,
@@ -189,10 +191,40 @@ export async function voirEnergies(): Promise<typeof Energie[]> {
 // Voir les réappros produit
 export async function voirReapproProduit(categorie: string): Promise<typeof Reappro[]> {
     return await Reappro.findAll({
-        include: [
-            { model: Transaction, include: [{ model: Mouvement, include: { model: Article, include: { model: Produit, where: { catégorie: categorie } } } }] }
-        ]
-    });
+            include: [
+              {
+                model: Transaction,
+                include: [
+                  {
+                    model: Mouvement,
+                    include: [
+                      {
+                        model: Article,
+                        include: [
+                          {
+                            model: Produit,
+                            where: {
+                              catégorie: categorie
+                            },
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                // Ajoutez cette condition pour filtrer les réappros correspondants
+                where: Sequelize.literal(`EXISTS (
+                  SELECT 1
+                  FROM mouvement
+                  JOIN article ON mouvement.article_id = article.id
+                  JOIN produit ON article.id = produit.id
+                  WHERE reappro.id_transaction = transaction.id
+                  AND mouvement.transaction_id = transaction.id
+                  AND produit.catégorie = '${categorie}'
+                )`)
+              }
+            ]
+          });
 }
 
 // Voir les réappros énergie
