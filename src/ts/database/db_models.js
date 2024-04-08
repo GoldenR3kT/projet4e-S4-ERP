@@ -151,7 +151,8 @@ const Article = sequelize.define('article', {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
-    prixHT: DataTypes.DOUBLE
+    prixHT: DataTypes.DOUBLE,
+    prixTTC: DataTypes.DOUBLE
 });
 const Energie = sequelize.define('energie', {
     id: {
@@ -231,8 +232,8 @@ const Mouvement = sequelize.define('mouvement', {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
 });
-Mouvement.belongsTo(Article, { foreignKey: 'article_id' });
-Mouvement.belongsTo(Transaction, { foreignKey: 'transaction_id' });
+Mouvement.belongsTo(Article, { foreignKey: 'id_client' });
+Mouvement.belongsTo(Transaction, { foreignKey: 'id_transaction' });
 const Carte = sequelize.define('carte', {
     num: {
         type: DataTypes.INTEGER,

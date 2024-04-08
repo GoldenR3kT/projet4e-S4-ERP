@@ -93,14 +93,20 @@ export async function voirDerniersIncidentsNonRegles(): Promise<typeof Incident[
     return await Incident.findAll({ where: { en_cours: true } });
 }
 
+// Voir les derniers incidents (réglés)
+export async function voirDerniersIncidentsRegles(): Promise<typeof Incident[]> {
+    return await Incident.findAll({ where: { en_cours: false } });
+}
+
 // Déclarer un incident
 export async function declarerIncident(nom: string, description: string, niveau: string, idEmploye: number, date: Date, heure: string): Promise<void> {
     await Incident.create({ nom, desc: description, niveau, employe_id: idEmploye, date, heure, en_cours: true });
 }
 
 // Gérer un incident
-export async function gererIncident(description: string, idEmploye: number, date: Date, heure: string): Promise<void> {
-    await SolutionIncident.create({ desc: description, employe_id: idEmploye, date, heure });
+export async function gererIncident(id_incident: number, description: string, idEmploye: number, date: Date, heure: string): Promise<void> {
+    await SolutionIncident.create({ incident_id: id_incident, desc: description, employe_id: idEmploye, date, heure });
+    await Incident.update({ en_cours: 0 }, { where: { id: id_incident } });
 }
 
 // Voir tout les incidents
@@ -146,8 +152,9 @@ export async function recupererCarteCCE(): Promise<typeof CCE[]> {
 }
 
 // Enregistrer un paiement
-export async function enregistrerPaiement(montant: number, idTransaction: number, idMoyenDePaiement: number, idClient: number): Promise<void> {
-    await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: idClient });
+export async function enregistrerPaiement(montant: number, idTransaction: number, idMoyenDePaiement: number, numCarte: number): Promise<void> {
+    const id_client = await Carte.findByPk(numCarte, { attributes: ['id_client'] });
+    await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: id_client });
 }
 
 // Imprimer une facture
@@ -183,16 +190,16 @@ export async function voirEnergies(): Promise<typeof Energie[]> {
 export async function voirReapproProduit(categorie: string): Promise<typeof Reappro[]> {
     return await Reappro.findAll({
         include: [
-            { model: Transaction, include: [{ model: Mouvement, include: { model: Produit, include: { model: Article, where: { catégorie: categorie } } } }] }
+            { model: Transaction, include: [{ model: Mouvement, include: { model: Article, include: { model: Produit, where: { catégorie: categorie } } } }] }
         ]
     });
 }
 
 // Voir les réappros énergie
-export async function voirReapproEnergie(categorie: string): Promise<typeof Reappro[]> {
+export async function voirReapproEnergie(): Promise<typeof Reappro[]> {
     return await Reappro.findAll({
         include: [
-            { model: Transaction, include: [{ model: Mouvement, include: { model: Produit, include: { model: Article, where: { catégorie: categorie } } } }] }
+            { model: Transaction, include: [{ model: Mouvement, include: { model: Article, include: { model: Energie} } }] }
         ]
     });
 }
@@ -228,7 +235,8 @@ export async function voirTousEmployes(): Promise<typeof Employe[]> {
 
 // Voir les infos
 export async function voirInfosEmploye(idEmploye: number): Promise<typeof Employe | null> {
-    return await Employe.findByPk(idEmploye, { include: [Personne, Contact] });
+    return await Employe.findByPk(idEmploye, { include: [
+        { model: Personne, include: [ { model: Partenaire, include: [ { model: Contact,} ]} ]} ]} );
 }
 
 // Modif infos

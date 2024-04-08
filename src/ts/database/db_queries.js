@@ -9,7 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 exports.modifierEvenement = exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
+=======
+exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.recupererEnergiePompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
+exports.modifierEvenement = void 0;
+>>>>>>> 293a3fbdfd5d69a092da2f66235491549515a059
 const models = require("./db_models");
 const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDePaiement, Paiement, Article, Energie, Produit, Menu, ProduitMenu, Pompe, Mouvement, Carte, CM, CCE, GestionCce, Bonus, CceBonus, Employe, Periode, ActiviteEdt, Promo, Evenement, Incident, SolutionIncident, Aide, AchatClient, Reappro } = models;
 // AUTHENTIFICATION
@@ -87,6 +92,13 @@ function voirDerniersIncidentsNonRegles() {
     });
 }
 exports.voirDerniersIncidentsNonRegles = voirDerniersIncidentsNonRegles;
+// Voir les derniers incidents (réglés)
+function voirDerniersIncidentsRegles() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield Incident.findAll({ where: { en_cours: false } });
+    });
+}
+exports.voirDerniersIncidentsRegles = voirDerniersIncidentsRegles;
 // Déclarer un incident
 function declarerIncident(nom, description, niveau, idEmploye, date, heure) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -95,9 +107,10 @@ function declarerIncident(nom, description, niveau, idEmploye, date, heure) {
 }
 exports.declarerIncident = declarerIncident;
 // Gérer un incident
-function gererIncident(description, idEmploye, date, heure) {
+function gererIncident(id_incident, description, idEmploye, date, heure) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield SolutionIncident.create({ desc: description, employe_id: idEmploye, date, heure });
+        yield SolutionIncident.create({ incident_id: id_incident, desc: description, employe_id: idEmploye, date, heure });
+        yield Incident.update({ en_cours: 0 }, { where: { id: id_incident } });
     });
 }
 exports.gererIncident = gererIncident;
@@ -155,9 +168,10 @@ function recupererCarteCCE() {
 }
 exports.recupererCarteCCE = recupererCarteCCE;
 // Enregistrer un paiement
-function enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, idClient) {
+function enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: idClient });
+        const id_client = yield Carte.findByPk(numCarte, { attributes: ['id_client'] });
+        yield Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: id_client });
     });
 }
 exports.enregistrerPaiement = enregistrerPaiement;
@@ -209,11 +223,11 @@ function voirReapproProduit(categorie) {
 }
 exports.voirReapproProduit = voirReapproProduit;
 // Voir les réappros énergie
-function voirReapproEnergie(categorie) {
+function voirReapproEnergie() {
     return __awaiter(this, void 0, void 0, function* () {
         return yield Reappro.findAll({
             include: [
-                { model: Transaction, include: [{ model: Mouvement, include: { model: Produit, include: { model: Article, where: { catégorie: categorie } } } }] }
+                { model: Transaction, include: [{ model: Mouvement, include: { model: Energie, include: { model: Article } } }] }
             ]
         });
     });

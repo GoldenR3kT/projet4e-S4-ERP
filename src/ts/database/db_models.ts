@@ -118,6 +118,7 @@ const Transaction = sequelize.define('transaction', {
   TVA: DataTypes.DOUBLE
 });
 
+
 const MoyenDePaiement = sequelize.define('moyenDePaiement', {
   id: {
     type: DataTypes.INTEGER,
@@ -167,14 +168,11 @@ const Article = sequelize.define('article', {
     type: DataTypes.DOUBLE,
     allowNull: false
   },
-  prixHT: DataTypes.DOUBLE
+  prixHT: DataTypes.DOUBLE,
+  prixTTC: DataTypes.DOUBLE
 });
 
 const Energie = sequelize.define('energie', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true
-  },
   unite: {
     type: DataTypes.STRING(20),
     allowNull: false
@@ -188,10 +186,6 @@ const Energie = sequelize.define('energie', {
 Energie.belongsTo(Article, { foreignKey: 'id' });
 
 const Produit = sequelize.define('produit', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true
-  },
   image: DataTypes.STRING(100),
   catégorie: DataTypes.STRING(20)
 }, {
@@ -245,6 +239,7 @@ const Pompe = sequelize.define('pompe', {
 });
 
 Pompe.belongsTo(Energie, { foreignKey: 'id_energie' });
+Energie.hasMany(Pompe, { foreignKey: 'id_energie' });
 
 const Mouvement = sequelize.define('mouvement', {
   id: {
@@ -252,7 +247,13 @@ const Mouvement = sequelize.define('mouvement', {
     primaryKey: true,
     autoIncrement: true
   },
-  quantite: DataTypes.INTEGER
+  quantite: DataTypes.INTEGER,
+  article_id: {
+    type: DataTypes.INTEGER
+  },
+  transaction_id: {
+    type: DataTypes.INTEGER
+  }
 }, {
   foreignKeyConstraints: true,
   onUpdate: 'CASCADE',
@@ -261,6 +262,8 @@ const Mouvement = sequelize.define('mouvement', {
 
 Mouvement.belongsTo(Article, { foreignKey: 'article_id' });
 Mouvement.belongsTo(Transaction, { foreignKey: 'transaction_id' });
+Article.belongsTo(Mouvement, { foreignKey: 'article_id' });
+Transaction.hasMany(Mouvement, { foreignKey: 'transaction_id' });
 
 const Carte = sequelize.define('carte', {
   num: {
@@ -400,6 +403,7 @@ const ActiviteEdt = sequelize.define('activite_edt', {
 
 ActiviteEdt.belongsTo(Employe, { foreignKey: 'employe_id' });
 ActiviteEdt.belongsTo(Periode, { foreignKey: 'periode_id' });
+Employe.hasMany(ActiviteEdt, { foreignKey: 'employe_id' });
 
 const Promo = sequelize.define('promo', {
   periode_id: {
@@ -419,6 +423,7 @@ const Promo = sequelize.define('promo', {
 
 Promo.belongsTo(Periode, { foreignKey: 'periode_id' });
 Promo.belongsTo(Article, { foreignKey: 'article_id' });
+Article.hasMany(Promo, { foreignKey: 'article_id' });
 
 const Evenement = sequelize.define('evenement', {
   periode_id: {

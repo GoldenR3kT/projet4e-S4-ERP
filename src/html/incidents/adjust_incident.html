@@ -5,10 +5,6 @@
     <title>Incident - Regler</title>
     <link rel="stylesheet" type="text/css" href="/css/incidents/incidents-adjust.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <script src="/ts/incidents/incidents.js"></script>
-    <script src="/ts/nav/nav-call.js"></script>
-    <script src="/ts/incidents/open-incidents.js"></script>
-
 </head>
 <body>
 <header>
@@ -17,9 +13,9 @@
 <div id="erp">
     <div id="main">
         <h1 id="main-title">PLAN<span class="E-title">E</span>RGY</h1>
-        <button id="announce-button" onclick="redirectionAnnounce()">Déclarer un incident</button>
+        <button id="announce-button" onclick="redirectionAnnounce2()">Déclarer un incident</button>
         <p id="id-incident">ID incident : </p>
-
+        <p id="incidentID"></p>
         <div id="left-div">
             <p class="title"> Informations </p>
             <div class="first-row">
@@ -28,9 +24,9 @@
                 <p class="sub-title"> Heure </p>
             </div>
             <div id="sub-row-1">
-                <p class="information"> Employé </p>
-                <p class="information"> Date </p>
-                <p class="information"> Heure </p>
+                <p id="employee-info" class="information"></p>
+                <p id="date-info" class="information"></p>
+                <p id="hour-info" class="information"></p>
             </div>
 
             <p class="title"> Incident </p>
@@ -39,11 +35,12 @@
                 <p class="sub-title"> Niveau </p>
             </div>
             <div id="sub-row-2">
-                <p class="information"> Intitulé </p>
-                <p class="information"> Niveau </p>
+                <p id="title-info" class="information"></p>
+                <p id="level-info" class="information"></p>
             </div>
-            <p id="description" class="sub-title"> Description </p>
-            <p id="sub-row-3" class="information"> Description </p>
+            <p id="sub-row-3" class="sub-title">Description</p>
+            <p id="description" class="information"></p>
+
         </div>
 
         <div id="right-div">
@@ -53,18 +50,20 @@
                 <p class="sub-title"> Niveau </p>
             </div>
             <div id="sub-row-right">
-                <p class="information"> Intitulé </p>
-                <p class="information"> Niveau </p>
+                <p id="title-info-right" class="information"></p>
+                <p id="level-info-right" class="information"></p>
             </div>
-            <p id="description-right" class="sub-title"> Description </p>
-            <p id="sub-row-right2" class="information"> Description </p>
+            <p id="sub-row-right2" class="sub-title"> Description </p>
+            <p id="description-right" class="information"></p>
             <p class="title"> Solution </p>
-            <input type="text" id="solution" placeholder="Description de la solution de l'incident">
+            <input type="text" id="solution" placeholder="Description de la solution de l'incident" required>
         </div>
         <button id="adjust-button">Régler l'incident</button>
-
     </div>
 </div>
 
+<script src="/ts/incidents/adjust-incidents.js"></script>
+<script src="/ts/nav/nav-call.js"></script>
+<script src="/ts/incidents/open-incidents.js"></script>
 </body>
 </html>
