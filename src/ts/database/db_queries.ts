@@ -245,7 +245,7 @@ export async function modifierArticle(idArticle: number, nouvellesValeurs: Parti
 export async function lancerReappro(date: Date, totalHT: number, TVA: number, idArticle: number, quantite: number): Promise<void> {
     const transaction = await Transaction.create({ date, totalHT, TVA });
     await Mouvement.create({ article_id: idArticle, transaction_id: transaction.id, quantite });
-    await Reappro.create({ id_transaction: transaction.id });
+    await Reappro.create({ id_transaction: transaction.id, annulable: 1, reception: 0});
 }
 
 // Annuler un réappro
