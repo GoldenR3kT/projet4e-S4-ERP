@@ -613,6 +613,28 @@ app.put('/modifierEdt', async (req, res) => {
     }
 });
 
+// Créer un employé
+app.post('/employe', async (req, res) => {
+  try {
+    const { alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays } = req.body;
+    await db.creerEmploye(alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays);
+    res.status(201).send({ message: "Employé créé avec succès" });
+  } catch (error) {
+    res.status(500).send({ message: "Erreur lors de la création de l'employé", error });
+  }
+});
+
+// Supprimer un employé
+app.delete('/employe/:id', async (req, res) => {
+  try {
+    const idEmploye = +req.params.id;
+    await db.supprimerEmploye(idEmploye);
+    res.status(200).send({ message: "Employé supprimé avec succès" });
+  } catch (error) {
+    res.status(500).send({ message: "Erreur lors de la suppression de l'employé", error });
+  }
+});
+
 // CLIENT / CARTE
 
 // Voir les clients

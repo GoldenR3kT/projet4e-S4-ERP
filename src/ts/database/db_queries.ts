@@ -276,6 +276,20 @@ export async function modifierInfosEmploye(idEmploye: number, nouvellesInfos: Pa
     await Employe.update(nouvellesInfos, { where: { id: idEmploye } });
 }
 
+// Créer un employé
+export async function creerEmploye(alias: string, mdp: string, dep: string, poste: string, rang: number, nom: string, prenom: string, courriel: string, tel: string, adresse: string, codePostal: string, pays: string): Promise<void> {
+    const partenaire = await Partenaire.create({});
+    const personne = await Personne.create({ nom, prenom, id: partenaire.id });
+    await Contact.create({ partenaire_id: partenaire.id, courriel, tel, adresse, codePostal, pays });
+    await Employe.create({ id: partenaire.id, alias: alias, mdp: mdp, dep: dep, poste: poste, rang: rang});
+}
+
+// Supprimer un employé
+export async function supprimerEmploye(idEmploye: number): Promise<void> {
+    await Partenaire.destroy({ where: { id: idEmploye } });
+}
+
+
 // Voir edt
 export async function voirEdt(idEmploye: number): Promise<typeof ActiviteEdt[]> {
     return await ActiviteEdt.findAll( { include: [{ model: Periode }] }, { where: { employe_id: idEmploye } });
