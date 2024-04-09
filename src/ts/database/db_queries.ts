@@ -371,3 +371,13 @@ export async function voirFournisseurs(): Promise<typeof Fournisseur[]> {
     return await Fournisseur.findAll();
 
 }
+
+export async function supprimerFournisseur(idFournisseur: number): Promise<void> {
+    await Fournisseur.destroy({ where: { id: idFournisseur } });
+}
+
+//modifier fournisseur
+
+export async function modifierFournisseur(idFournisseur: number, nouvellesValeurs: Partial<typeof Fournisseur>): Promise<void> {
+    await Fournisseur.update(nouvellesValeurs, { where: { id: idFournisseur } });
+}

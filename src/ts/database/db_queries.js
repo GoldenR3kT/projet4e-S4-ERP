@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
-exports.voirFournisseurs = exports.modifierEvenement = void 0;
+exports.modifierFournisseur = exports.supprimerFournisseur = exports.voirFournisseurs = exports.modifierEvenement = void 0;
 const models = require("./db_models");
 const Sequelize = require('sequelize');
 const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDePaiement, Paiement, Article, Energie, Produit, Menu, ProduitMenu, Pompe, Mouvement, Carte, CM, CCE, GestionCce, Bonus, CceBonus, Employe, Periode, ActiviteEdt, Promo, Evenement, Incident, SolutionIncident, Aide, AchatClient, Reappro } = models;
@@ -443,3 +443,16 @@ function voirFournisseurs() {
     });
 }
 exports.voirFournisseurs = voirFournisseurs;
+function supprimerFournisseur(idFournisseur) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield Fournisseur.destroy({ where: { id: idFournisseur } });
+    });
+}
+exports.supprimerFournisseur = supprimerFournisseur;
+//modifier fournisseur
+function modifierFournisseur(idFournisseur, nouvellesValeurs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield Fournisseur.update(nouvellesValeurs, { where: { id: idFournisseur } });
+    });
+}
+exports.modifierFournisseur = modifierFournisseur;

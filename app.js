@@ -768,3 +768,13 @@ app.get('/voirFournisseurs', (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
+app.delete('/supprimerFournisseur/:idFournisseur', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idFournisseur = +req.params.idFournisseur;
+    try {
+        yield db.supprimerFournisseur(idFournisseur);
+        res.send({ message: 'Fournisseur supprimé avec succès' });
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
