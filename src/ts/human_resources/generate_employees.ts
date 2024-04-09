@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         permissions: [],
                         emploiDuTemps: emploiDuTemps // Assigning the fetched schedule data
                     });
+
                 } catch (error) {
                     console.error(`Error fetching details for employee with ID ${employee.id}:`, error);
                 }
@@ -83,13 +84,54 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`/voirEdt/${employeeId}`);
             const scheduleData = await response.json();
-            console.log(scheduleData);
-            return scheduleData;
+
+            // Transform the received scheduleData into the format expected by the application
+            const emploiDuTemps: PeriodeEDT[] = scheduleData.map((item: any) => {
+                return {
+                    employe_id: item.employe_id,
+                    periode_id: item.periode_id,
+                    intitule: item.intitule,
+                    jour: new Date(item.periode.dateDebut).toLocaleDateString(),
+                    heureDebut: new Date(item.periode.dateDebut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    heureFin: new Date(item.periode.dateFin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                };
+            });
+
+            return emploiDuTemps;
         } catch (error) {
             console.error('Error fetching employee schedule:', error);
             return [];
         }
     }
+
+
+
+    function ajouterPeriodesPourEmployes(employeesData: Employee[], periodes: any[]): void {
+        employeesData.forEach((employee, index) => {
+            const periode: PeriodeEDT = {
+                employe_id: employee.id,
+                periode_id: periodes[index].periode_id,
+                intitule: periodes[index].intitule,
+                jour: new Date(periodes[index].periode.dateDebut).toLocaleDateString(),
+                heureDebut: new Date(periodes[index].periode.dateDebut).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                heureFin: new Date(periodes[index].periode.dateFin).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            };
+    
+            // Ajouter la période à l'emploi du temps de l'employé
+            employee.emploiDuTemps.push(periode);
+        });
+    }
+    
+    // Utilisation de la fonction avec les données existantes
+    const periodesData = [{"employe_id":1,"periode_id":1,"intitule":"Activité 1","periode":{"id":1,"dateDebut":"2024-04-01T00:00:00.000Z","dateFin":"2024-04-15T00:00:00.000Z"}},{"employe_id":2,"periode_id":2,"intitule":"Activité 2","periode":{"id":2,"dateDebut":"2024-04-16T00:00:00.000Z","dateFin":"2024-04-30T00:00:00.000Z"}},{"employe_id":3,"periode_id":3,"intitule":"Activité 3","periode":{"id":3,"dateDebut":"2024-05-01T00:00:00.000Z","dateFin":"2024-05-15T00:00:00.000Z"}}];
+    
+    ajouterPeriodesPourEmployes(employeesData, periodesData);
+    
+
+
+
+
+
 
     getEmployeesFromServer();
     refreshEmployeeList();
@@ -490,7 +532,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const whiteSquare = document.querySelector('.white-square') as HTMLInputElement;
             const weekInput = document.getElementById('week-input') as HTMLInputElement;
             
-            if (whiteSquare && weekInput) {
+            /*
+            if (weekInput) {
+
                 weekInput.addEventListener('keypress', async (event) => {
                     if (event.key === 'Enter') {
                         const edtText = document.getElementById('edt-text');
@@ -498,10 +542,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             edtText.textContent = 'EDT ' + weekInput.value;
                         }
                         const employeeWithSchedule = { ...employee, emploiDuTemps: await getEmployeeSchedule(employee.id) };
-                        displayScheduleDetails(employeeWithSchedule, whiteSquare);
                     }
                 });
             }
+            */
+            if (whiteSquare) {
+                //ajouterPeriodesPourEmployes();
+                displayScheduleDetails(employee, whiteSquare);
+            }
+
         }
     }
     
@@ -514,7 +563,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const periodeDetails = document.createElement('div');
             periodeDetails.classList.add('periode-details');
             periodeDetails.innerHTML = `
-                <p>Id: ${periode.periode_id}</p>
                 <p>Intitulé: ${periode.intitule}</p>
                 <p>Date: ${periode.jour}</p>
                 <p>Début: ${periode.heureDebut}</p>
