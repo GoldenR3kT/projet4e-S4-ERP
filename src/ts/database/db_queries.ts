@@ -39,9 +39,9 @@ const {
 // AUTHENTIFICATION
 
 // Se connecter
-export async function seConnecter(alias: string): Promise<string> {
+export async function seConnecter(alias: string): Promise<{ mdp: any; rang: any } | null> {
     const employe = await Employe.findOne({ where: { alias } });
-    return employe ? employe.mdp : null;
+    return employe ? { rang: employe.rang, mdp: employe.mdp } : null;
 }
 
 // Modifier le mdp
@@ -133,6 +133,17 @@ export async function encaisser(date: Date, totalHT: number, TVA: number, idArti
     }
 }
 
+export async function ajouterFournisseur(nom: string, adresse: string, email: string): Promise<void> {
+    const partenaire= await Partenaire.create();
+    await Fournisseur.create({ id: partenaire.id, nom, adresse, email });
+}
+
+//recuperer Transaction
+
+export async function recupererTransaction(): Promise<typeof Transaction[]> {
+    return await Transaction.findAll();
+}
+
 // Recuperer les pompes
 export async function recupererPompe(): Promise<typeof Pompe[]> {
     return await Pompe.findAll();
@@ -155,8 +166,7 @@ export async function recupererCarteCCE(): Promise<typeof CCE[]> {
 
 // Enregistrer un paiement
 export async function enregistrerPaiement(montant: number, idTransaction: number, idMoyenDePaiement: number, numCarte: number): Promise<void> {
-    const id_client = await Carte.findByPk(numCarte, { attributes: ['id_client'] });
-    await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: id_client });
+    await Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: numCarte });
 }
 
 // Imprimer une facture

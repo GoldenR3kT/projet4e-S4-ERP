@@ -5,6 +5,9 @@ const pumpScrollable: HTMLElement | null = document.getElementById('pumps-statio
 const searchInput = document.getElementById('search-product-input') as HTMLInputElement;
 searchInput.addEventListener('input', searchProducts);
 
+let tabProduits: any[] = [];
+let tabQuantites: any[] = [];
+let tabMoyenDePaiement: any[] = [];
 
 
 const total = document.getElementById('price-total') as HTMLParagraphElement;
@@ -62,6 +65,9 @@ async function searchProducts() {
                             pumpOkClickHandler = async () => {
                                 let energyInput = document.getElementById("quantity-energy") as HTMLInputElement;
 
+                                tabProduits.push(produit.id);
+
+                                tabQuantites.push(energyInput.value);
                                 toAskQEnergy.style.display = 'none';
                                 toAskQEnergy.style.zIndex = '0';
                                 console.log(energyInput.value);
@@ -99,6 +105,9 @@ async function searchProducts() {
                             totalPrice += produit.prixTTC;
                             total.textContent = totalPrice + ' €';
 
+                            tabProduits.push(produit.id);
+
+                            tabQuantites.push(1);
 
                             const newProductToAdd = document.createElement('div').cloneNode(true) as HTMLDivElement;
                             const productNameClone = productName.cloneNode(true) as HTMLParagraphElement;
@@ -132,27 +141,47 @@ function disableAllCheckboxes() {
         }
     });
 }
-
 document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
     if (checkbox instanceof HTMLInputElement) {
         checkbox.addEventListener('change', () => {
-            const associatedInput = document.getElementById(checkbox.id + '-input')as HTMLInputElement;
-            if (associatedInput instanceof HTMLInputElement) {
+            const associatedInput = document.getElementById(checkbox.id + '-input') as HTMLInputElement;
+            const associatedLabel = checkbox.previousElementSibling as HTMLLabelElement;
+
+            if (associatedInput instanceof HTMLInputElement && associatedLabel instanceof HTMLLabelElement) {
                 associatedInput.style.backgroundColor = checkbox.checked ? '#0FD274' : '#f1e3a4';
                 associatedInput.disabled = !checkbox.checked;
-            }
-            if (checkbox.checked) {
-                checkbox.parentElement?.classList.add('checked');
-                buttonValidate.disabled = false;
 
-                associatedInput.disabled = false;
-            } else {
-                checkbox.parentElement?.classList.remove('checked');
-                buttonValidate.disabled = true;
+                if (checkbox.checked) {
+                    checkbox.parentElement?.classList.add('checked');
+                    buttonValidate.disabled = false;
+
+                    associatedInput.disabled = false;
+
+                    // Ajouter au tableau tabmoyendepaiement selon le type de paiement
+                    if (associatedLabel.textContent === 'CB') {
+                        tabMoyenDePaiement.push(1);
+                    } else if (associatedLabel.textContent === 'CCE') {
+                        tabMoyenDePaiement.push(2);
+                    } else if (associatedLabel.textContent === 'Espèces') {
+                        tabMoyenDePaiement.push(3);
+                    }
+                } else {
+                    checkbox.parentElement?.classList.remove('checked');
+                    buttonValidate.disabled = true;
+
+                    if (associatedLabel.textContent === 'CB') {
+                        tabMoyenDePaiement = tabMoyenDePaiement.filter(item => item !== 1);
+                    } else if (associatedLabel.textContent === 'CCE') {
+                        tabMoyenDePaiement = tabMoyenDePaiement.filter(item => item !== 2);
+                    } else if (associatedLabel.textContent === 'Espèces') {
+                        tabMoyenDePaiement = tabMoyenDePaiement.filter(item => item !== 3);
+                    }
+                }
             }
         });
     }
 });
+
 
 async function getMemberCard() {
     const memberIdInput = document.getElementById('id-member') as HTMLInputElement;
@@ -369,6 +398,72 @@ displayPumps();
 
 document.querySelector('#member-card-client-search')?.addEventListener('click', getMemberCard);
 document.querySelector('#cce-card-client-search')?.addEventListener('click', getCardCCE);
-document.querySelector('#validate')?.addEventListener('click', () => {
-    window.location.href = '/cash_desk/overview';
+document.getElementById('validate')?.addEventListener('click', async () => {
+    try {
+        const date = Date.now();
+        const totalHT = total.textContent ? parseFloat(total.textContent) : 0;
+        const TVA = 0.2
+        console.log(tabProduits);
+        console.log(tabQuantites);
+        const response = await fetch('/encaisser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                date: date,
+                totalHT: totalHT,
+                TVA: TVA,
+                idArticles: tabProduits,
+                quantites: tabQuantites
+            })
+        });
+        if(response.ok){
+            window.location.href = '/cash_desk/overview';
+        }
+        //await addPaymentDb();
+    } catch (error) {
+        console.error('Une erreur est survenue:', error);
+    }
+
 });
+
+/*
+async function addPaymentDb() {
+    try {
+
+        const totalMon= total.textContent ? parseFloat(total.textContent.replace('€', '')) : 0;
+        const idTransaction = await fetch('/voirHistoriqueTransactions');
+        const idTransactionJson = await idTransaction.json();
+        if (idTransactionJson.length > 0) {
+            idTransactionJson.sort((a: any, b: any) => b.id - a.id);
+            const transactionWithMaxId = idTransactionJson[0];
+            console.log('Transaction avec l\'ID le plus grand :', transactionWithMaxId);
+        } else {
+            console.log('Aucune transaction trouvée.');
+        }
+
+        for (let i = 0; i < tabMoyenDePaiement.length; i++) {
+            const response = await fetch('/enregistrerPaiement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    montantTotal: totalMon,
+                    id_transaction: idTransactionJson[0].id,
+                    id_moyenDePaiement: tabMoyenDePaiement[i],
+                    id_client: null
+                })
+            });
+
+            if (response.ok) {
+                console.log('Mise à jour des points de fidélité effectuée avec succès.');
+            } else {
+                console.error('Erreur lors de la requête:', response.status);
+            }
+        }
+    } catch (error) {
+        console.error('Une erreur est survenue:', error);
+    }
+}*/

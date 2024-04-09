@@ -39,8 +39,8 @@
 
 
 #products-list-box{
-    width: 30vw;
-    height: 40vh;
+    width: 38vw;
+    height: 48vh;
     padding: 10px;
     font-size: 20px;
     border-radius: 10px;
@@ -53,90 +53,11 @@
 
 #products-list-scrollable {
     overflow-y: auto;
-    height: 25vh;
+    height: 35vh;
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 0.5em;
 
-}
-
-#ask-payment-method{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 3%;
-}
-
-
-#ask-payment-method > button{
-    width: 9vw;
-    height:8vh;
-    font-size: 20px;
-    margin: 10px;
-    background-color: #0FD274;
-    text-align: center;
-    box-shadow: 0 0 10px #494949;
-
-}
-
-
-
-/*calculator*/
-
-#calculator{
-    width: 13vw;
-    height: 30vh;
-    padding: 10px;
-    font-size: 20px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    background-color: #0FD274;
-    box-shadow: 0 0 10px #494949;
-
-
-}
-
-
-#calculator-screen-input{
-    width: 70%;
-    height: 4vh;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    margin-left: 15%;
-    background-color: #ffffff;
-    text-align: end;
-}
-
-#button-ok{
-    width: 70%;
-    height: 4vh;
-    font-size: 20px;
-    margin-top: -0.5%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ffffff;
-}
-
-#calculator-buttons{
-    align-items: center;
-    text-align: center;
-}
-
-.button-calculator {
-    width: 17%;
-    height: 3vh;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 1vh;
-    background-color: #ffffff;
-}
-
-.button-calculator:hover, #button-ok:hover {
-    background-color: #105408;
-    cursor: pointer;
 }
 
 
@@ -148,7 +69,7 @@
     margin: 10px;
     background-color: #0FD274;
     text-align: center;
-    box-shadow: 0 0 10px #494949;
+    box-shadow: 0 0 5px #494949;
 
 }
 h2{

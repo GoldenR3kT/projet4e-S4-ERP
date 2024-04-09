@@ -171,9 +171,15 @@ import {addAbortSignal} from "node:stream";
 app.post('/seConnecter', async (req, res) => {
     const alias = req.body.alias;
     try {
-      const mdp = await db.seConnecter(alias);
-      if(mdp === req.body.password){
-        res.redirect('/cash_desk');
+      const employe = await db.seConnecter(alias);
+
+      if(employe?.mdp === req.body.password){
+        if(employe?.rang === 1){
+          res.redirect('/storage#energie');
+        }
+        else{
+          res.redirect('/cash_desk');
+        }
       }
       else{
         res.status(401).send({ error: 'Mot de passe incorrect' });
@@ -358,14 +364,26 @@ app.get('/voirDerniersIncidentsRegles', async (req, res) => {
     const TVA = req.body.TVA;
     const idArticles = req.body.idArticles;
     const quantites = req.body.quantites;
+
     try {
       await db.encaisser(date, totalHT, TVA, idArticles, quantites);
-      res.send({ message: 'Encaissement effectué avec succès' });
+      res.redirect('/cash_desk/overview');
     } catch (error) {
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
 
+
+  //recuperer transaction
+
+    app.get('/recupererTransaction', async (req, res) => {
+        try {
+        const transactions = await db.recupererTransaction();
+        res.send(transactions);
+        } catch (error) {
+        res.status(500).send({error: 'Une erreur est survenue'});
+        }
+    });
 
   // Récuperer Pompe
 
@@ -425,9 +443,16 @@ app.get('/getCardCCE', async (req, res) => {
       await db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte);
       res.send({ message: 'Paiement enregistré avec succès' });
     } catch (error) {
+      console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });
     }
   });
+
+
+
+
+
+
 
 // Voir historique des transactions
 app.get('/voirHistoriqueTransactions', async (req, res) => {

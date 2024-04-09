@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
-exports.modifierEvenement = void 0;
+exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.recupererTransaction = exports.ajouterFournisseur = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
+exports.modifierEvenement = exports.creerEvenement = exports.modifierPromotion = void 0;
 const models = require("./db_models");
 const Sequelize = require('sequelize');
 const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDePaiement, Paiement, Article, Energie, Produit, Menu, ProduitMenu, Pompe, Mouvement, Carte, CM, CCE, GestionCce, Bonus, CceBonus, Employe, Periode, ActiviteEdt, Promo, Evenement, Incident, SolutionIncident, Aide, AchatClient, Reappro } = models;
@@ -19,7 +19,7 @@ const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDe
 function seConnecter(alias) {
     return __awaiter(this, void 0, void 0, function* () {
         const employe = yield Employe.findOne({ where: { alias } });
-        return employe ? employe.mdp : null;
+        return employe ? { rang: employe.rang, mdp: employe.mdp } : null;
     });
 }
 exports.seConnecter = seConnecter;
@@ -137,6 +137,20 @@ function encaisser(date, totalHT, TVA, idArticles, quantites) {
     });
 }
 exports.encaisser = encaisser;
+function ajouterFournisseur(nom, adresse, email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const partenaire = yield Partenaire.create();
+        yield Fournisseur.create({ id: partenaire.id, nom, adresse, email });
+    });
+}
+exports.ajouterFournisseur = ajouterFournisseur;
+//recuperer Transaction
+function recupererTransaction() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield Transaction.findAll();
+    });
+}
+exports.recupererTransaction = recupererTransaction;
 // Recuperer les pompes
 function recupererPompe() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -167,8 +181,7 @@ exports.recupererCarteCCE = recupererCarteCCE;
 // Enregistrer un paiement
 function enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte) {
     return __awaiter(this, void 0, void 0, function* () {
-        const id_client = yield Carte.findByPk(numCarte, { attributes: ['id_client'] });
-        yield Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: id_client });
+        yield Paiement.create({ montantTotal: montant, id_transaction: idTransaction, id_moyenDePaiement: idMoyenDePaiement, id_client: numCarte });
     });
 }
 exports.enregistrerPaiement = enregistrerPaiement;
@@ -268,9 +281,9 @@ function modifierArticle(idArticle, nouvellesValeurs) {
 }
 exports.modifierArticle = modifierArticle;
 // Lancer un réappro
-function lancerReappro(idArticle, quantite) {
+function lancerReappro(date, totalHT, TVA, idArticle, quantite) {
     return __awaiter(this, void 0, void 0, function* () {
-        const transaction = yield Transaction.create({});
+        const transaction = yield Transaction.create({ date, totalHT, TVA });
         yield Mouvement.create({ article_id: idArticle, transaction_id: transaction.id, quantite });
         yield Reappro.create({ id_transaction: transaction.id });
     });

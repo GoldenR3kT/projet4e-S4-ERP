@@ -155,9 +155,14 @@ const db = __importStar(require("./src/ts/database/db_queries"));
 app.post('/seConnecter', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const alias = req.body.alias;
     try {
-        const mdp = yield db.seConnecter(alias);
-        if (mdp === req.body.password) {
-            res.redirect('/cash_desk');
+        const employe = yield db.seConnecter(alias);
+        if ((employe === null || employe === void 0 ? void 0 : employe.mdp) === req.body.password) {
+            if ((employe === null || employe === void 0 ? void 0 : employe.rang) === 1) {
+                res.redirect('/storage#energie');
+            }
+            else {
+                res.redirect('/cash_desk');
+            }
         }
         else {
             res.status(401).send({ error: 'Mot de passe incorrect' });
@@ -341,7 +346,17 @@ app.post('/encaisser', (req, res) => __awaiter(void 0, void 0, void 0, function*
     const quantites = req.body.quantites;
     try {
         yield db.encaisser(date, totalHT, TVA, idArticles, quantites);
-        res.send({ message: 'Encaissement effectué avec succès' });
+        res.redirect('/cash_desk/overview');
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
+//recuperer transaction
+app.get('/recupererTransaction', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const transactions = yield db.recupererTransaction();
+        res.send(transactions);
     }
     catch (error) {
         res.status(500).send({ error: 'Une erreur est survenue' });
@@ -400,6 +415,7 @@ app.post('/enregistrerPaiement', (req, res) => __awaiter(void 0, void 0, void 0,
         res.send({ message: 'Paiement enregistré avec succès' });
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
@@ -495,13 +511,17 @@ app.put('/modifierArticle', (req, res) => __awaiter(void 0, void 0, void 0, func
 }));
 // Lancer un réappro
 app.post('/lancerReappro', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const date = req.body.date;
+    const totalHT = req.body.totalHT;
+    const TVA = req.body.TVA;
     const idArticle = req.body.idArticle;
     const quantite = req.body.quantite;
     try {
-        yield db.lancerReappro(idArticle, quantite);
+        yield db.lancerReappro(date, totalHT, TVA, idArticle, quantite);
         res.send({ message: 'Réappro lancé avec succès' });
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
