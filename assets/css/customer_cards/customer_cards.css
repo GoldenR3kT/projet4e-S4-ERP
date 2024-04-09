@@ -300,3 +300,10 @@ svg:hover{
     background-color: #2e9a21; /* Couleur du bouton client au survol dans le CSS */
     color: #ffffff; /* Couleur du texte du bouton client au survol dans le CSS */
 }
+
+button:disabled {
+    background-color: #dddddd; /* Couleur de fond grisée */
+    color: #888888; /* Couleur de texte grisée */
+    cursor: not-allowed; /* Curseur interdit */
+    opacity: 0.6; /* Opacité réduite */
+}

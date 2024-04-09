@@ -1,20 +1,61 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 document.addEventListener("DOMContentLoaded", () => {
     const listCustomers = document.querySelector('.list-customers');
     const infoCustomer = document.querySelector('.info-customer');
     // Données des clients (simulées)
-    const customersData = [
-        { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", cce: "", cm: "cm1" },
-        { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", cce: "cce2", cm: "" },
-        { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", cce: "cce3", cm: "cm3" },
-        { id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", cce: "cce4", cm: "cm4" },
-        { id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", cce: "cce5", cm: "cm5" },
-        { id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", cce: "cce6", cm: "cm6" },
-        { id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", cce: "cce7", cm: "cm7" },
-        { id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", cce: "cce8", cm: "cm8" },
-        { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", cce: "cce9", cm: "cm9" },
-        { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", cce: "cce10", cm: "cm10" }
-    ];
+    const customersData = [];
+    getCustomersFromServer();
+    function getCustomersFromServer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+            try {
+                const response = yield fetch('/voirClients');
+                const clientsFromServer = yield response.json();
+                // Clear the existing customersData array before populating it with new data
+                customersData.length = 0;
+                // Populate customersData array with fetched data
+                for (const client of clientsFromServer) {
+                    try {
+                        const contact = (_b = (_a = client === null || client === void 0 ? void 0 : client.personne) === null || _a === void 0 ? void 0 : _a.partenaire) === null || _b === void 0 ? void 0 : _b.contact;
+                        const tel = (_c = contact === null || contact === void 0 ? void 0 : contact.tel) !== null && _c !== void 0 ? _c : '';
+                        const email = (_d = contact === null || contact === void 0 ? void 0 : contact.courriel) !== null && _d !== void 0 ? _d : '';
+                        const adresse = (_e = contact === null || contact === void 0 ? void 0 : contact.adresse) !== null && _e !== void 0 ? _e : '';
+                        const codePostal = (_f = contact === null || contact === void 0 ? void 0 : contact.codePostal) !== null && _f !== void 0 ? _f : '';
+                        const pays = (_g = contact === null || contact === void 0 ? void 0 : contact.pays) !== null && _g !== void 0 ? _g : '';
+                        const cce = 0; // Ajoutez la logique pour récupérer cce
+                        const cm = 0; // Ajoutez la logique pour récupérer cm
+                        customersData.push({
+                            id: client.id,
+                            nom: (_j = (_h = client.personne) === null || _h === void 0 ? void 0 : _h.nom) !== null && _j !== void 0 ? _j : '',
+                            prenom: (_l = (_k = client.personne) === null || _k === void 0 ? void 0 : _k.prenom) !== null && _l !== void 0 ? _l : '',
+                            tel: tel,
+                            email: email,
+                            adresse: `${adresse}, ${codePostal}, ${pays}`,
+                            cce: cce,
+                            cm: cm
+                        });
+                    }
+                    catch (error) {
+                        console.error(`Error fetching details for client with ID ${client.id}:`, error);
+                    }
+                }
+                // Rafraîchir la liste des clients
+                refreshCustomerList();
+            }
+            catch (error) {
+                console.error('Error fetching clients data:', error);
+            }
+        });
+    }
     //refreshCustomerList();
     // Fonction pour supprimer et réafficher la liste des employés
     function refreshCustomerList() {
@@ -125,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (addCceButton) {
             addCceButton.addEventListener('click', () => {
                 // Générer une valeur aléatoire pour cce
-                const randomValue = Math.random().toString(36).substring(7);
+                const randomValue = Math.random();
                 customer.cce = randomValue;
                 // Mettre à jour l'affichage des informations client
                 showCustomerInfo(customer);
@@ -134,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (addCmButton) {
             addCmButton.addEventListener('click', () => {
                 // Générer une valeur aléatoire pour cm
-                const randomValue = Math.random().toString(36).substring(7);
+                const randomValue = Math.random();
                 customer.cm = randomValue;
                 // Mettre à jour l'affichage des informations client
                 showCustomerInfo(customer);
@@ -191,8 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
             updatedCustomer.tel = tel.value;
             updatedCustomer.email = email.value;
             updatedCustomer.adresse = adresse.value;
-            updatedCustomer.cce = cce.value;
-            updatedCustomer.cm = cm.value;
+            updatedCustomer.cce = parseInt(cce.value);
+            updatedCustomer.cm = parseInt(cm.value);
             // Mettez à jour l'affichage de l'employé dans la liste
             const customerElement = document.querySelector(`.customer[data-id="${customerId}"]`);
             if (customerElement) {
@@ -226,8 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 tel: "",
                 email: "",
                 adresse: "",
-                cce: "",
-                cm: ""
+                cce: 0,
+                cm: 0
             };
         }
         else {
@@ -299,13 +340,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const addCmButton = document.getElementById('add-cm-button');
         if (addCceButton) {
             addCceButton.addEventListener('click', () => {
-                newCustomer.cce = Math.random().toString(36).substring(7);
+                newCustomer.cce = Math.random();
                 handleAddCustomerClick(event, newCustomer);
             });
         }
         if (addCmButton) {
             addCmButton.addEventListener('click', () => {
-                newCustomer.cm = Math.random().toString(36).substring(7);
+                newCustomer.cm = Math.random();
                 handleAddCustomerClick(event, newCustomer);
             });
         }
@@ -333,6 +374,29 @@ document.addEventListener("DOMContentLoaded", () => {
         if (infoCustomer) {
             infoCustomer.innerHTML = '';
         }
+        // Envoyer les données du client au serveur
+        addCustomerInServer(customer);
+    }
+    function addCustomerInServer(customerData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch('/creerClient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(customerData)
+                });
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la création du client : ' + response.statusText);
+                }
+                const responseData = yield response.json();
+                console.log(responseData.message); // Affiche le message de la réponse
+            }
+            catch (error) {
+                console.error('Une erreur est survenue : ', error);
+            }
+        });
     }
     // Récupérer les éléments de recherche par nom et par ID
     const searchByNameInput = document.getElementById('search-by-name');
@@ -431,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.setAttribute('alt', 'Card Image');
         infoDiv.appendChild(img);
         const span = document.createElement('span');
-        span.textContent = card.id + " " + card.idClient + " " + card.ptsMembre + card.credit;
+        span.textContent = card.id + " " + card.type + " " + card.idClient + " " + card.ptsMembre + card.credit;
         infoDiv.appendChild(span);
         // Boutons (à droite)
         const buttonsDiv = document.createElement('div');
@@ -626,20 +690,23 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
         if (createMemberCardButton) {
-            createMemberCardButton.addEventListener('click', () => {
-                newCard.type = "cm";
+            createMemberCardButton.addEventListener('click', function (event) {
+                event.preventDefault();
                 const cardId = document.getElementById('card-id');
                 newCard.id = parseFloat(cardId.value);
                 cardsData.push(newCard);
+                clearInfoCustomer();
                 refreshCardList();
             });
         }
         if (createEnergyCreditCardButton) {
-            createEnergyCreditCardButton.addEventListener('click', () => {
+            createEnergyCreditCardButton.addEventListener('click', function (event) {
+                event.preventDefault();
                 newCard.type = "cce";
                 const cardId = document.getElementById('card-id');
                 newCard.id = parseFloat(cardId.value);
                 cardsData.push(newCard);
+                clearInfoCustomer();
                 refreshCardList();
             });
         }
