@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                 } catch (error) {
+
                     console.error(`Error fetching details for employee with ID ${employee.id}:`, error);
                 }
             }
