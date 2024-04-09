@@ -278,7 +278,7 @@ export async function modifierInfosEmploye(idEmploye: number, nouvellesInfos: Pa
 
 // Voir edt
 export async function voirEdt(idEmploye: number): Promise<typeof ActiviteEdt[]> {
-    return await ActiviteEdt.findAll({ where: { employe_id: idEmploye } });
+    return await ActiviteEdt.findAll( { include: [{ model: Periode }] }, { where: { employe_id: idEmploye } });
 }
 
 // Modif edt
