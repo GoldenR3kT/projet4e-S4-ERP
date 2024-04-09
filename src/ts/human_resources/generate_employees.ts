@@ -13,23 +13,85 @@ document.addEventListener("DOMContentLoaded", () => {
         poste: string;
         rang: string;
         permissions: string[];
+        emploiDuTemps: PeriodeEDT[];
+    }
+
+
+    // Interface représentant une période de l'emploi du temps
+    interface PeriodeEDT {
+        employe_id: number;
+        periode_id: number;
+        intitule: string;
+        jour: string;
+        heureDebut: string;
+        heureFin: string;
     }
 
     const selectedPermissions: string[] = [];
 
-    // Données des employés (simulées)
-    const employeesData: Employee[] = [
-        { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", poste: "Poste1", rang: "Rang1", permissions:[] },
-        { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", poste: "Poste2", rang: "Rang2", permissions:[] },
-        { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", poste: "Poste3", rang: "Rang3", permissions:[] },
-        { id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", poste: "Poste4", rang: "Rang4", permissions:[] },
-        { id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", poste: "Poste5", rang: "Rang5", permissions:[] },
-        { id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", poste: "Poste6", rang: "Rang6", permissions:[] },
-        { id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", poste: "Poste7", rang: "Rang7", permissions:[] },
-        { id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", poste: "Poste8", rang: "Rang8", permissions:[] },
-        { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", poste: "Poste9", rang: "Rang9", permissions:[] },
-        { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", poste: "Poste10", rang: "Rang10", permissions:[] }
-    ];
+    let employeesData: Employee[] = [];
+
+    async function getEmployeesFromServer() {
+        try {
+            const response = await fetch('/voirTousEmployes');
+            const employeesFromServer = await response.json();
+    
+            // Clear the existing employeesData array before populating it with new data
+            employeesData.length = 0;
+    
+            // Populate employeesData array with fetched data
+            for (const employee of employeesFromServer) {
+                try {
+                    const fullEmployeeInfoResponse = await fetch(`/voirInfosEmploye/${employee.id}`);
+                    const employeeDetails = await fullEmployeeInfoResponse.json();
+    
+                    const tel = employeeDetails?.personne?.partenaire?.contact?.tel ?? '';
+                    const email = employeeDetails?.personne?.partenaire?.contact?.courriel ?? '';
+                    const adresse = employeeDetails?.personne?.partenaire?.contact?.adresse ?? '';
+                    const codePostal = employeeDetails?.personne?.partenaire?.contact?.codePostal ?? '';
+                    const pays = employeeDetails?.personne?.partenaire?.contact?.pays ?? '';
+    
+                    // Call getEmployeeSchedule to fetch schedule data
+                    const emploiDuTemps = await getEmployeeSchedule(employee.id);
+    
+                    employeesData.push({
+                        id: employee.id,
+                        nom: employee.personne?.nom ?? '',
+                        prenom: employee.personne?.prenom ?? '',
+                        tel: tel,
+                        email: email,
+                        adresse: `${adresse}, ${codePostal}, ${pays}`,
+                        poste: employee.poste ?? '',
+                        rang: employee.rang ?? '',
+                        permissions: [],
+                        emploiDuTemps: emploiDuTemps // Assigning the fetched schedule data
+                    });
+                } catch (error) {
+                    console.error(`Error fetching details for employee with ID ${employee.id}:`, error);
+                }
+            }
+    
+            // Refresh the employee list
+            refreshEmployeeList();
+        } catch (error) {
+            console.error('Error fetching employees data:', error);
+        }
+    }
+
+    // Fonction pour récupérer l'emploi du temps d'un employé
+    async function getEmployeeSchedule(employeeId: number): Promise<PeriodeEDT[]> {
+        try {
+            const response = await fetch(`/voirEdt/${employeeId}`);
+            const scheduleData = await response.json();
+            console.log(scheduleData);
+            return scheduleData;
+        } catch (error) {
+            console.error('Error fetching employee schedule:', error);
+            return [];
+        }
+    }
+
+    getEmployeesFromServer();
     refreshEmployeeList();
 
     // Fonction pour supprimer et réafficher la liste des employés
@@ -121,17 +183,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="line-input">
                         <div class="input-container">
                             <label for="tel">Numéro de téléphone :</label>
-                            <input type="tel" id="tel" name="tel" value="${employee.tel}" required>
+                            <input type="tel" id="tel" name="tel" value="${employee.tel}">
                         </div>
                         <div class="input-container">
                             <label for="email">Adresse email :</label>
-                            <input type="email" id="email" name="email" value="${employee.email}" required>
+                            <input type="email" id="email" name="email" value="${employee.email}">
                         </div>
                     </div>
                     <div class="line-input">
                         <div class="input-container">
                             <label for="adresse">Adresse :</label>
-                            <textarea id="adresse" name="adresse" rows="4" required>${employee.adresse}</textarea>
+                            <textarea id="adresse" name="adresse" rows="4">${employee.adresse}</textarea>
                         </div>
                     </div>
                     <br><br>
@@ -141,11 +203,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="line-input">
                         <div class="input-container">
                             <label for="poste">Poste :</label>
-                            <input type="text" id="poste" name="poste" value="${employee.poste}" required><br><br>
+                            <input type="text" id="poste" name="poste" value="${employee.poste}"><br><br>
                         </div>
                         <div class="input-container">
                             <label for="rang">Rang :</label>
-                            <input type="text" id="rang" name="rang" value="${employee.rang}" required><br><br>
+                            <input type="text" id="rang" name="rang" value="${employee.rang}"><br><br>
                         </div>
                     </div>
                 </fieldset>
@@ -219,21 +281,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <label for="activity">Label de l'activité :</label>
                                     <input type="text" id="activity" name="activity" required placeholder="Activité">
                             </div>
+                            <div class="input-container">
+                                <label for="date">Date :</label>
+                                <input type="text" id="date" name="date" required placeholder="JJ/MM/AAAA">
+                            </div>
                         </div>
                         <div class="line-input">
-                            <div class="input-container">
-                                <label for="startdate">Date de début :</label>
-                                <input type="text" id="startdate" name="startdate" required placeholder="JJ/MM/AAAA">
-                            </div>
                             <div class="input-container">
                                 <label for="starthour">Heure de début :</label>
                                 <input type="text" id="starthour" name="starthour" required placeholder="hh:mm">
-                            </div>
-                        </div>
-                        <div class="line-input">
-                            <div class="input-container">
-                                <label for="enddate">Date de fin :</label>
-                                <input type="text" id="enddate" name="enddate" required placeholder="JJ/MM/AAAA">
                             </div>
                             <div class="input-container">
                                 <label for="endhour">Heure de fin :</label>
@@ -265,10 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const modifInfoButton = document.getElementById('modif-info-button');
         const addPermButton = document.getElementById('add-perm-button');
         const removePermButton = document.getElementById('remove-perm-button');
-        const addActivityButton = document.getElementById('add-activity-button');
         const removeActivityButton = document.getElementById('remove-activity-button');
 
-        if (addPermButton && removePermButton && addActivityButton && removeActivityButton) {
+        if (addPermButton && removePermButton && removeActivityButton) {
             addPermButton.addEventListener('click', () => {handleAddPermissionClick(employee.permissions)});
             removePermButton.addEventListener('click',() => { handleRemovePermissionClick(employee.permissions)});
         }
@@ -277,21 +332,90 @@ document.addEventListener("DOMContentLoaded", () => {
                 showEmployeeInfo(employee);
             });
         }
+
+        const addActivityButton = document.getElementById('add-activity-button');
+        if (addActivityButton) {
+            addActivityButton.addEventListener('click', async () => {
+                const activityInput = document.getElementById('activity') as HTMLInputElement;
+                const dateInput = document.getElementById('date') as HTMLInputElement;
+                const startHourInput = document.getElementById('starthour') as HTMLInputElement;
+                const endHourInput = document.getElementById('endhour') as HTMLInputElement;
+    
+                if (activityInput && dateInput && startHourInput && endHourInput) {
+                    const activity = activityInput.value;
+                    const date = dateInput.value;
+                    const startHour = startHourInput.value;
+                    const endHour = endHourInput.value;
+    
+                    // Créer un nouvel objet PeriodeEDT avec les nouvelles valeurs
+                    const newPeriode: PeriodeEDT = {
+                        periode_id: -1, // ID temporaire, sera remplacé par le serveur
+                        employe_id: employee.id,
+                        intitule: activity,
+                        jour: date,
+                        heureDebut: startHour,
+                        heureFin: endHour
+                    };
+    
+                    // Appeler la fonction pour modifier la période de l'EDT
+                    await handleModifyPeriodButtonClick(employee.id, -1, newPeriode);
+                }
+            });
+        }
+        
     }
 
-/*
-    // Fonction pour mettre à jour la liste des permissions sélectionnées
-    function updateSelectedPermissionsList(selectedPermissionsList: HTMLElement) {
-        // Effacer la liste actuelle
-        selectedPermissionsList.innerHTML = "";
+    async function modifyEmployeeScheduleOnServer(employeeId: number, idPeriode: number, nouvellesValeurs: any): Promise<boolean> {
+        try {
+            const response = await fetch('/modifierEdt', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idPeriode: idPeriode,
+                    nouvellesValeurs: nouvellesValeurs
+                })
+            });
+    
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log(responseData.message);
+                return true;
+            } else {
+                console.error('Failed to modify employee schedule:', response.status);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error modifying employee schedule:', error);
+            return false;
+        }
+    }
 
-        // Parcourir le tableau des permissions sélectionnées et les ajouter à la liste
-        selectedPermissions.forEach((permission) => {
-            const listItem = document.createElement("li");
-            listItem.textContent = permission;
-            selectedPermissionsList.appendChild(listItem);
-        });
-    }*/
+    async function handleModifyPeriodButtonClick(employeeId: number, idPeriode: number, nouvellesValeurs: any) {
+        const success: boolean = await modifyEmployeeScheduleOnServer(employeeId, idPeriode, nouvellesValeurs);
+        if (success) {
+            // Ajouter la nouvelle période à l'emploi du temps local de l'employé
+            const employee = employeesData.find(emp => emp.id === employeeId);
+            if (employee) {
+                const newPeriode: PeriodeEDT = {
+                    periode_id: idPeriode, // L'ID de la période modifiée
+                    employe_id: employeeId,
+                    intitule: nouvellesValeurs.intitule,
+                    jour: nouvellesValeurs.jour,
+                    heureDebut: nouvellesValeurs.heureDebut,
+                    heureFin: nouvellesValeurs.heureFin
+                };
+                employee.emploiDuTemps.push(newPeriode);
+            }
+    
+            // Rafraîchir la liste des employés
+            refreshEmployeeList();
+        } else {
+            // Gérer l'échec de la modification des périodes de l'EDT
+        }
+    }
+    
 
     // Fonction pour mettre à jour la liste des permissions sélectionnées
     function updateSelectedPermissionsList(selectedPermissionsList: HTMLElement, permissions: string[]) {
@@ -305,48 +429,6 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedPermissionsList.appendChild(listItem);
         });
     }
-/*
-    // Fonction pour gérer le clic sur le bouton "Ajouter" dans le formulaire de permissions
-    function handleAddPermissionClick() {
-        const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
-        const selectedPermissionsList = document.getElementById("selected-perms");
-
-        // Récupérer la permission sélectionnée
-        const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
-
-        // Vérifier si la permission n'a pas déjà été sélectionnée
-        if (!selectedPermissions.includes(selectedPermission)) {
-            // Ajouter la permission à la liste des permissions sélectionnées
-            selectedPermissions.push(selectedPermission);
-
-            // Mettre à jour l'affichage de la liste des permissions sélectionnées
-            if (selectedPermissionsList) {
-                updateSelectedPermissionsList(selectedPermissionsList);
-            }
-        }
-    }
-
-    // Fonction pour gérer le clic sur le bouton "Supprimer" dans le formulaire de permissions
-    function handleRemovePermissionClick() {
-        const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
-        const selectedPermissionsList = document.getElementById("selected-perms");
-
-        // Récupérer la permission sélectionnée
-        const selectedPermission = permissionSelect.options[permissionSelect.selectedIndex].value;
-
-        // Trouver l'index de la permission sélectionnée dans le tableau des permissions sélectionnées
-        const index = selectedPermissions.indexOf(selectedPermission);
-
-        // Vérifier si la permission est présente dans le tableau et la supprimer si elle est trouvée
-        if (index !== -1) {
-            selectedPermissions.splice(index, 1);
-
-            // Mettre à jour l'affichage de la liste des permissions sélectionnées
-            if (selectedPermissionsList) {
-                updateSelectedPermissionsList(selectedPermissionsList);
-            }
-        }
-    }*/
 
     function handleAddPermissionClick(permissions: string[]) {
         const permissionSelect = document.getElementById("perm") as HTMLSelectElement;
@@ -398,72 +480,145 @@ document.addEventListener("DOMContentLoaded", () => {
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E" alt="Employee Image">
                     <h2>${employee.nom} ${employee.prenom}</h2>
                     <div class="white-square">
-                        <div id="edt-text">EDT</div>
+                        <!-- EDT periods will be displayed here -->
                     </div>
                     <p>Semaine du :</p>
                     <input type="text" id="week-input" placeholder="jj/mm/aaaa">
                 </div>
             `;
+            
+            const whiteSquare = document.querySelector('.white-square') as HTMLInputElement;
             const weekInput = document.getElementById('week-input') as HTMLInputElement;
-            weekInput?.addEventListener('keypress', (event) => {
-                if (event.key === 'Enter') {
-                    const edtText = document.getElementById('edt-text');
-                    if (edtText) {
-                        edtText.textContent = 'EDT ' + weekInput.value;
+            
+            if (whiteSquare && weekInput) {
+                weekInput.addEventListener('keypress', async (event) => {
+                    if (event.key === 'Enter') {
+                        const edtText = document.getElementById('edt-text');
+                        if (edtText) {
+                            edtText.textContent = 'EDT ' + weekInput.value;
+                        }
+                        const employeeWithSchedule = { ...employee, emploiDuTemps: await getEmployeeSchedule(employee.id) };
+                        displayScheduleDetails(employeeWithSchedule, whiteSquare);
                     }
-                }
-            });
+                });
+            }
         }
     }
+    
+    async function displayScheduleDetails(employee: Employee, container: HTMLElement) {
+        // Clear any existing content
+        container.innerHTML = '';
+    
+        // Loop through each period in employee's schedule and display details
+        for (const periode of employee.emploiDuTemps) {
+            const periodeDetails = document.createElement('div');
+            periodeDetails.classList.add('periode-details');
+            periodeDetails.innerHTML = `
+                <p>Id: ${periode.periode_id}</p>
+                <p>Intitulé: ${periode.intitule}</p>
+                <p>Date: ${periode.jour}</p>
+                <p>Début: ${periode.heureDebut}</p>
+                <p>Fin: ${periode.heureFin}</p>
+            `;
+            container.appendChild(periodeDetails);
+        }
+    }
+    
+    
 
 
     // Fonction pour gérer la soumission du formulaire de modification d'employé
-    function handleModifyEmployeeFormSubmit(event: Event) {
+    async function handleModifyEmployeeFormSubmit(event: Event) {
         event.preventDefault();
-
+    
         const form = event.target as HTMLFormElement;
-
+    
         const employeeId = parseInt(document.getElementById("employee_id")?.textContent || "");
-        const nom = form.elements.namedItem("nom") as HTMLInputElement;
-        const prenom = form.elements.namedItem("prenom") as HTMLInputElement;
-        const tel = form.elements.namedItem("tel") as HTMLInputElement;
-        const email = form.elements.namedItem("email") as HTMLInputElement;
-        const adresse = form.elements.namedItem("adresse") as HTMLTextAreaElement;
-        const poste = form.elements.namedItem("poste") as HTMLInputElement;
-        const rang = form.elements.namedItem("rang") as HTMLInputElement;
+        const nom = (form.elements.namedItem("nom") as HTMLInputElement).value;
+        const prenom = (form.elements.namedItem("prenom") as HTMLInputElement).value;
+        const tel = (form.elements.namedItem("tel") as HTMLInputElement).value;
+        const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+        const adresse = (form.elements.namedItem("adresse") as HTMLTextAreaElement).value;
+        const poste = (form.elements.namedItem("poste") as HTMLInputElement).value;
+        const rang = (form.elements.namedItem("rang") as HTMLInputElement).value;
+    
+        // Diviser l'adresse en utilisant les virgules comme séparateurs
+        const adresseParts = adresse.split(',');
 
-        // Mettez à jour les informations de l'employé dans la liste
-        const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
-        if (updatedEmployee) {
-            updatedEmployee.nom = nom.value;
-            updatedEmployee.prenom = prenom.value;
-            updatedEmployee.tel = tel.value;
-            updatedEmployee.email = email.value;
-            updatedEmployee.adresse = adresse.value;
-            updatedEmployee.poste = poste.value;
-            updatedEmployee.rang = rang.value;
+        // Extraire le code postal et le pays des parties de l'adresse
+        const codePostal = adresseParts[1]?.trim() ?? '';
+        const pays = adresseParts[2]?.trim() ?? '';
 
-            // Mettez à jour l'affichage de l'employé dans la liste
-            const employeeElement = document.querySelector(`.employee[data-id="${employeeId}"]`);
-            if (employeeElement) {
-                const infoDiv = employeeElement.querySelector('.employee-info');
-                if (infoDiv) {
-                    infoDiv.textContent = `${updatedEmployee.nom} ${updatedEmployee.prenom} ${updatedEmployee.email} ${updatedEmployee.poste}`;
+        const nouvellesInfos = {
+            personne: {
+                nom: nom,
+                prenom: prenom,
+                partenaire: {
+                    contact: {
+                        tel: tel,
+                        courriel: email,
+                        adresse: adresseParts[0]?.trim() ?? '', // La première partie est l'adresse principale
+                        codePostal: codePostal,
+                        pays: pays
+                    }
                 }
+            },
+            poste: poste,
+            rang: rang
+        };
+    
+        // Appel de la fonction pour modifier l'employé sur le serveur
+        const success: boolean = await modifyEmployeeOnServer(employeeId, nouvellesInfos);
+    
+        if (success) {
+            // Mettre à jour les données locales de l'employé modifié
+            const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
+            if (updatedEmployee) {
+                // Mettre à jour les propriétés nom, poste et rang
+                updatedEmployee.nom = nom;
+                updatedEmployee.prenom = prenom;
+                updatedEmployee.tel = tel;
+                updatedEmployee.email = email;
+                updatedEmployee.adresse = adresse;
+                updatedEmployee.poste = poste;
+                updatedEmployee.rang = rang;
             }
+    
+            // Rafraîchir la liste des employés
+            refreshEmployeeList();
+        } else {
+            // Gérer l'échec de la modification de l'employé
         }
-
-        // Effacez le contenu de la section info-employee
-        if (infoEmployee) {
-            infoEmployee.innerHTML = '';
-        }
-
-        // Rafraîchir la liste des employés
-        refreshEmployeeList();
     }
 
-
+    async function modifyEmployeeOnServer(employeeId: number, nouvellesInfos: any): Promise<boolean> {
+        try {
+            const response = await fetch('/modifierInfosEmploye', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    employe_id: employeeId,
+                    nouvellesInfos: nouvellesInfos
+                })
+            });
     
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log(responseData.message);
+                return true;
+            } else {
+                console.error('Failed to modify employee information:', response.status);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error modifying employee information:', error);
+            return false;
+        }
+    }
+    
+
     const addEmployeeButton = document.getElementById("add-employee-button");
     const infoEmployeeSection = document.querySelector(".info-employee") as HTMLElement;
 
@@ -497,19 +652,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="line-input">
                         <div class="input-container">
                             <label for="tel">Numéro de téléphone :</label>
-                            <input type="tel" id="tel" name="tel" required>
+                            <input type="tel" id="tel" name="tel">
                         </div>
                     
                         <div class="input-container">
                             <label for="email">Adresse email :</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email">
                         </div>
                     </div>
                     
                     <div class="line-input">
                         <div class="input-container">
                             <label for="adresse">Adresse :</label>
-                            <textarea id="adresse" name="adresse" rows="4" required></textarea>
+                            <textarea id="adresse" name="adresse" rows="4"></textarea>
                         </div>
                     </div>
                 </fieldset>
@@ -518,12 +673,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="line-input">
                         <div class="input-container">
                             <label for="poste">Poste :</label>
-                            <input type="text" id="poste" name="poste" required>
+                            <input type="text" id="poste" name="poste">
                         </div>
                     
                         <div class="input-container">
                             <label for="rang">Rang :</label>
-                            <input type="text" id="rang" name="rang" required>
+                            <input type="text" id="rang" name="rang">
                         </div>
                     </div>
                 </fieldset>
@@ -609,7 +764,8 @@ document.addEventListener("DOMContentLoaded", () => {
             adresse: adresse,
             poste: poste,
             rang: rang,
-            permissions: []
+            permissions: [],
+            emploiDuTemps: []
         };
 
         // Ajoutez le nouvel employé à la liste des employés
