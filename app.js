@@ -778,3 +778,16 @@ app.delete('/supprimerFournisseur/:idFournisseur', (req, res) => __awaiter(void 
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
+app.post('/ajouterFournisseur', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = req.body.nom;
+    const adresse = req.body.adresse;
+    const email = req.body.email;
+    try {
+        yield db.ajouterFournisseur(nom, adresse, email);
+        res.send({ message: 'Fournisseur ajouté avec succès' });
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));

@@ -803,3 +803,16 @@ app.delete('/supprimerFournisseur/:idFournisseur', async (req, res) => {
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 });
+
+app.post('/ajouterFournisseur', async (req, res) => {
+    const nom = req.body.nom;
+    const adresse = req.body.adresse;
+    const email = req.body.email;
+    try {
+        await db.ajouterFournisseur(nom, adresse, email);
+        res.send({ message: 'Fournisseur ajouté avec succès' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+});

@@ -1,3 +1,4 @@
+let currentIdFournisseur: number;
 function ajouterFournisseur(nom: string, adresse: string, email: string, idFournisseur: number): void {
     // Sélectionner l'ul
     const listeFournisseurs = document.getElementById("liste-fournisseurs");
@@ -24,7 +25,7 @@ function ajouterFournisseur(nom: string, adresse: string, email: string, idFourn
     const btnModify = document.createElement("button");
     btnModify.className = "modify-button";
     btnModify.innerHTML = "Modifier";
-    btnModify.onclick = () => modifierProfil(nom, adresse, email, idFournisseur);
+    btnModify.onclick = () => updateProfilView(nom, adresse, email, idFournisseur);
     fournisseur.appendChild(btnModify);
 
     // Créer le bouton "Supprimer" avec la même classe et texte
@@ -68,7 +69,7 @@ function supprimerFournisseur(fournisseurElement: HTMLElement): void {
 }
 
 
-function modifierProfil(nom: string, adresse: string, email: string, idFournisseur: number): void {
+function updateProfilView(nom: string, adresse: string, email: string, idFournisseur: number): void {
     const nomInput = document.getElementById("nom") as HTMLInputElement;
     const adresseInput = document.getElementById("adresse") as HTMLInputElement;
     const emailInput = document.getElementById("email") as HTMLInputElement;
@@ -79,10 +80,58 @@ function modifierProfil(nom: string, adresse: string, email: string, idFournisse
     adresseInput.value = adresse;
     emailInput.value = email;
 
+    // Stocker l'idFournisseur actuel dans la variable globale
+    currentIdFournisseur = idFournisseur;
+
     // Modifier le texte du bouton profil
     profilBtn.textContent = "Modifier profil";
+}
 
-    ajouterFournisseur(nom, adresse, email,idFournisseur);
+function modifyProfil(nom: string, adresse: string, email: string): void {
+    const nomInput = document.getElementById("nom") as HTMLInputElement;
+    const adresseInput = document.getElementById("adresse") as HTMLInputElement;
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const profilBtn = document.getElementById("btn_profile") as HTMLButtonElement;
+
+    // Récupérer les valeurs des inputs
+    const newNom = nomInput.value;
+    const newAdresse = adresseInput.value;
+    const newEmail = emailInput.value;
+
+    // Vérifier si les valeurs des inputs sont valides
+    if (newNom && newAdresse && newEmail) {
+        // Envoyer les données du formulaire au serveur pour modifier le fournisseur
+        fetch(`/modifierFournisseur/${currentIdFournisseur}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ newNom, newAdresse, newEmail })
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Si la requête est réussie, réinitialiser les valeurs des inputs
+                    nomInput.value = "";
+                    adresseInput.value = "";
+                    emailInput.value = "";
+
+                    // Charger à nouveau la liste des fournisseurs
+                    initFournisseurs();
+
+                    profilBtn.textContent = "Ajouter fournisseur";
+                    profilBtn.className = "add-profil";
+                } else {
+                    // Sinon, afficher un message d'erreur
+                    throw new Error('Erreur lors de la modification du fournisseur');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Une erreur est survenue lors de la modification du fournisseur.');
+            });
+    } else {
+        alert('Veuillez remplir tous les champs du formulaire.');
+    }
 }
 
 async function initFournisseurs() {
@@ -113,5 +162,45 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email") as HTMLInputElement;
     const profilBtn = document.getElementById("btn_profile") as HTMLButtonElement;
 
+    btnAjouter.addEventListener("click", async () => {
+        nomInput.value = "";
+        adresseInput.value = "";
+        emailInput.value = "";
+
+        profilBtn.textContent = "Ajouter un fournisseur";
+
+    });
+
+    profilBtn.addEventListener("click", async () => {
+        if (profilBtn.textContent === "Ajouter un fournisseur") {
+            // Récupérer les valeurs des inputs
+            const nom = nomInput.value;
+            const adresse = adresseInput.value;
+            const email = emailInput.value;
+
+            // Envoyer les données du nouveau fournisseur au serveur
+            const response = await fetch(`/ajouterFournisseur`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nom, adresse, email })
+            });
+
+            if (response.ok) {
+                // Si la requête est réussie, ajouter le nouveau fournisseur à la liste
+                ajouterFournisseur(nom, adresse, email, 0);
+                nomInput.value = "";
+                adresseInput.value = "";
+                emailInput.value = "";
+            } else {
+                // Sinon, afficher un message d'erreur
+                alert('Une erreur est survenue lors de l\'ajout du fournisseur.');
+            }
+        } else {
+            modifyProfil(nomInput.value, adresseInput.value, emailInput.value, );
+        }
+    }
+    );
 });
 
