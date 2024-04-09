@@ -263,6 +263,31 @@ document.addEventListener("DOMContentLoaded", () => {
         if (index !== -1) {
             customersData.splice(index, 1);
             listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(customerElement);
+            /*
+            // Effectuer la requête DELETE
+            fetch(`/supprimerClient/${idClient}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Une erreur est survenue lors de la suppression du client');
+                }
+                // Supprimer l'élément du tableau
+                customersData.splice(index, 1);
+                // Supprimer l'élément de l'interface utilisateur
+                listCustomers?.removeChild(customerElement);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Afficher la réponse de l'API (optionnel)
+            })
+            .catch(error => {
+                console.error(error); // Gérer les erreurs de la requête (optionnel)
+            });
+            */
         }
     }
     // Fonction pour gérer la soumission du formulaire de modification d'employé
@@ -670,6 +695,30 @@ document.addEventListener("DOMContentLoaded", () => {
         if (index !== -1) {
             cardsData.splice(index, 1);
             listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(cardElement);
+            // Effectuer la requête DELETE
+            /*
+            fetch(`/supprimerCarte/${card.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Une erreur est survenue lors de la suppression de la carte');
+                }
+                // Supprimer l'élément du tableau
+                cardsData.splice(index, 1);
+                // Supprimer l'élément de l'interface utilisateur
+                listCustomers?.removeChild(cardElement);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Afficher la réponse de l'API (optionnel)
+            })
+            .catch(error => {
+                console.error(error); // Gérer les erreurs de la requête (optionnel)
+            });*/
         }
     }
     // Fonction pour gérer la soumission du formulaire de modification d'employé

@@ -9,13 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
-exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.recupererTransaction = exports.ajouterFournisseur = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
-exports.modifierEvenement = exports.creerEvenement = exports.modifierPromotion = void 0;
-=======
-exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
-exports.ajouterFournisseur = exports.modifierFournisseur = exports.supprimerFournisseur = exports.voirFournisseurs = exports.modifierEvenement = void 0;
->>>>>>> 7dd824ae09f3f412a56beb49ec80b61903c619cc
+exports.voirEvenements = exports.voirPromotions = exports.modifierClient = exports.associerCarteClient = exports.supprimerCarte = exports.supprimerClient = exports.ajouterCarte = exports.creerClient = exports.voirDetailsClient = exports.voirClients = exports.modifierEdt = exports.voirEdt = exports.supprimerEmploye = exports.creerEmploye = exports.modifierInfosEmploye = exports.voirInfosEmploye = exports.voirTousEmployes = exports.enregistrerReceptionReappro = exports.annulerReappro = exports.lancerReappro = exports.modifierArticle = exports.voirReapproEnergie = exports.voirReapproProduit = exports.voirEnergies = exports.voirProduits = exports.voirArticles = exports.voirDetailTransaction = exports.voirHistoriqueTransactions = exports.enregistrerPaiement = exports.recupererCarteCCE = exports.recupererCarteMembre = exports.changerEtatPompe = exports.recupererPompe = exports.recupererTransaction = exports.encaisser = exports.voirDetailsIncident = exports.voirTousIncidents = exports.gererIncident = exports.declarerIncident = exports.voirDerniersIncidentsRegles = exports.voirDerniersIncidentsNonRegles = exports.supprimerAide = exports.redigerAide = exports.voirAide = exports.voirAides = exports.voirEdtProfil = exports.modifierInfosEmployeProfil = exports.voirInfosEmployeProfil = exports.modifierMotDePasse = exports.seConnecter = void 0;
+exports.ajouterFournisseur = exports.modifierFournisseur = exports.supprimerFournisseur = exports.voirFournisseurs = exports.modifierEvenement = exports.creerEvenement = exports.modifierPromotion = exports.creerPromotion = void 0;
 const models = require("./db_models");
 const Sequelize = require('sequelize');
 const { Partenaire, Personne, Contact, Fournisseur, Client, Transaction, MoyenDePaiement, Paiement, Article, Energie, Produit, Menu, ProduitMenu, Pompe, Mouvement, Carte, CM, CCE, GestionCce, Bonus, CceBonus, Employe, Periode, ActiviteEdt, Promo, Evenement, Incident, SolutionIncident, Aide, AchatClient, Reappro } = models;
@@ -142,13 +137,6 @@ function encaisser(date, totalHT, TVA, idArticles, quantites) {
     });
 }
 exports.encaisser = encaisser;
-function ajouterFournisseur(nom, adresse, email) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const partenaire = yield Partenaire.create();
-        yield Fournisseur.create({ id: partenaire.id, nom, adresse, email });
-    });
-}
-exports.ajouterFournisseur = ajouterFournisseur;
 //recuperer Transaction
 function recupererTransaction() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -290,7 +278,7 @@ function lancerReappro(date, totalHT, TVA, idArticle, quantite) {
     return __awaiter(this, void 0, void 0, function* () {
         const transaction = yield Transaction.create({ date, totalHT, TVA });
         yield Mouvement.create({ article_id: idArticle, transaction_id: transaction.id, quantite });
-        yield Reappro.create({ id_transaction: transaction.id });
+        yield Reappro.create({ id_transaction: transaction.id, annulable: 1, reception: 0 });
     });
 }
 exports.lancerReappro = lancerReappro;
@@ -332,6 +320,23 @@ function modifierInfosEmploye(idEmploye, nouvellesInfos) {
     });
 }
 exports.modifierInfosEmploye = modifierInfosEmploye;
+// Créer un employé
+function creerEmploye(alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const partenaire = yield Partenaire.create({});
+        const personne = yield Personne.create({ nom, prenom, id: partenaire.id });
+        yield Contact.create({ partenaire_id: partenaire.id, courriel, tel, adresse, codePostal, pays });
+        yield Employe.create({ id: partenaire.id, alias: alias, mdp: mdp, dep: dep, poste: poste, rang: rang });
+    });
+}
+exports.creerEmploye = creerEmploye;
+// Supprimer un employé
+function supprimerEmploye(idEmploye) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield Partenaire.destroy({ where: { id: idEmploye } });
+    });
+}
+exports.supprimerEmploye = supprimerEmploye;
 // Voir edt
 function voirEdt(idEmploye) {
     return __awaiter(this, void 0, void 0, function* () {

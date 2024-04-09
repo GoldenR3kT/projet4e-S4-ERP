@@ -362,7 +362,6 @@ app.get('/recupererTransaction', (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(500).send({ error: 'Une erreur est survenue' });
     }
 }));
-// Récuperer Pompe
 app.get('/getPump', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pompes = yield db.recupererPompe();
@@ -603,6 +602,28 @@ app.put('/modifierEdt', (req, res) => __awaiter(void 0, void 0, void 0, function
     }
     catch (error) {
         res.status(500).send({ error: 'Une erreur est survenue' });
+    }
+}));
+// Créer un employé
+app.post('/creerEmploye', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays } = req.body;
+        yield db.creerEmploye(alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays);
+        res.status(201).send({ message: "Employé créé avec succès" });
+    }
+    catch (error) {
+        res.status(500).send({ message: "Erreur lors de la création de l'employé", error });
+    }
+}));
+// Supprimer un employé
+app.delete('/supprimerEmploye/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const idEmploye = +req.params.id;
+        yield db.supprimerEmploye(idEmploye);
+        res.status(200).send({ message: "Employé supprimé avec succès" });
+    }
+    catch (error) {
+        res.status(500).send({ message: "Erreur lors de la suppression de l'employé", error });
     }
 }));
 // CLIENT / CARTE
