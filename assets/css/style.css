@@ -198,6 +198,7 @@ li > a:hover{
 }
 
 .incident {
+    marin-top: 10px;
     background-color: #f1e3a4;
     border: 1px solid #000000;
 }

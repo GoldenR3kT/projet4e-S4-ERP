@@ -614,12 +614,30 @@ document.addEventListener("DOMContentLoaded", () => {
             poste: poste,
             rang: rang
         };
+
     
         // Appel de la fonction pour modifier l'employé sur le serveur
         const success: boolean = await modifyEmployeeOnServer(employeeId, nouvellesInfos);
     
+        const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
+        if (updatedEmployee) {
+            // Mettre à jour les propriétés nom, poste et rang
+            updatedEmployee.nom = nom;
+            updatedEmployee.prenom = prenom;
+            updatedEmployee.tel = tel;
+            updatedEmployee.email = email;
+            updatedEmployee.adresse = adresse;
+            updatedEmployee.poste = poste;
+            updatedEmployee.rang = rang;
+        }
+        refreshEmployeeList();
+
+
+        //POUR L'INSTANT CA MARCHE PAS DU COUP J'AI SORTIS LES MODIFS VISUELLES DE LA CONDITION
         if (success) {
+        
             // Mettre à jour les données locales de l'employé modifié
+            /*
             const updatedEmployee = employeesData.find(employee => employee.id === employeeId);
             if (updatedEmployee) {
                 // Mettre à jour les propriétés nom, poste et rang
@@ -630,7 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 updatedEmployee.adresse = adresse;
                 updatedEmployee.poste = poste;
                 updatedEmployee.rang = rang;
-            }
+            }*/
     
             // Rafraîchir la liste des employés
             refreshEmployeeList();
