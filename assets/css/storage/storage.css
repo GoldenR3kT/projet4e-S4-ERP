@@ -164,3 +164,7 @@ body {
     pointer-events: none; /* Empêcher le clic sur le bouton */
     opacity: 0.5; /* Réduire l'opacité pour indiquer qu'il est désactivé */
 }
+
+.ligne-reappro-alerte {
+    background-color: #ff0000;
+}

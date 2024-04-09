@@ -22,6 +22,10 @@ function ajouterStock(nameBDD: string, prixHTBDD: number, prixTTCBDD: string, qu
     quantite.textContent = quantiteBDD.toString(); // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(quantite);
 
+    if (quantiteBDD < 10) {
+        stock.className = 'ligne-reappro-alerte' ;
+    }
+
     // Créer le bouton avec la même classe et texte
     const btnReappro = document.createElement("button");
     btnReappro.className = "reappro-button";
@@ -29,7 +33,7 @@ function ajouterStock(nameBDD: string, prixHTBDD: number, prixTTCBDD: string, qu
     btnReappro.addEventListener('click', function() {
         requeteReappro(idArticle, quantiteBDD,prixHTBDD);
         btnReappro.classList.add('bouton-reappro-inactif');
-        stock.classList.add('ligne-reappro-active');
+        stock.className = 'ligne-reappro-active';
     });
     stock.appendChild(btnReappro);
 
@@ -143,10 +147,10 @@ async function initEnergie() {
     viderListes();
     const response = await fetch(`/voirEnergies`);
     const energies = await response.json();
-    console.log(energies);
+
     const response2 = await fetch(`/voirReapproEnergie`);
     const reappros = await response2.json();
-
+    console.log(reappros);
     const categorieTitle = document.getElementById('categorie_title');
     if (categorieTitle) {
         categorieTitle.textContent = 'Energie';
@@ -162,7 +166,7 @@ async function initEnergie() {
 
         reappros.forEach((reappro: {
             id_transaction: number,
-            transaction: { date: string, mouvements: { quantite: number, article_id: number }[] }
+            transaction: { date: string, mouvements: { quantite: number, article_id: number, article: {nom : string}}[] }
         }, index: number) => {
             const { id_transaction, transaction: { date, mouvements } } = reappro;
 
@@ -175,7 +179,7 @@ async function initEnergie() {
             const produits = mouvements.map(mouvement => {
                 return {
                     id: mouvement.article_id,
-                    nom: `Produit ${mouvement.article_id}`,
+                    nom: mouvement.article.nom,
                     quantite: mouvement.quantite,
                     prix: 0 // Mettez ici le prix correspondant si vous avez l'information
                 };
@@ -207,7 +211,7 @@ async function initBoutique() {
         boutique.forEach((produit: {
             id: number,
             unite: string,
-            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
+            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number}
         }, index: number) => {
             const {id,nom, prixHT, prixTTC, quantite} = produit.article;
             ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
@@ -215,7 +219,7 @@ async function initBoutique() {
 
         reappros.forEach((reappro: {
             id_transaction: number,
-            transaction: { date: string, mouvements: { quantite: number, article_id: number }[] }
+            transaction: { date: string, mouvements: { quantite: number, article_id: number, nom: string, article: {nom : string}}[] }
         }, index: number) => {
             const { id_transaction, transaction: { date, mouvements } } = reappro;
 
@@ -228,7 +232,7 @@ async function initBoutique() {
             const produits = mouvements.map(mouvement => {
                 return {
                     id: mouvement.article_id,
-                    nom: `Produit ${mouvement.article_id}`,
+                    nom: mouvement.article.nom,
                     quantite: mouvement.quantite,
                     prix: 0 // Mettez ici le prix correspondant si vous avez l'information
                 };
@@ -260,7 +264,7 @@ async function initAtelier() {
         boutique.forEach((produit: {
             id: number,
             unite: string,
-            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number }
+            article: { id: number, nom: string, prixHT: number, prixTTC: number, quantite: number}
         }, index: number) => {
             const {id,nom, prixHT, prixTTC, quantite} = produit.article;
             ajouterStock(nom, prixHT, prixTTC.toString(), quantite, id);
@@ -268,7 +272,7 @@ async function initAtelier() {
 
         reappros.forEach((reappro: {
             id_transaction: number,
-            transaction: { date: string, mouvements: { quantite: number, article_id: number }[] }
+            transaction: { date: string, mouvements: { quantite: number, article_id: number, nom: string, article: {nom : string}}[] }
         }, index: number) => {
             const { id_transaction, transaction: { date, mouvements } } = reappro;
 
@@ -281,7 +285,7 @@ async function initAtelier() {
             const produits = mouvements.map(mouvement => {
                 return {
                     id: mouvement.article_id,
-                    nom: `Produit ${mouvement.article_id}`,
+                    nom: mouvement.article.nom,
                     quantite: mouvement.quantite,
                     prix: 0 // Mettez ici le prix correspondant si vous avez l'information
                 };

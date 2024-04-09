@@ -26,6 +26,9 @@ function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD, idArticle) {
     const quantite = document.createElement("p");
     quantite.textContent = quantiteBDD.toString(); // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(quantite);
+    if (quantiteBDD < 10) {
+        stock.className = 'ligne-reappro-alerte';
+    }
     // Créer le bouton avec la même classe et texte
     const btnReappro = document.createElement("button");
     btnReappro.className = "reappro-button";
@@ -33,7 +36,7 @@ function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD, idArticle) {
     btnReappro.addEventListener('click', function () {
         requeteReappro(idArticle, quantiteBDD, prixHTBDD);
         btnReappro.classList.add('bouton-reappro-inactif');
-        stock.classList.add('ligne-reappro-active');
+        stock.className = 'ligne-reappro-active';
     });
     stock.appendChild(btnReappro);
     // Ajouter le nouvel élément li à l'ul
@@ -122,9 +125,9 @@ function initEnergie() {
         viderListes();
         const response = yield fetch(`/voirEnergies`);
         const energies = yield response.json();
-        console.log(energies);
         const response2 = yield fetch(`/voirReapproEnergie`);
         const reappros = yield response2.json();
+        console.log(reappros);
         const categorieTitle = document.getElementById('categorie_title');
         if (categorieTitle) {
             categorieTitle.textContent = 'Energie';
@@ -141,7 +144,7 @@ function initEnergie() {
                 const produits = mouvements.map(mouvement => {
                     return {
                         id: mouvement.article_id,
-                        nom: `Produit ${mouvement.article_id}`,
+                        nom: mouvement.article.nom,
                         quantite: mouvement.quantite,
                         prix: 0 // Mettez ici le prix correspondant si vous avez l'information
                     };
@@ -178,7 +181,7 @@ function initBoutique() {
                 const produits = mouvements.map(mouvement => {
                     return {
                         id: mouvement.article_id,
-                        nom: `Produit ${mouvement.article_id}`,
+                        nom: mouvement.article.nom,
                         quantite: mouvement.quantite,
                         prix: 0 // Mettez ici le prix correspondant si vous avez l'information
                     };
@@ -214,7 +217,7 @@ function initAtelier() {
                 const produits = mouvements.map(mouvement => {
                     return {
                         id: mouvement.article_id,
-                        nom: `Produit ${mouvement.article_id}`,
+                        nom: mouvement.article.nom,
                         quantite: mouvement.quantite,
                         prix: 0 // Mettez ici le prix correspondant si vous avez l'information
                     };

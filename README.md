@@ -5,6 +5,11 @@ Installation des dépendances
 npm install
 ```
 
+Installation TypeScript
+```bash
+npm install -D typescript
+```
+
 Lancement du serveur 
 ```bash
 npm run start
