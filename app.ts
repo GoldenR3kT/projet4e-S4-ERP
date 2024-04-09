@@ -614,7 +614,7 @@ app.put('/modifierEdt', async (req, res) => {
 });
 
 // Créer un employé
-app.post('/employe', async (req, res) => {
+app.post('/creerEmploye', async (req, res) => {
   try {
     const { alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays } = req.body;
     await db.creerEmploye(alias, mdp, dep, poste, rang, nom, prenom, courriel, tel, adresse, codePostal, pays);
@@ -625,7 +625,7 @@ app.post('/employe', async (req, res) => {
 });
 
 // Supprimer un employé
-app.delete('/employe/:id', async (req, res) => {
+app.delete('/supprimerEmploye/:id', async (req, res) => {
   try {
     const idEmploye = +req.params.id;
     await db.supprimerEmploye(idEmploye);
