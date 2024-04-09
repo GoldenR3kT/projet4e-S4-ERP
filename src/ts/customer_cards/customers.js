@@ -1,20 +1,61 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 document.addEventListener("DOMContentLoaded", () => {
     const listCustomers = document.querySelector('.list-customers');
     const infoCustomer = document.querySelector('.info-customer');
     // Données des clients (simulées)
-    const customersData = [
-        { id: 1, nom: "Nom1", prenom: "Prenom1", tel: "123456789", email: "email1@example.com", adresse: "Adresse1", cce: "", cm: "cm1" },
-        { id: 2, nom: "Nom2", prenom: "Prenom2", tel: "987654321", email: "email2@example.com", adresse: "Adresse2", cce: "cce2", cm: "" },
-        { id: 3, nom: "Nom3", prenom: "Prenom3", tel: "456123789", email: "email3@example.com", adresse: "Adresse3", cce: "cce3", cm: "cm3" },
-        { id: 4, nom: "Nom4", prenom: "Prenom4", tel: "789456123", email: "email4@example.com", adresse: "Adresse4", cce: "cce4", cm: "cm4" },
-        { id: 5, nom: "Nom5", prenom: "Prenom5", tel: "321654987", email: "email5@example.com", adresse: "Adresse5", cce: "cce5", cm: "cm5" },
-        { id: 6, nom: "Nom6", prenom: "Prenom6", tel: "654987321", email: "email6@example.com", adresse: "Adresse6", cce: "cce6", cm: "cm6" },
-        { id: 7, nom: "Nom7", prenom: "Prenom7", tel: "987123654", email: "email7@example.com", adresse: "Adresse7", cce: "cce7", cm: "cm7" },
-        { id: 8, nom: "Nom8", prenom: "Prenom8", tel: "654321987", email: "email8@example.com", adresse: "Adresse8", cce: "cce8", cm: "cm8" },
-        { id: 9, nom: "Nom9", prenom: "Prenom9", tel: "321987654", email: "email9@example.com", adresse: "Adresse9", cce: "cce9", cm: "cm9" },
-        { id: 10, nom: "Nom10", prenom: "Prenom10", tel: "987321654", email: "email10@example.com", adresse: "Adresse10", cce: "cce10", cm: "cm10" }
-    ];
+    const customersData = [];
+    getCustomersFromServer();
+    function getCustomersFromServer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+            try {
+                const response = yield fetch('/voirClients');
+                const clientsFromServer = yield response.json();
+                // Clear the existing customersData array before populating it with new data
+                customersData.length = 0;
+                // Populate customersData array with fetched data
+                for (const client of clientsFromServer) {
+                    try {
+                        const contact = (_b = (_a = client === null || client === void 0 ? void 0 : client.personne) === null || _a === void 0 ? void 0 : _a.partenaire) === null || _b === void 0 ? void 0 : _b.contact;
+                        const tel = (_c = contact === null || contact === void 0 ? void 0 : contact.tel) !== null && _c !== void 0 ? _c : '';
+                        const email = (_d = contact === null || contact === void 0 ? void 0 : contact.courriel) !== null && _d !== void 0 ? _d : '';
+                        const adresse = (_e = contact === null || contact === void 0 ? void 0 : contact.adresse) !== null && _e !== void 0 ? _e : '';
+                        const codePostal = (_f = contact === null || contact === void 0 ? void 0 : contact.codePostal) !== null && _f !== void 0 ? _f : '';
+                        const pays = (_g = contact === null || contact === void 0 ? void 0 : contact.pays) !== null && _g !== void 0 ? _g : '';
+                        const cce = 0; // Ajoutez la logique pour récupérer cce
+                        const cm = 0; // Ajoutez la logique pour récupérer cm
+                        customersData.push({
+                            id: client.id,
+                            nom: (_j = (_h = client.personne) === null || _h === void 0 ? void 0 : _h.nom) !== null && _j !== void 0 ? _j : '',
+                            prenom: (_l = (_k = client.personne) === null || _k === void 0 ? void 0 : _k.prenom) !== null && _l !== void 0 ? _l : '',
+                            tel: tel,
+                            email: email,
+                            adresse: `${adresse}, ${codePostal}, ${pays}`,
+                            cce: cce,
+                            cm: cm
+                        });
+                    }
+                    catch (error) {
+                        console.error(`Error fetching details for client with ID ${client.id}:`, error);
+                    }
+                }
+                // Rafraîchir la liste des clients
+                refreshCustomerList();
+            }
+            catch (error) {
+                console.error('Error fetching clients data:', error);
+            }
+        });
+    }
     //refreshCustomerList();
     // Fonction pour supprimer et réafficher la liste des employés
     function refreshCustomerList() {
@@ -125,8 +166,24 @@ document.addEventListener("DOMContentLoaded", () => {
         if (addCceButton) {
             addCceButton.addEventListener('click', () => {
                 // Générer une valeur aléatoire pour cce
-                const randomValue = Math.random().toString(36).substring(7);
-                customer.cce = randomValue;
+                const availableCceId = getAvailableCardId('cce');
+                if (availableCceId !== undefined) {
+                    customer.cce = availableCceId;
+                    // Trouver la carte correspondant à l'ID disponible
+                    const cceCard = cardsData.find(card => card.id === availableCceId);
+                    if (cceCard) {
+                        cceCard.idClient = customer.id;
+                    }
+                    else {
+                        console.error("La carte de crédit énergie correspondante n'a pas été trouvée.");
+                    }
+                    // Mettre à jour l'affichage des informations client
+                    showCustomerInfo(customer);
+                }
+                else {
+                    // Aucune carte de crédit énergie disponible
+                    console.error('Aucune carte de crédit énergie disponible.');
+                }
                 // Mettre à jour l'affichage des informations client
                 showCustomerInfo(customer);
             });
@@ -134,12 +191,50 @@ document.addEventListener("DOMContentLoaded", () => {
         if (addCmButton) {
             addCmButton.addEventListener('click', () => {
                 // Générer une valeur aléatoire pour cm
-                const randomValue = Math.random().toString(36).substring(7);
-                customer.cm = randomValue;
+                const availableCmId = getAvailableCardId('cm');
+                if (availableCmId !== undefined) {
+                    customer.cm = availableCmId;
+                    // Trouver la carte correspondant à l'ID disponible
+                    const cmCard = cardsData.find(card => card.id === availableCmId);
+                    if (cmCard) {
+                        cmCard.idClient = customer.id;
+                    }
+                    else {
+                        console.error("La carte CM correspondante n'a pas été trouvée.");
+                    }
+                    // Mettre à jour l'affichage des informations client
+                    showCustomerInfo(customer);
+                }
+                else {
+                    // Aucune carte CM disponible
+                    console.error('Aucune carte CM disponible.');
+                }
                 // Mettre à jour l'affichage des informations client
                 showCustomerInfo(customer);
             });
         }
+    }
+    // Fonction pour récupérer le premier ID de carte disponible pour un type spécifique ('cce' ou 'cm')
+    function getAvailableCardId(cardType) {
+        // Rechercher la première carte disponible qui n'est pas déjà attribuée à un client
+        for (const card of cardsData) {
+            if (card.type === cardType && !card.idClient) {
+                // Vérifier si la carte n'est pas déjà attribuée à un client dans customersData
+                const isCardAssigned = customersData.some(customer => {
+                    return customer.cce === card.id || customer.cm === card.id;
+                });
+                if (!isCardAssigned) {
+                    return card.id;
+                }
+            }
+        }
+        return undefined;
+    }
+    // Définir la fonction pour récupérer le prochain ID disponible pour chaque type de carte
+    function getNextAvailableId(cardType) {
+        const cardsOfType = cardsData.filter(card => card.type === cardType);
+        const maxIdOfType = cardsOfType.reduce((maxId, card) => Math.max(maxId, card.id), 0);
+        return maxIdOfType + 1;
     }
     /// Fonction pour afficher le champ de saisie de la carte ou le bouton d'ajout
     function renderCardInput(customer, cardType) {
@@ -191,8 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
             updatedCustomer.tel = tel.value;
             updatedCustomer.email = email.value;
             updatedCustomer.adresse = adresse.value;
-            updatedCustomer.cce = cce.value;
-            updatedCustomer.cm = cm.value;
+            updatedCustomer.cce = parseInt(cce.value);
+            updatedCustomer.cm = parseInt(cm.value);
             // Mettez à jour l'affichage de l'employé dans la liste
             const customerElement = document.querySelector(`.customer[data-id="${customerId}"]`);
             if (customerElement) {
@@ -226,8 +321,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 tel: "",
                 email: "",
                 adresse: "",
-                cce: "",
-                cm: ""
+                cce: 0,
+                cm: 0
             };
         }
         else {
@@ -299,40 +394,87 @@ document.addEventListener("DOMContentLoaded", () => {
         const addCmButton = document.getElementById('add-cm-button');
         if (addCceButton) {
             addCceButton.addEventListener('click', () => {
-                newCustomer.cce = Math.random().toString(36).substring(7);
+                // Générer une valeur aléatoire pour cce
+                const availableCceId = getAvailableCardId('cce');
+                if (availableCceId !== undefined) {
+                    newCustomer.cce = availableCceId;
+                }
+                else {
+                    // Aucune carte de crédit énergie disponible
+                    console.error('Aucune carte de crédit énergie disponible.');
+                }
                 handleAddCustomerClick(event, newCustomer);
             });
         }
         if (addCmButton) {
             addCmButton.addEventListener('click', () => {
-                newCustomer.cm = Math.random().toString(36).substring(7);
+                const availableCMId = getAvailableCardId('cm');
+                if (availableCMId !== undefined) {
+                    newCustomer.cm = availableCMId;
+                }
+                else {
+                    // Aucune carte de crédit énergie disponible
+                    console.error('Aucune carte de crédit énergie disponible.');
+                }
                 handleAddCustomerClick(event, newCustomer);
             });
         }
     }
+    // Modifier la fonction handleAddCustomerFormSubmit
     function handleAddCustomerFormSubmit(event, customer) {
-        event.preventDefault();
-        const form = event.target;
-        // Récupérez les valeurs du formulaire
-        const nom = form.elements.namedItem("nom").value;
-        const prenom = form.elements.namedItem("prenom").value;
-        const tel = form.elements.namedItem("tel").value;
-        const email = form.elements.namedItem("email").value;
-        const adresse = form.elements.namedItem("adresse").value;
-        // Assigner les valeurs au client
-        customer.nom = nom;
-        customer.prenom = prenom;
-        customer.tel = tel;
-        customer.email = email;
-        customer.adresse = adresse;
-        // Ajoutez le nouvel employé à la liste des employés
-        customersData.push(customer);
-        // Rafraîchissez la liste des employés
-        refreshCustomerList();
-        // Effacez le contenu de la section info-customer
-        if (infoCustomer) {
-            infoCustomer.innerHTML = '';
-        }
+        return __awaiter(this, void 0, void 0, function* () {
+            event.preventDefault();
+            const form = event.target;
+            // Récupérer les valeurs du formulaire
+            const nom = form.elements.namedItem("nom").value;
+            const prenom = form.elements.namedItem("prenom").value;
+            const tel = form.elements.namedItem("tel").value;
+            const email = form.elements.namedItem("email").value;
+            const adresse = form.elements.namedItem("adresse").value;
+            // Assigner les valeurs au client
+            customer.nom = nom;
+            customer.prenom = prenom;
+            customer.tel = tel;
+            customer.email = email;
+            customer.adresse = adresse;
+            try {
+                // Appeler la fonction pour envoyer les données du client au serveur
+                yield addCustomerInServer(customer);
+                // Ajouter le nouvel employé à la liste des employés seulement après l'ajout réussi dans la base de données
+                customersData.push(customer);
+                // Rafraîchir la liste des employés
+                refreshCustomerList();
+                // Effacer le contenu de la section info-customer
+                if (infoCustomer) {
+                    infoCustomer.innerHTML = '';
+                }
+            }
+            catch (error) {
+                console.error('Une erreur est survenue : ', error);
+            }
+        });
+    }
+    // Fonction pour envoyer les données du client au serveur
+    function addCustomerInServer(customerData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch('/creerClient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(customerData)
+                });
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la création du client : ' + response.statusText);
+                }
+                const responseData = yield response.json();
+                console.log(responseData.message); // Affiche le message de la réponse
+            }
+            catch (error) {
+                console.error('Une erreur est survenue : ', error);
+            }
+        });
     }
     // Récupérer les éléments de recherche par nom et par ID
     const searchByNameInput = document.getElementById('search-by-name');
@@ -394,16 +536,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     const cardsData = [
-        { id: 1, type: "cce", ptsMembre: 1, credit: 11, dernierCredit: "01/04/2024", montantDernierCredit: 10, idClient: "" },
-        { id: 2, type: "cm", ptsMembre: 2, credit: 22, dernierCredit: "02/04/2024", montantDernierCredit: 20, idClient: "" },
-        { id: 3, type: "cce", ptsMembre: 3, credit: 33, dernierCredit: "03/04/2024", montantDernierCredit: 30, idClient: "" },
-        { id: 4, type: "cm", ptsMembre: 4, credit: 44, dernierCredit: "04/04/2024", montantDernierCredit: 40, idClient: "" },
-        { id: 5, type: "cce", ptsMembre: 5, credit: 55, dernierCredit: "05/04/2024", montantDernierCredit: 50, idClient: "" },
-        { id: 6, type: "cm", ptsMembre: 6, credit: 66, dernierCredit: "06/04/2024", montantDernierCredit: 60, idClient: "" },
-        { id: 7, type: "cce", ptsMembre: 7, credit: 77, dernierCredit: "07/04/2024", montantDernierCredit: 70, idClient: "" },
-        { id: 8, type: "cm", ptsMembre: 8, credit: 88, dernierCredit: "08/04/2024", montantDernierCredit: 80, idClient: "" },
-        { id: 9, type: "cce", ptsMembre: 9, credit: 99, dernierCredit: "09/04/2024", montantDernierCredit: 90, idClient: "" },
-        { id: 10, type: "cm", ptsMembre: 10, credit: 110, dernierCredit: "10/04/2024", montantDernierCredit: 100, idClient: "" },
+        { id: 1, type: "cce", ptsMembre: 1, credit: 11, dernierCredit: "01/04/2024", montantDernierCredit: 10, idClient: 0 },
+        { id: 2, type: "cm", ptsMembre: 2, credit: 22, dernierCredit: "02/04/2024", montantDernierCredit: 20, idClient: 0 },
+        { id: 3, type: "cce", ptsMembre: 3, credit: 33, dernierCredit: "03/04/2024", montantDernierCredit: 30, idClient: 0 },
+        { id: 4, type: "cm", ptsMembre: 4, credit: 44, dernierCredit: "04/04/2024", montantDernierCredit: 40, idClient: 0 },
+        { id: 5, type: "cce", ptsMembre: 5, credit: 55, dernierCredit: "05/04/2024", montantDernierCredit: 50, idClient: 0 },
+        { id: 6, type: "cm", ptsMembre: 6, credit: 66, dernierCredit: "06/04/2024", montantDernierCredit: 60, idClient: 0 },
+        { id: 7, type: "cce", ptsMembre: 7, credit: 77, dernierCredit: "07/04/2024", montantDernierCredit: 70, idClient: 0 },
+        /*{ id: 8, type: "cm", ptsMembre: 8, credit: 88, dernierCredit: "08/04/2024", montantDernierCredit: 80, idClient: 0},
+        { id: 9, type: "cce", ptsMembre: 9, credit: 99, dernierCredit: "09/04/2024", montantDernierCredit: 90, idClient: 0},
+        { id: 10, type: "cm", ptsMembre: 10, credit: 110, dernierCredit: "10/04/2024", montantDernierCredit: 100, idClient: 0},*/
     ];
     // Fonction pour supprimer et réafficher la liste des employés
     function refreshCardList() {
@@ -431,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.setAttribute('alt', 'Card Image');
         infoDiv.appendChild(img);
         const span = document.createElement('span');
-        span.textContent = card.id + " " + card.idClient + " " + card.ptsMembre + card.credit;
+        span.textContent = card.id + " " + card.type + " " + card.idClient + " " + card.ptsMembre + card.credit;
         infoDiv.appendChild(span);
         // Boutons (à droite)
         const buttonsDiv = document.createElement('div');
@@ -560,7 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const idClient = form.elements.namedItem("idClient");
         updatedCard = cardsData.find(card => card.id === cardId);
         if (updatedCard && idClient.value) {
-            updatedCard.idClient = idClient.value;
+            updatedCard.idClient = parseInt(idClient.value);
         }
         // Effacez le contenu de la section info-customer
         if (infoCustomer) {
@@ -588,7 +730,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 credit: 0,
                 dernierCredit: "",
                 montantDernierCredit: 0,
-                idClient: ""
+                idClient: 0
             };
         }
         else {
@@ -626,20 +768,24 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
         if (createMemberCardButton) {
-            createMemberCardButton.addEventListener('click', () => {
+            createMemberCardButton.addEventListener('click', function (event) {
+                event.preventDefault();
                 newCard.type = "cm";
                 const cardId = document.getElementById('card-id');
                 newCard.id = parseFloat(cardId.value);
                 cardsData.push(newCard);
+                clearInfoCustomer();
                 refreshCardList();
             });
         }
         if (createEnergyCreditCardButton) {
-            createEnergyCreditCardButton.addEventListener('click', () => {
+            createEnergyCreditCardButton.addEventListener('click', function (event) {
+                event.preventDefault();
                 newCard.type = "cce";
                 const cardId = document.getElementById('card-id');
                 newCard.id = parseFloat(cardId.value);
                 cardsData.push(newCard);
+                clearInfoCustomer();
                 refreshCardList();
             });
         }

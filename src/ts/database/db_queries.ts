@@ -133,11 +133,6 @@ export async function encaisser(date: Date, totalHT: number, TVA: number, idArti
     }
 }
 
-export async function ajouterFournisseur(nom: string, adresse: string, email: string): Promise<void> {
-    const partenaire= await Partenaire.create();
-    await Fournisseur.create({ id: partenaire.id, nom, adresse, email });
-}
-
 //recuperer Transaction
 
 export async function recupererTransaction(): Promise<typeof Transaction[]> {
@@ -255,7 +250,7 @@ export async function modifierArticle(idArticle: number, nouvellesValeurs: Parti
 export async function lancerReappro(date: Date, totalHT: number, TVA: number, idArticle: number, quantite: number): Promise<void> {
     const transaction = await Transaction.create({ date, totalHT, TVA });
     await Mouvement.create({ article_id: idArticle, transaction_id: transaction.id, quantite });
-    await Reappro.create({ id_transaction: transaction.id });
+    await Reappro.create({ id_transaction: transaction.id, annulable: 1, reception: 0});
 }
 
 // Annuler un réappro
@@ -286,9 +281,23 @@ export async function modifierInfosEmploye(idEmploye: number, nouvellesInfos: Pa
     await Employe.update(nouvellesInfos, { where: { id: idEmploye } });
 }
 
+// Créer un employé
+export async function creerEmploye(alias: string, mdp: string, dep: string, poste: string, rang: number, nom: string, prenom: string, courriel: string, tel: string, adresse: string, codePostal: string, pays: string): Promise<void> {
+    const partenaire = await Partenaire.create({});
+    const personne = await Personne.create({ nom, prenom, id: partenaire.id });
+    await Contact.create({ partenaire_id: partenaire.id, courriel, tel, adresse, codePostal, pays });
+    await Employe.create({ id: partenaire.id, alias: alias, mdp: mdp, dep: dep, poste: poste, rang: rang});
+}
+
+// Supprimer un employé
+export async function supprimerEmploye(idEmploye: number): Promise<void> {
+    await Partenaire.destroy({ where: { id: idEmploye } });
+}
+
+
 // Voir edt
 export async function voirEdt(idEmploye: number): Promise<typeof ActiviteEdt[]> {
-    return await ActiviteEdt.findAll({ where: { employe_id: idEmploye } });
+    return await ActiviteEdt.findAll( { include: [{ model: Periode }] }, { where: { employe_id: idEmploye } });
 }
 
 // Modif edt
@@ -375,4 +384,24 @@ export async function creerEvenement(debut: Date, fin: Date, intitule: string): 
 // Modifier un évènement
 export async function modifierEvenement(idPeriode: number, nouvelIntitule: string): Promise<void> {
     await Evenement.update({ intitule: nouvelIntitule }, { where: { periode_id: idPeriode } });
+}
+
+export async function voirFournisseurs(): Promise<typeof Fournisseur[]> {
+    return await Fournisseur.findAll();
+
+}
+
+export async function supprimerFournisseur(idFournisseur: number): Promise<void> {
+    await Partenaire.destroy({ where: { id: idFournisseur } });
+}
+
+//modifier fournisseur
+
+export async function modifierFournisseur(idFournisseur: number, nouvellesValeurs: Partial<typeof Fournisseur>): Promise<void> {
+    await Fournisseur.update(nouvellesValeurs, { where: { id: idFournisseur } });
+}
+
+export async function ajouterFournisseur(nom: string, adresse: string, email: string): Promise<void> {
+    const partenaire= await Partenaire.create();
+    await Fournisseur.create({ id: partenaire.id, nom, adresse, email });
 }

@@ -339,7 +339,7 @@ function updateView() {
             initRestaurant();
             break;
         default:
-            // Si aucun cas ne correspond, ne rien faire ou effectuer une action par défaut
+            initEnergie();
             break;
     }
 }
