@@ -317,7 +317,7 @@ exports.modifierInfosEmploye = modifierInfosEmploye;
 // Voir edt
 function voirEdt(idEmploye) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield ActiviteEdt.findAll({ where: { employe_id: idEmploye } });
+        return yield ActiviteEdt.findAll({ include: [{ model: Periode }] }, { where: { employe_id: idEmploye } });
     });
 }
 exports.voirEdt = voirEdt;

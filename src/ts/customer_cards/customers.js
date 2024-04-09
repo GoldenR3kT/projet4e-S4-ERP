@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const customersData = [];
     getCustomersFromServer();
     function getCustomersFromServer() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
             try {
                 const response = yield fetch('/voirClients');
                 const clientsFromServer = yield response.json();
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let newCustomer;
         if (!customer) {
             newCustomer = {
-                id: customersData.length + 1, // Générez un nouvel identifiant unique
+                id: customersData.length + 1,
                 nom: "",
                 prenom: "",
                 tel: "",

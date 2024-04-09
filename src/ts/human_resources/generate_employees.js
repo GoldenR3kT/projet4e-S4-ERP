@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedPermissions = [];
     let employeesData = [];
     function getEmployeesFromServer() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
             try {
                 const response = yield fetch('/voirTousEmployes');
                 const employeesFromServer = yield response.json();
@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const endHour = endHourInput.value;
                     // Créer un nouvel objet PeriodeEDT avec les nouvelles valeurs
                     const newPeriode = {
-                        periode_id: -1, // ID temporaire, sera remplacé par le serveur
+                        periode_id: -1,
                         employe_id: employee.id,
                         intitule: activity,
                         jour: date,
@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const employee = employeesData.find(emp => emp.id === employeeId);
                 if (employee) {
                     const newPeriode = {
-                        periode_id: idPeriode, // L'ID de la période modifiée
+                        periode_id: idPeriode,
                         employe_id: employeeId,
                         intitule: nouvellesValeurs.intitule,
                         jour: nouvellesValeurs.jour,
@@ -469,8 +469,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Fonction pour gérer la soumission du formulaire de modification d'employé
     function handleModifyEmployeeFormSubmit(event) {
+        var _a, _b, _c, _d, _e, _f, _g;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g;
             event.preventDefault();
             const form = event.target;
             const employeeId = parseInt(((_a = document.getElementById("employee_id")) === null || _a === void 0 ? void 0 : _a.textContent) || "");
@@ -494,7 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         contact: {
                             tel: tel,
                             courriel: email,
-                            adresse: (_g = (_f = adresseParts[0]) === null || _f === void 0 ? void 0 : _f.trim()) !== null && _g !== void 0 ? _g : '', // La première partie est l'adresse principale
+                            adresse: (_g = (_f = adresseParts[0]) === null || _f === void 0 ? void 0 : _f.trim()) !== null && _g !== void 0 ? _g : '',
                             codePostal: codePostal,
                             pays: pays
                         }
@@ -680,7 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rang = form.elements.namedItem("rang").value;
         // Créez un nouvel objet employé avec les valeurs du formulaire
         const newEmployee = {
-            id: employeesData.length + 1, // Générez un nouvel identifiant unique
+            id: employeesData.length + 1,
             nom: nom,
             prenom: prenom,
             tel: tel,
