@@ -167,7 +167,6 @@ import {addAbortSignal} from "node:stream";
 app.post('/seConnecter', async (req, res) => {
     const alias = req.body.alias;
     try {
-<<<<<<< HEAD
       const employe = await db.seConnecter(alias);
 
       if(employe?.mdp === req.body.password){
@@ -181,14 +180,7 @@ app.post('/seConnecter', async (req, res) => {
       else{
         res.status(401).send({ error: 'Mot de passe incorrect' });
       }
-=======
-        const mdp = await db.seConnecter(alias);
-        if (mdp === req.body.password) {
-            res.redirect('/cash_desk');
-        } else {
-            res.status(401).send({error: 'Mot de passe incorrect'});
-        }
->>>>>>> 7dd824ae09f3f412a56beb49ec80b61903c619cc
+
 
     } catch (error) {
         res.status(500).send({error: 'Une erreur est survenue'});
@@ -371,20 +363,14 @@ app.post('/encaisser', async (req, res) => {
     const quantites = req.body.quantites;
 
     try {
-<<<<<<< HEAD
       await db.encaisser(date, totalHT, TVA, idArticles, quantites);
       res.redirect('/cash_desk/overview');
-=======
-        await db.encaisser(date, totalHT, TVA, idArticles, quantites);
-        res.send({message: 'Encaissement effectué avec succès'});
->>>>>>> 7dd824ae09f3f412a56beb49ec80b61903c619cc
     } catch (error) {
         res.status(500).send({error: 'Une erreur est survenue'});
     }
 });
 
 
-<<<<<<< HEAD
   //recuperer transaction
 
     app.get('/recupererTransaction', async (req, res) => {
@@ -396,10 +382,7 @@ app.post('/encaisser', async (req, res) => {
         }
     });
 
-  // Récuperer Pompe
-=======
-// Récuperer Pompe
->>>>>>> 7dd824ae09f3f412a56beb49ec80b61903c619cc
+
 
 app.get('/getPump', async (req, res) => {
     try {
@@ -457,12 +440,9 @@ app.post('/enregistrerPaiement', async (req, res) => {
         await db.enregistrerPaiement(montant, idTransaction, idMoyenDePaiement, numCarte);
         res.send({message: 'Paiement enregistré avec succès'});
     } catch (error) {
-<<<<<<< HEAD
       console.log(error);
       res.status(500).send({ error: 'Une erreur est survenue' });
-=======
-        res.status(500).send({error: 'Une erreur est survenue'});
->>>>>>> 7dd824ae09f3f412a56beb49ec80b61903c619cc
+
     }
 });
 
