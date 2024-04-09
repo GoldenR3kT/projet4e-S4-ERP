@@ -27,7 +27,7 @@ function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD, idArticle) {
     quantite.textContent = quantiteBDD.toString(); // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(quantite);
     if (quantiteBDD < 10) {
-        stock.className = 'ligne-reappro-alerte';
+        stock.style.backgroundColor = 'rgb(250,3,3)';
     }
     // Créer le bouton avec la même classe et texte
     const btnReappro = document.createElement("button");

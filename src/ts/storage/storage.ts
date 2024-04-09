@@ -23,7 +23,7 @@ function ajouterStock(nameBDD: string, prixHTBDD: number, prixTTCBDD: string, qu
     stock.appendChild(quantite);
 
     if (quantiteBDD < 10) {
-        stock.className = 'ligne-reappro-alerte' ;
+        stock.style.backgroundColor = 'rgb(250,3,3)';
     }
 
     // Créer le bouton avec la même classe et texte
