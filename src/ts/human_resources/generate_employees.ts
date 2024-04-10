@@ -106,34 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
-    function ajouterPeriodesPourEmployes(employeesData: Employee[], periodes: any[]): void {
-        employeesData.forEach((employee, index) => {
-            const periode: PeriodeEDT = {
-                employe_id: employee.id,
-                periode_id: periodes[index].periode_id,
-                intitule: periodes[index].intitule,
-                jour: new Date(periodes[index].periode.dateDebut).toLocaleDateString(),
-                heureDebut: new Date(periodes[index].periode.dateDebut).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                heureFin: new Date(periodes[index].periode.dateFin).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-            };
-    
-            // Ajouter la période à l'emploi du temps de l'employé
-            employee.emploiDuTemps.push(periode);
-        });
-    }
-    
-    // Utilisation de la fonction avec les données existantes
-    const periodesData = [{"employe_id":1,"periode_id":1,"intitule":"Activité 1","periode":{"id":1,"dateDebut":"2024-04-01T00:00:00.000Z","dateFin":"2024-04-15T00:00:00.000Z"}},{"employe_id":2,"periode_id":2,"intitule":"Activité 2","periode":{"id":2,"dateDebut":"2024-04-16T00:00:00.000Z","dateFin":"2024-04-30T00:00:00.000Z"}},{"employe_id":3,"periode_id":3,"intitule":"Activité 3","periode":{"id":3,"dateDebut":"2024-05-01T00:00:00.000Z","dateFin":"2024-05-15T00:00:00.000Z"}}];
-    
-    ajouterPeriodesPourEmployes(employeesData, periodesData);
-    
-
-
-
-
-
-
     getEmployeesFromServer();
     refreshEmployeeList();
 
@@ -278,14 +250,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Fonction pour supprimer un employé de la liste et du tableau
-    function removeEmployee(employeeElement: HTMLDivElement, employee: Employee) {
-        // Retirer l'élément de la liste des employés
-        const index = employeesData.findIndex(emp => emp.id === employee.id);
-        if (index !== -1) {
-            employeesData.splice(index, 1);
-            listEmployees?.removeChild(employeeElement);
+    async function removeEmployee(employeeElement: HTMLDivElement, employee: Employee): Promise<void> {
+        try {
+            const response = await fetch(`/supprimerEmploye/${employee.id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                // Retirer l'élément de la liste des employés
+                const index = employeesData.findIndex(emp => emp.id === employee.id);
+                if (index !== -1) {
+                    employeesData.splice(index, 1);
+                    listEmployees?.removeChild(employeeElement);
+                    
+                }
+                console.log('Employee deleted successfully');
+            } else {
+                console.error('Failed to delete employee:', response.status);
+            }
+        } catch (error) {
+            console.error('Error deleting employee:', error);
         }
     }
+
 
     // Fonction pour afficher le formulaire de modification des permissions et de l'EDT
     function showEDTPermissionsForm(employee: Employee) {
@@ -575,6 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
 
+    
 
     // Fonction pour gérer la soumission du formulaire de modification d'employé
     async function handleModifyEmployeeFormSubmit(event: Event) {
@@ -660,30 +648,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function modifyEmployeeOnServer(employeeId: number, nouvellesInfos: any): Promise<boolean> {
         try {
-            const response = await fetch('/modifierInfosEmploye', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    employe_id: employeeId,
-                    nouvellesInfos: nouvellesInfos
-                })
-            });
+            // Parcourir chaque clé (information) dans nouvellesInfos
+            for (const infoKey in nouvellesInfos) {
+                if (Object.prototype.hasOwnProperty.call(nouvellesInfos, infoKey)) {
+                    const infoValue = nouvellesInfos[infoKey];
+                    // Effectuer une requête PUT distincte pour mettre à jour chaque information
+                    const response = await fetch(`/modifierInfosEmploye/${employeeId}/${infoKey}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ value: infoValue })
+                    });
     
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log(responseData.message);
-                return true;
-            } else {
-                console.error('Failed to modify employee information:', response.status);
-                return false;
+                    if (!response.ok) {
+                        console.error(`Failed to modify ${infoKey} for employee with ID ${employeeId}:`, response.status);
+                        return false; // Si une seule modification échoue, arrêter et renvoyer false
+                    }
+                }
             }
+            console.log('Employee information modified successfully');
+            return true; // Si toutes les modifications sont réussies, renvoyer true
         } catch (error) {
             console.error('Error modifying employee information:', error);
             return false;
         }
     }
+    
     
 
     const addEmployeeButton = document.getElementById("add-employee-button");
@@ -858,7 +849,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({id: employee.id, poste: employee.poste, rang: employee.rang, nom: employee.nom, prenom: employee.prenom, id_partenaire: employee.id, courriel:employee.email, tel:employee.tel,adresse: parties[0], codePostal: parties[1], pays: parties[2]})
+                body: JSON.stringify({alias: "", mdp:"", dep:"Planergy", poste: employee.poste, rang: employee.rang, nom: employee.nom, prenom: employee.prenom, id_partenaire: employee.id, courriel:employee.email, tel:employee.tel,adresse: parties[0], codePostal: parties[1], pays: parties[2]})
             });
 
             if (!response.ok) {
@@ -871,6 +862,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error('Une erreur est survenue : ', error);
         }
     }
+
+
 
 
     
