@@ -835,6 +835,8 @@ document.addEventListener("DOMContentLoaded", () => {
             emploiDuTemps: []
         };
 
+
+        addEmployeeInServer(newEmployee)
         // Ajoutez le nouvel employé à la liste des employés
         employeesData.push(newEmployee);
 
@@ -844,6 +846,29 @@ document.addEventListener("DOMContentLoaded", () => {
         // Effacez le contenu de la section info-employee
         if (infoEmployee) {
             infoEmployee.innerHTML = '';
+        }
+    }
+
+    // Fonction pour envoyer les données du client au serveur
+    async function addEmployeeInServer(employee: Employee) {
+        let parties = employee.adresse.split(', ');
+        try {
+            const response = await fetch('/creerEmploye', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id: employee.id, poste: employee.poste, rang: employee.rang, nom: employee.nom, prenom: employee.prenom, id_partenaire: employee.id, courriel:employee.email, tel:employee.tel,adresse: parties[0], codePostal: parties[1], pays: parties[2]})
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de la création du client : ' + response.statusText);
+            }
+
+            const responseData = await response.json();
+            console.log(responseData.message); // Affiche le message de la réponse
+        } catch (error) {
+            console.error('Une erreur est survenue : ', error);
         }
     }
 

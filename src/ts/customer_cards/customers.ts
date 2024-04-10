@@ -539,14 +539,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // Fonction pour envoyer les données du client au serveur
-    async function addCustomerInServer(customerData: Customer) {
+    async function addCustomerInServer(customer: Customer) {
+        let parties = customer.adresse.split(', ');
         try {
             const response = await fetch('/creerClient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(customerData)
+                body: JSON.stringify({ id: customer.id, nom: customer.nom, prenom: customer.prenom, id_partenaire: customer.id, courriel:customer.email, tel:customer.tel,adresse: parties[0], codePostal: parties[1], pays: parties[2]})
             });
 
             if (!response.ok) {
