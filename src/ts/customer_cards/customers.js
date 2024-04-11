@@ -8,21 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// Liste contenant tous les clients
+let customersData = [];
+let cardsData = [];
 document.addEventListener("DOMContentLoaded", () => {
     const listCustomers = document.querySelector('.list-customers');
     const infoCustomer = document.querySelector('.info-customer');
-    // Données des clients (simulées)
-    const customersData = [];
     getCustomersFromServer();
+    refreshCustomerList();
+    //////////////////////////// CLIENTS ////////////////////////////
+    /*************** REQUETES SERVEURS ***************/
+    //Récupérer les clients
     function getCustomersFromServer() {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
             try {
                 const response = yield fetch('/voirClients');
                 const clientsFromServer = yield response.json();
-                // Clear the existing customersData array before populating it with new data
+                // Vide la liste avant de la repeupler
                 customersData.length = 0;
-                // Populate customersData array with fetched data
+                // Repeuple customersData avec les résultats
                 for (const client of clientsFromServer) {
                     try {
                         const contact = (_b = (_a = client === null || client === void 0 ? void 0 : client.personne) === null || _a === void 0 ? void 0 : _a.partenaire) === null || _b === void 0 ? void 0 : _b.contact;
@@ -31,8 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         const adresse = (_e = contact === null || contact === void 0 ? void 0 : contact.adresse) !== null && _e !== void 0 ? _e : '';
                         const codePostal = (_f = contact === null || contact === void 0 ? void 0 : contact.codePostal) !== null && _f !== void 0 ? _f : '';
                         const pays = (_g = contact === null || contact === void 0 ? void 0 : contact.pays) !== null && _g !== void 0 ? _g : '';
-                        const cce = 0; // Ajoutez la logique pour récupérer cce
-                        const cm = 0; // Ajoutez la logique pour récupérer cm
+                        const cce = 0;
+                        const cm = 0;
                         customersData.push({
                             id: client.id,
                             nom: (_j = (_h = client.personne) === null || _h === void 0 ? void 0 : _h.nom) !== null && _j !== void 0 ? _j : '',
@@ -56,8 +61,56 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    //refreshCustomerList();
-    // Fonction pour supprimer et réafficher la liste des employés
+    //Créer un client
+    function addCustomerInServer(customer) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let parties = customer.adresse.split(', ');
+            try {
+                const response = yield fetch('/creerClient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: customer.id, nom: customer.nom, prenom: customer.prenom, id_partenaire: customer.id, courriel: customer.email, tel: customer.tel, adresse: parties[0], codePostal: parties[1], pays: parties[2] })
+                });
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la création du client : ' + response.statusText);
+                }
+                const responseData = yield response.json();
+                console.log(responseData.message); // Affiche le message de la réponse
+            }
+            catch (error) {
+                console.error('Une erreur est survenue : ', error);
+            }
+        });
+    }
+    //Supprimer un client
+    function removeCustomer(employeeElement, customer) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch(`/supprimerClient/${customer.id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    // Retirer l'élément de la liste des clients
+                    const index = customersData.findIndex(cust => cust.id === customer.id);
+                    if (index !== -1) {
+                        customersData.splice(index, 1);
+                        listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(employeeElement);
+                    }
+                    console.log('Customer deleted successfully');
+                }
+                else {
+                    console.error('Failed to delete customer:', response.status);
+                }
+            }
+            catch (error) {
+                console.error('Error deleting customer:', error);
+            }
+        });
+    }
+    /*************** AFFICHAGES SUR LA PARTIE "list-customers" ***************/
+    // Fonction pour supprimer et réafficher la liste des clients
     function refreshCustomerList() {
         const listCustomers = document.getElementById('list-customers');
         if (!listCustomers)
@@ -70,11 +123,24 @@ document.addEventListener("DOMContentLoaded", () => {
             listCustomers.appendChild(customerElement);
         });
     }
-    // Fonction pour créer un élément d'employé
+    // Fonction pour afficher les clients
+    function displayCustomers(customers) {
+        const listCustomers = document.getElementById('list-customers');
+        if (!listCustomers)
+            return;
+        // Effacer tout le contenu de list-customers
+        listCustomers.innerHTML = '';
+        // Réafficher les clients filtrés
+        customers.forEach(customer => {
+            const customerElement = createCustomerElement(customer);
+            listCustomers.appendChild(customerElement);
+        });
+    }
+    // Fonction pour créer un élément d'un client
     function createCustomerElement(customer) {
         const customerDiv = document.createElement('div');
         customerDiv.classList.add('customer');
-        // Informations de l'employé (à gauche)
+        // Informations du client (à gauche)
         const infoDiv = document.createElement('div');
         infoDiv.classList.add('customer-info');
         customerDiv.appendChild(infoDiv);
@@ -105,7 +171,15 @@ document.addEventListener("DOMContentLoaded", () => {
         buttonsDiv.appendChild(supprimerButton);
         return customerDiv;
     }
-    // Fonction pour afficher les informations de l'employé sélectionné
+    // Fonction pour vider le contenu de la section info-customer
+    function clearInfoCustomer() {
+        const infoCustomer = document.querySelector('.info-customer');
+        if (infoCustomer) {
+            infoCustomer.innerHTML = '';
+        }
+    }
+    /*************** AFFICHAGES SUR LA PARTIE "info-customers" ***************/
+    // Fonction pour afficher les informations du client sélectionné
     function showCustomerInfo(customer) {
         const customerInfoHTML = `
             <h2>Modification Informations du client : <span id="customer_id">${customer.id}</span>
@@ -214,28 +288,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
-    // Fonction pour récupérer le premier ID de carte disponible pour un type spécifique ('cce' ou 'cm')
-    function getAvailableCardId(cardType) {
-        // Rechercher la première carte disponible qui n'est pas déjà attribuée à un client
-        for (const card of cardsData) {
-            if (card.type === cardType && !card.idClient) {
-                // Vérifier si la carte n'est pas déjà attribuée à un client dans customersData
-                const isCardAssigned = customersData.some(customer => {
-                    return customer.cce === card.id || customer.cm === card.id;
-                });
-                if (!isCardAssigned) {
-                    return card.id;
-                }
-            }
-        }
-        return undefined;
-    }
-    // Définir la fonction pour récupérer le prochain ID disponible pour chaque type de carte
-    function getNextAvailableId(cardType) {
-        const cardsOfType = cardsData.filter(card => card.type === cardType);
-        const maxIdOfType = cardsOfType.reduce((maxId, card) => Math.max(maxId, card.id), 0);
-        return maxIdOfType + 1;
-    }
     /// Fonction pour afficher le champ de saisie de la carte ou le bouton d'ajout
     function renderCardInput(customer, cardType) {
         // Si le client a déjà une carte de ce type, afficher la valeur dans un champ de texte
@@ -256,41 +308,23 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
     }
-    // Fonction pour supprimer un employé de la liste et du tableau
-    function removeCustomer(customerElement, customer) {
-        // Retirer l'élément de la liste des employés
-        const index = customersData.findIndex(emp => emp.id === customer.id);
-        if (index !== -1) {
-            customersData.splice(index, 1);
-            listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(customerElement);
-            /*
-            // Effectuer la requête DELETE
-            fetch(`/supprimerClient/${idClient}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
+    // Fonction pour récupérer le premier ID de carte disponible pour un type spécifique ('cce' ou 'cm')
+    function getAvailableCardId(cardType) {
+        // Rechercher la première carte disponible qui n'est pas déjà attribuée à un client
+        for (const card of cardsData) {
+            if (card.type === cardType && !card.idClient) {
+                // Vérifier si la carte n'est pas déjà attribuée à un client dans customersData
+                const isCardAssigned = customersData.some(customer => {
+                    return customer.cce === card.id || customer.cm === card.id;
+                });
+                if (!isCardAssigned) {
+                    return card.id;
                 }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Une erreur est survenue lors de la suppression du client');
-                }
-                // Supprimer l'élément du tableau
-                customersData.splice(index, 1);
-                // Supprimer l'élément de l'interface utilisateur
-                listCustomers?.removeChild(customerElement);
-                return response.json();
-            })
-            .then(data => {
-                console.log(data); // Afficher la réponse de l'API (optionnel)
-            })
-            .catch(error => {
-                console.error(error); // Gérer les erreurs de la requête (optionnel)
-            });
-            */
+            }
         }
+        return undefined;
     }
-    // Fonction pour gérer la soumission du formulaire de modification d'employé
+    // Fonction pour gérer la soumission du formulaire de modification d'un client
     function handleModifyCustomerFormSubmit(event) {
         var _a;
         event.preventDefault();
@@ -303,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const adresse = form.elements.namedItem("adresse");
         const cce = form.elements.namedItem("cce");
         const cm = form.elements.namedItem("cm");
-        // Mettez à jour les informations de l'employé dans la liste
+        // Mettez à jour les informations du client dans la liste
         const updatedCustomer = customersData.find(customer => customer.id === customerId);
         if (updatedCustomer) {
             updatedCustomer.nom = nom.value;
@@ -313,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updatedCustomer.adresse = adresse.value;
             updatedCustomer.cce = parseInt(cce.value);
             updatedCustomer.cm = parseInt(cm.value);
-            // Mettez à jour l'affichage de l'employé dans la liste
+            // Mettez à jour l'affichage du client dans la liste
             const customerElement = document.querySelector(`.customer[data-id="${customerId}"]`);
             if (customerElement) {
                 const infoDiv = customerElement.querySelector('.customer-info');
@@ -326,11 +360,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (infoCustomer) {
             infoCustomer.innerHTML = '';
         }
-        // Rafraîchir la liste des employés
+        // Rafraîchir la liste des clients
         refreshCustomerList();
     }
+    /*************** AJOUT D'UN NOUVEAU CLIENT ***************/
     const addCustomerButton = document.getElementById("add-customer-button");
-    const infoCustomerSection = document.querySelector(".info-customer");
     if (addCustomerButton) {
         addCustomerButton.addEventListener("click", handleAddCustomerClick);
     }
@@ -404,8 +438,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </form>
         `;
         // Affichage du formulaire dans la section info-customer
-        if (infoCustomerSection) {
-            infoCustomerSection.innerHTML = formHTML;
+        if (infoCustomer) {
+            infoCustomer.innerHTML = formHTML;
         }
         // Récupération du bouton de soumission et attachement du gestionnaire d'événements
         const addSubmitButton = document.querySelector('form');
@@ -465,9 +499,9 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 // Appeler la fonction pour envoyer les données du client au serveur
                 yield addCustomerInServer(customer);
-                // Ajouter le nouvel employé à la liste des employés seulement après l'ajout réussi dans la base de données
+                // Ajouter le nouveau client à la liste des clients seulement après l'ajout réussi dans la base de données
                 customersData.push(customer);
-                // Rafraîchir la liste des employés
+                // Rafraîchir la liste des clients
                 refreshCustomerList();
                 // Effacer le contenu de la section info-customer
                 if (infoCustomer) {
@@ -479,28 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    // Fonction pour envoyer les données du client au serveur
-    function addCustomerInServer(customerData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const response = yield fetch('/creerClient', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(customerData)
-                });
-                if (!response.ok) {
-                    throw new Error('Erreur lors de la création du client : ' + response.statusText);
-                }
-                const responseData = yield response.json();
-                console.log(responseData.message); // Affiche le message de la réponse
-            }
-            catch (error) {
-                console.error('Une erreur est survenue : ', error);
-            }
-        });
-    }
+    /*************** FILTRE ET RECHERCHE DANS LA LISTE ***************/
     // Récupérer les éléments de recherche par nom et par ID
     const searchByNameInput = document.getElementById('search-by-name');
     const searchByIdInput = document.getElementById('search-by-id');
@@ -527,7 +540,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-    // Fonction pour filtrer les employés par nom
+    // Fonction pour filtrer les clients par nom
     function filterCustomersByName(name) {
         const filteredCustomers = customersData.filter(customer => {
             const fullName = `${customer.nom} ${customer.prenom}`.toLowerCase();
@@ -535,32 +548,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         displayCustomers(filteredCustomers);
     }
-    // Fonction pour filtrer les employés par ID
+    // Fonction pour filtrer les clients par ID
     function filterCustomersById(id) {
         const filteredCustomers = customersData.filter(customer => customer.id === id);
         displayCustomers(filteredCustomers);
     }
-    // Fonction pour afficher les employés
-    function displayCustomers(customers) {
-        const listCustomers = document.getElementById('list-customers');
-        if (!listCustomers)
-            return;
-        // Effacer tout le contenu de list-customers
-        listCustomers.innerHTML = '';
-        // Réafficher les employés filtrés
-        customers.forEach(customer => {
-            const customerElement = createCustomerElement(customer);
-            listCustomers.appendChild(customerElement);
-        });
-    }
-    // Fonction pour vider le contenu de la section info-customer
-    function clearInfoCustomer() {
-        const infoCustomer = document.querySelector('.info-customer');
-        if (infoCustomer) {
-            infoCustomer.innerHTML = '';
-        }
-    }
-    const cardsData = [
+    //////////////////////////// CARTES ////////////////////////////
+    cardsData = [
         { id: 1, type: "cce", ptsMembre: 1, credit: 11, dernierCredit: "01/04/2024", montantDernierCredit: 10, idClient: 0 },
         { id: 2, type: "cm", ptsMembre: 2, credit: 22, dernierCredit: "02/04/2024", montantDernierCredit: 20, idClient: 0 },
         { id: 3, type: "cce", ptsMembre: 3, credit: 33, dernierCredit: "03/04/2024", montantDernierCredit: 30, idClient: 0 },
@@ -568,11 +562,9 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 5, type: "cce", ptsMembre: 5, credit: 55, dernierCredit: "05/04/2024", montantDernierCredit: 50, idClient: 0 },
         { id: 6, type: "cm", ptsMembre: 6, credit: 66, dernierCredit: "06/04/2024", montantDernierCredit: 60, idClient: 0 },
         { id: 7, type: "cce", ptsMembre: 7, credit: 77, dernierCredit: "07/04/2024", montantDernierCredit: 70, idClient: 0 },
-        /*{ id: 8, type: "cm", ptsMembre: 8, credit: 88, dernierCredit: "08/04/2024", montantDernierCredit: 80, idClient: 0},
-        { id: 9, type: "cce", ptsMembre: 9, credit: 99, dernierCredit: "09/04/2024", montantDernierCredit: 90, idClient: 0},
-        { id: 10, type: "cm", ptsMembre: 10, credit: 110, dernierCredit: "10/04/2024", montantDernierCredit: 100, idClient: 0},*/
     ];
-    // Fonction pour supprimer et réafficher la liste des employés
+    /*************** AFFICHAGES SUR LA PARTIE "list-customers" ***************/
+    // Fonction pour supprimer et réafficher la liste des cartes
     function refreshCardList() {
         const listCards = document.getElementById('list-customers');
         if (!listCards)
@@ -585,11 +577,11 @@ document.addEventListener("DOMContentLoaded", () => {
             listCards.appendChild(cardElement);
         });
     }
-    // Fonction pour créer un élément d'employé
+    // Fonction pour créer un élément d'une carte
     function createCardElement(card) {
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('customer');
-        // Informations de l'employé (à gauche)
+        // Informations du client (à gauche)
         const infoDiv = document.createElement('div');
         infoDiv.classList.add('customer-info');
         cardDiv.appendChild(infoDiv);
@@ -620,6 +612,7 @@ document.addEventListener("DOMContentLoaded", () => {
         buttonsDiv.appendChild(supprimerButton);
         return cardDiv;
     }
+    /*************** AFFICHAGES SUR LA PARTIE "info-customers" ***************/
     // Fonction pour afficher les informations de la carte sélectionnée
     function showCardInfo(card) {
         let cardInfoHTML = `
@@ -721,7 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });*/
         }
     }
-    // Fonction pour gérer la soumission du formulaire de modification d'employé
+    // Fonction pour gérer la soumission du formulaire de modification d'une carte
     function handleModifyCardFormSubmit(event) {
         var _a;
         event.preventDefault();
@@ -760,6 +753,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Rafraîchir la liste des cartes
         refreshCardList();
     }
+    /*************** AJOUT D'UNE NOUVELLE CARTE ***************/
     // Récupérer le bouton d'ajout de carte
     const addCardButton = document.getElementById("add-card-button");
     // Ajouter un écouteur d'événements au bouton d'ajout de carte
@@ -839,21 +833,23 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
+    //////////////////////////// CARTES ////////////////////////////
     // Sélectionnez les boutons par leur ID
     const customerButton = document.getElementById("customer-button");
     const cardButton = document.getElementById("card-button");
     // Ajoutez des écouteurs d'événements pour chaque bouton
+    //Afficher la liste des clients
     if (customerButton) {
         customerButton.addEventListener("click", () => {
             clearInfoCustomer();
             refreshCustomerList();
         });
     }
+    //Afficher la liste des cartes
     if (cardButton) {
         cardButton.addEventListener("click", () => {
             clearInfoCustomer();
             refreshCardList();
         });
     }
-    refreshCustomerList();
 });

@@ -27,7 +27,7 @@ function ajouterStock(nameBDD, prixHTBDD, prixTTCBDD, quantiteBDD, idArticle) {
     quantite.textContent = quantiteBDD.toString(); // Remplacez cela par la vraie valeur de l'email du fournisseur
     stock.appendChild(quantite);
     if (quantiteBDD < 10) {
-        stock.className = 'ligne-reappro-alerte';
+        stock.style.backgroundColor = 'rgb(250,3,3)';
     }
     // Créer le bouton avec la même classe et texte
     const btnReappro = document.createElement("button");
@@ -66,10 +66,19 @@ function ajouterReappro(id, dateCommande, produit, quantite, prix) {
     const btnAnnuler = document.createElement("button");
     btnAnnuler.className = "annuler-button";
     btnAnnuler.innerHTML = "Annuler";
+    btnAnnuler.addEventListener('click', function () {
+        annulerReappro(parseInt(id));
+        reappro.remove();
+    });
     reappro.appendChild(btnAnnuler);
     const btnEnregistrer = document.createElement("button");
     btnEnregistrer.className = "enregistrer-button";
     btnEnregistrer.innerHTML = "Enregistrer la reception";
+    btnEnregistrer.addEventListener('click', function () {
+        enregistrerReceptionReappro(parseInt(id));
+        btnEnregistrer.disabled = true;
+        btnEnregistrer.textContent = "Réception enregistrée";
+    });
     reappro.appendChild(btnEnregistrer);
     // Ajouter le nouvel élément li à l'ul
     listeReappro === null || listeReappro === void 0 ? void 0 : listeReappro.appendChild(reappro);
@@ -326,6 +335,44 @@ function requeteReappro(idArticle, quantite, prixHT) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ idArticle: idArticle, quantite: 1000, date: Date.now(), totalHT: quantite * prixHT, TVA: 0.2 })
+            });
+            if (response.ok) {
+                const responseData = yield response.json();
+                console.log(responseData.message);
+            }
+            else {
+                console.error('Erreur lors de la requête : ', response.status);
+            }
+        }
+        catch (error) {
+            console.error('Une erreur est survenue : ', error);
+        }
+    });
+}
+function annulerReappro(idTransaction) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch('/annulerReappro/' + idTransaction, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                const responseData = yield response.json();
+                console.log(responseData.message);
+            }
+            else {
+                console.error('Erreur lors de la requête : ', response.status);
+            }
+        }
+        catch (error) {
+            console.error('Une erreur est survenue : ', error);
+        }
+    });
+}
+function enregistrerReceptionReappro(idTransaction) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch('/enregistrerReceptionReappro/' + idTransaction, {
+                method: 'PUT'
             });
             if (response.ok) {
                 const responseData = yield response.json();

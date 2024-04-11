@@ -11,12 +11,15 @@
         </header>
     </head>
     <body onload="fillFormData()">
+
+        <!-- Div contenant le bouton de redirection. -->
         <div id="conteneur-annuler-bouton">
             <button  id="bouton-annuler-modifications" class="bouton-profil-modification" onclick="window.location.href='/profile'">
                 Annuler
             </button>
         </div>
 
+        <!-- Div contenant le formulaire central de modification des informations. -->
         <form id="conteneur-modifications" action="" method="post">
                 <div id="formulaire-modifications">
                     <div id="informations-label">
@@ -45,6 +48,7 @@
                 </div>
         </form>
 
+        <!-- Div contenant le bouton de validation et de redirection. -->
         <div id="conteneur-valider-bouton">
             <button  id="bouton-valider-modifications" class="bouton-profil-modification" onclick="window.location.href='/profile'">
                 Valider les modifications
@@ -53,6 +57,7 @@
 
         <script src="/ts/nav/nav-call.js"></script>
         <script src="/ts/incidents/open-incidents.js"></script>
+        <script src="/ts/profile/profile-modification.js"> </script>
 
     </body>
 </html>
