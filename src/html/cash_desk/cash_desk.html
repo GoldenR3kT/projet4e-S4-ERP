@@ -14,6 +14,8 @@
     
 </head>
 <body>
+
+    <!-- popup de confirmation pour la pompe -->
     <div id="toask-pump" style="display: none">
         <div id="toask-pump-form">
             <label id="label-toast">DEVEROUILLER LA POMPE ?</label>
@@ -24,6 +26,7 @@
         </div>
     </div>
 
+    <!-- popup de confirmation pour une quantité d' énergie -->
     <div id="toast-energy-quantity" style="display: none">
         <div id="toask-energy-form">
             <label id="label-toast-energy" for="quantity-energy">ENTREZ UNE QUANTITE ?</label>
@@ -34,11 +37,15 @@
             </div>
         </div>
     </div>
+
+    <!-- template de l'erp -->
     <div id="erp">
 
         <div id="main">
 
+            <!-- div haut de la caisse -->
             <div id="cash-desk-top">
+                <!-- div de recherche de produit -->
                 <div id="search-product-box">
                     <input type="text" id="search-product-input" placeholder="Rechercher un produit">
                     <button id="search-product-button" onclick=searchProducts()>Rechercher</button>
@@ -46,6 +53,7 @@
 
                     </div>
                 </div>
+                <!-- div de la liste des produits -->
                 <div id="products-list-box">
                     <p id="products-list-result">Liste des produits :</p>
                     <div id="products-list-scrollable">
@@ -53,6 +61,8 @@
                     </div>
                     <div id="products-list-price">MONTANT TOTAL : <p id="price-total">0€</p></div>
                 </div>
+
+                <!-- div de la calculatrice -->
                 <div id="calculator">
                     <div id="calculator-screen">
                         <input type="text" id="calculator-screen-input" placeholder="0.00€">
@@ -75,12 +85,16 @@
                 </div>
             </div>
 
+            <!-- div du milieu de la caisse -->
             <div id="cash-desk-mid">
+                <!-- div des pompes de la station -->
                 <div id="pumps-station">
                     <p>Station de pompe</p>
                     <div id="pumps-station-scrollable">
                     </div>
                 </div>
+
+                <!-- div de la carte membre -->
                 <div id="member-card-client">
                     <div>
                         <p>Carte membre :</p>
@@ -102,7 +116,11 @@
 
             </div>
 
+
+            <!-- div bas de la caisse -->
             <div id="cash-desk-bottom">
+
+                <!-- div du choix du mode de paiement -->
                 <div id="payment">
                     <label id="choice" for="choice">Choisissez le(s) mode de paiement(s) :</label>
                     <div id="payment-checkbox">
@@ -129,6 +147,8 @@
                     </div>
 
                 </div>
+
+                <!-- div de la carte energie -->
                 <div id="energy-card">
                     <div id="energy-card-client">
                         <div>

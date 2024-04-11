@@ -8,13 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const dateEndInput = document.getElementById('date-end-promo');
         const promotionPercentageInput = document.getElementById('promotion-pourcentage');
         // Récupérer les valeurs des champs de formulaire
-        // @ts-ignore
         const idArticle = idArticleInput.value;
-        // @ts-ignore
         const dateStart = dateStartInput.value;
-        // @ts-ignore
         const dateEnd = dateEndInput.value;
-        // @ts-ignore
         const promotionPercentage = promotionPercentageInput.value;
         // Créer un nouvel élément ul avec les valeurs
         const newPromotionItem = document.createElement('ul');
@@ -36,19 +32,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // @ts-ignore
         promotionList.appendChild(newListItem);
         // Réinitialiser les champs de formulaire
-        // @ts-ignore
         idArticleInput.value = '';
-        // @ts-ignore
         dateStartInput.value = '';
-        // @ts-ignore
         dateEndInput.value = '';
-        // @ts-ignore
         promotionPercentageInput.value = '';
         // Initialiser les menus après l'ajout de nouveaux éléments
         initializePromotionMenus();
     });
 });
-// @ts-ignore
 function initializePromotionMenus() {
     const promotionItems = document.querySelectorAll('.promotion-item');
     promotionItems.forEach(function (item) {
@@ -70,7 +61,6 @@ function initializePromotionMenus() {
         });
     });
 }
-// @ts-ignore
 function closeAllPromotionMenus() {
     const allPromotionMenus = document.querySelectorAll('.promotion-menu');
     const allPromotionItems = document.querySelectorAll('.promotion-item');
@@ -85,13 +75,12 @@ function closeAllPromotionMenus() {
         item.classList.remove('style-open');
     });
 }
-// @ts-ignore
 function adjustMenuHeight(menu) {
     // @ts-ignore
     menu.style.height = 'auto';
     const menuHeight = menu.scrollHeight;
     // @ts-ignore
-    menu.style.height = '50px'; // Réduire la hauteur du menu à 50px pour l'exemple
+    menu.style.height = '50px';
 }
 // @ts-ignore
 function adjustSiblingElements(parentElement, isOpen) {

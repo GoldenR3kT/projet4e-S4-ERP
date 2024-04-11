@@ -1,12 +1,14 @@
+
 // Récupération des éléments du DOM
+
 let input = document.getElementById('calculator-screen-input') as HTMLInputElement;
 let buttons = document.getElementsByClassName('button-calculator');
 
 
+// Ajout d'un gestionnaire d'événements au clic sur les boutons de la calculatrice
 for(let i = 0; i < buttons.length; i++) {
     let button = buttons[i] as HTMLButtonElement;
 
-    // Listener pour le click
     button.addEventListener('click', function(event) {
         //  bouton 'C', on réinitialise l'input
         if (button.id === 'button-clear') {

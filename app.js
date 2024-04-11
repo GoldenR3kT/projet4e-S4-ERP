@@ -43,6 +43,7 @@ const port = 3000;
 // chemin absolu vers le dossier 'html'
 const htmlPath = path_1.default.join(__dirname, 'src', 'html');
 const cssPath = path_1.default.join(__dirname, 'assets', 'css');
+const imgPath = path_1.default.join(__dirname, 'assets', 'img');
 // On indique à Express d'utiliser le moteur de vue ejs
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');

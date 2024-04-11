@@ -1,22 +1,40 @@
+
+//On récupère les éléments du DOM
+
 const productSearched: HTMLElement | null = document.getElementById('search-product-scrollable');
 const productList: HTMLElement | null = document.getElementById('products-list-scrollable');
 const pumpScrollable: HTMLElement | null = document.getElementById('pumps-station-scrollable') as HTMLElement;
-
 const searchInput = document.getElementById('search-product-input') as HTMLInputElement;
-searchInput.addEventListener('input', searchProducts);
+const total = document.getElementById('price-total') as HTMLParagraphElement;
+const buttonValidate = document.getElementById('validate') as HTMLButtonElement;
 
+
+//On initialise les tableaux pour les produits, les quantités et les moyens de paiement
 let tabProduits: any[] = [];
 let tabQuantites: any[] = [];
 let tabMoyenDePaiement: any[] = [];
 
 
-const total = document.getElementById('price-total') as HTMLParagraphElement;
-const buttonValidate = document.getElementById('validate') as HTMLButtonElement;
+//On ajoute un écouteur d'événement sur l'input de recherche
+searchInput.addEventListener('input', searchProducts);
 
+//On ajoute un écouteur d'événement sur le bouton pour rediriger vers la page de gestion des cartes du client
+document.getElementById('member-card-client-add')?.addEventListener('click', () => {
+    window.location.href = '/customer_cards';
+});
+document.getElementById('cce-card-client-add')?.addEventListener('click', () => {
+    window.location.href = '/customer_cards';
+});
+
+document.querySelector('#member-card-client-search')?.addEventListener('click', getMemberCard);
+document.querySelector('#cce-card-client-search')?.addEventListener('click', getCardCCE);
+
+//fonction pour rechercher les produits
 async function searchProducts() {
     const searchInputValue = searchInput.value.trim().toLowerCase();
 
     try {
+        // Récupérer les produits
         const response = await fetch(`/voirArticles`);
         const produits = await response.json();
 
@@ -27,11 +45,16 @@ async function searchProducts() {
             const filteredProduits = produits.filter((produit: any) => produit.nom.toLowerCase().includes(searchInputValue));
 
             if (filteredProduits.length === 0) {
+                // Afficher un message si aucun produit n'est trouvé
+
                 const noResultsMessage = document.createElement('p');
                 noResultsMessage.textContent = 'Aucun produit trouvé.';
                 productSearched.appendChild(noResultsMessage);
             } else {
+                // Afficher les produits trouvés
+
                 filteredProduits.forEach((produit: any) => {
+                    // Créer les éléments du DOM pour chaque produit
                     const productDiv = document.createElement('div');
                     const buttonAdd = document.createElement('button');
                     const divNamePrice = document.createElement('div');
@@ -46,16 +69,18 @@ async function searchProducts() {
                     divNamePrice.className = 'div-namePrice';
                     productDiv.className = 'product-div';
                     buttonAdd.className = 'add-product-button';
+
+                    // Ajouter un écouteur d'événement sur le bouton d'ajout qui permet d'ajouter le produit à la liste des produits
                     buttonAdd.addEventListener('click', () => {
                         const productToAdd = divNamePrice.cloneNode(true);
                         disableAllCheckboxes();
 
+                        // Gère le cas où le produit est un carburant
                         if (productName.textContent?.includes("Diesel") || productName.textContent?.includes("Sans Plomb") || productName.textContent?.includes("Electricite") || productName.textContent?.includes("Gaz")) {
                             let toAskQEnergy = document.getElementById('toast-energy-quantity') as HTMLElement;
                             toAskQEnergy.style.display = 'block';
                             toAskQEnergy.style.zIndex = '1000';
 
-                            let previousPumpOkClickHandler: () => void
                             let pumpOkClickHandler: () => void;
 
 
@@ -102,6 +127,8 @@ async function searchProducts() {
                             });
                         }
                         else{
+
+                            // Ajouter le produit à la liste des produits et mettre à jour le prix total
                             totalPrice += produit.prixTTC;
                             total.textContent = totalPrice + ' €';
 
@@ -134,6 +161,7 @@ async function searchProducts() {
 }
 
 
+// Fonction pour désactiver tous les checkboxes
 function disableAllCheckboxes() {
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         if (checkbox instanceof HTMLInputElement) {
@@ -141,6 +169,8 @@ function disableAllCheckboxes() {
         }
     });
 }
+
+// Ajouter un écouteur d'événement sur chaque checkbox pour gérer la sélection des moyens de paiement
 document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
     if (checkbox instanceof HTMLInputElement) {
         checkbox.addEventListener('change', () => {
@@ -183,6 +213,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
 });
 
 
+// Fonction pour récupérer les informations d'un membre
 async function getMemberCard() {
     const memberIdInput = document.getElementById('id-member') as HTMLInputElement;
     const memberId = memberIdInput.value;
@@ -211,6 +242,8 @@ async function getMemberCard() {
     }
 }
 
+
+// Fonction pour récupérer les informations d'une carte CCE
 async function getCardCCE() {
     const cceIdInput = document.getElementById('id-cce') as HTMLInputElement;
     const cceId = cceIdInput.value;
@@ -239,6 +272,7 @@ async function getCardCCE() {
 }
 
 
+// Fonction pour récupérer les Articles
 async function getArticles() {
     try {
         const response = await fetch(`/voirArticles`);
@@ -249,6 +283,7 @@ async function getArticles() {
     }
 }
 
+// Fonction pour récupérer les Energies
 async function getEnergies() {
     try {
         const response = await fetch(`/voirEnergies`);
@@ -259,6 +294,8 @@ async function getEnergies() {
     }
 }
 
+
+// Fonction pour récupérer les Pompes
 async function getPumps() {
     try {
         const response = await fetch(`/getPump`);
@@ -269,11 +306,14 @@ async function getPumps() {
     }
 }
 
+
+// Fonction pour afficher les pompes
 async function displayPumps() {
     const articles = await getArticles();
     const energies = await getEnergies();
     const pumps = await getPumps();
 
+    // Afficher les pompes
     if (pumpScrollable) {
         for (const pump of pumps) {
             const pumpDiv = document.createElement('div');
@@ -297,7 +337,6 @@ async function displayPumps() {
                     pumpDiv.style.backgroundColor = 'red';
                     pumpName.style.backgroundColor = 'red';
 
-                    // Fonction asynchrone pour mettre à jour l'état dans la base de données
                     const updateState = async () => {
                         try {
                             const response = await fetch('/changerEtatPompe', {
@@ -317,7 +356,7 @@ async function displayPumps() {
                         }
                     };
 
-                    await updateState(); // Appel de la fonction pour mettre à jour l'état dans la base de données
+                    await updateState();
                 } else {
                     pumpStatut.textContent = 'Statut : ' + pump.statut;
                 }
@@ -327,6 +366,8 @@ async function displayPumps() {
                 pumpDiv.appendChild(pumpQuantity);
                 pumpDiv.appendChild(pumpStatut);
                 pumpDiv.className = 'pump-div';
+
+                // Ajouter un écouteur d'événement sur la pompe pour changer son état et la dévérouiller pour le client
 
                 pumpDiv.addEventListener('click', () => {
                     document.querySelectorAll('.pump-div').forEach((element) => {
@@ -395,9 +436,7 @@ async function displayPumps() {
 
 displayPumps();
 
-
-document.querySelector('#member-card-client-search')?.addEventListener('click', getMemberCard);
-document.querySelector('#cce-card-client-search')?.addEventListener('click', getCardCCE);
+// Ajouter un écouteur d'événement sur le bouton de validation pour encaisser
 document.getElementById('validate')?.addEventListener('click', async () => {
     try {
         const date = Date.now();
@@ -427,6 +466,8 @@ document.getElementById('validate')?.addEventListener('click', async () => {
     }
 
 });
+
+// Fonction pour ajouter un paiement dans la base de données
 
 /*
 async function addPaymentDb() {
@@ -467,3 +508,5 @@ async function addPaymentDb() {
         console.error('Une erreur est survenue:', error);
     }
 }*/
+
+

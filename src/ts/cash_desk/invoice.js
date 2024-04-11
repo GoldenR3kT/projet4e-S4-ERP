@@ -1,4 +1,5 @@
 "use strict";
+// Au chargement du DOM on rend les éléments de la liste de tickets et de factures cliquables
 document.addEventListener('DOMContentLoaded', function () {
     const ticketItems = document.querySelectorAll('.ticket-list-scrollable p');
     const invoiceItems = document.querySelectorAll('.invoice-list-scrollable p');

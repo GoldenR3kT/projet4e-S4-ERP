@@ -1,4 +1,5 @@
 "use strict";
+//On récupère les éléments du DOM
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,21 +9,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b, _c;
+var _a, _b, _c, _d, _e;
 const productSearched = document.getElementById('search-product-scrollable');
 const productList = document.getElementById('products-list-scrollable');
 const pumpScrollable = document.getElementById('pumps-station-scrollable');
 const searchInput = document.getElementById('search-product-input');
-searchInput.addEventListener('input', searchProducts);
+const total = document.getElementById('price-total');
+const buttonValidate = document.getElementById('validate');
+//On initialise les tableaux pour les produits, les quantités et les moyens de paiement
 let tabProduits = [];
 let tabQuantites = [];
 let tabMoyenDePaiement = [];
-const total = document.getElementById('price-total');
-const buttonValidate = document.getElementById('validate');
+//On ajoute un écouteur d'événement sur l'input de recherche
+searchInput.addEventListener('input', searchProducts);
+//On ajoute un écouteur d'événement sur le bouton pour rediriger vers la page de gestion des cartes du client
+(_a = document.getElementById('member-card-client-add')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+    window.location.href = '/customer_cards';
+});
+(_b = document.getElementById('cce-card-client-add')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
+    window.location.href = '/customer_cards';
+});
+(_c = document.querySelector('#member-card-client-search')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', getMemberCard);
+(_d = document.querySelector('#cce-card-client-search')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', getCardCCE);
+//fonction pour rechercher les produits
 function searchProducts() {
     return __awaiter(this, void 0, void 0, function* () {
         const searchInputValue = searchInput.value.trim().toLowerCase();
         try {
+            // Récupérer les produits
             const response = yield fetch(`/voirArticles`);
             const produits = yield response.json();
             if (productSearched) {
@@ -30,12 +44,15 @@ function searchProducts() {
                 let totalPrice = 0;
                 const filteredProduits = produits.filter((produit) => produit.nom.toLowerCase().includes(searchInputValue));
                 if (filteredProduits.length === 0) {
+                    // Afficher un message si aucun produit n'est trouvé
                     const noResultsMessage = document.createElement('p');
                     noResultsMessage.textContent = 'Aucun produit trouvé.';
                     productSearched.appendChild(noResultsMessage);
                 }
                 else {
+                    // Afficher les produits trouvés
                     filteredProduits.forEach((produit) => {
+                        // Créer les éléments du DOM pour chaque produit
                         const productDiv = document.createElement('div');
                         const buttonAdd = document.createElement('button');
                         const divNamePrice = document.createElement('div');
@@ -48,15 +65,16 @@ function searchProducts() {
                         divNamePrice.className = 'div-namePrice';
                         productDiv.className = 'product-div';
                         buttonAdd.className = 'add-product-button';
+                        // Ajouter un écouteur d'événement sur le bouton d'ajout qui permet d'ajouter le produit à la liste des produits
                         buttonAdd.addEventListener('click', () => {
                             var _a, _b, _c, _d;
                             const productToAdd = divNamePrice.cloneNode(true);
                             disableAllCheckboxes();
+                            // Gère le cas où le produit est un carburant
                             if (((_a = productName.textContent) === null || _a === void 0 ? void 0 : _a.includes("Diesel")) || ((_b = productName.textContent) === null || _b === void 0 ? void 0 : _b.includes("Sans Plomb")) || ((_c = productName.textContent) === null || _c === void 0 ? void 0 : _c.includes("Electricite")) || ((_d = productName.textContent) === null || _d === void 0 ? void 0 : _d.includes("Gaz"))) {
                                 let toAskQEnergy = document.getElementById('toast-energy-quantity');
                                 toAskQEnergy.style.display = 'block';
                                 toAskQEnergy.style.zIndex = '1000';
-                                let previousPumpOkClickHandler;
                                 let pumpOkClickHandler;
                                 let pumpOk = document.getElementById('toask-energy-button');
                                 pumpOkClickHandler = () => __awaiter(this, void 0, void 0, function* () {
@@ -87,6 +105,7 @@ function searchProducts() {
                                 });
                             }
                             else {
+                                // Ajouter le produit à la liste des produits et mettre à jour le prix total
                                 totalPrice += produit.prixTTC;
                                 total.textContent = totalPrice + ' €';
                                 tabProduits.push(produit.id);
@@ -114,6 +133,7 @@ function searchProducts() {
         }
     });
 }
+// Fonction pour désactiver tous les checkboxes
 function disableAllCheckboxes() {
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         if (checkbox instanceof HTMLInputElement) {
@@ -121,6 +141,7 @@ function disableAllCheckboxes() {
         }
     });
 }
+// Ajouter un écouteur d'événement sur chaque checkbox pour gérer la sélection des moyens de paiement
 document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
     if (checkbox instanceof HTMLInputElement) {
         checkbox.addEventListener('change', () => {
@@ -162,6 +183,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         });
     }
 });
+// Fonction pour récupérer les informations d'un membre
 function getMemberCard() {
     return __awaiter(this, void 0, void 0, function* () {
         const memberIdInput = document.getElementById('id-member');
@@ -189,6 +211,7 @@ function getMemberCard() {
         }
     });
 }
+// Fonction pour récupérer les informations d'une carte CCE
 function getCardCCE() {
     return __awaiter(this, void 0, void 0, function* () {
         const cceIdInput = document.getElementById('id-cce');
@@ -215,6 +238,7 @@ function getCardCCE() {
         }
     });
 }
+// Fonction pour récupérer les Articles
 function getArticles() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -227,6 +251,7 @@ function getArticles() {
         }
     });
 }
+// Fonction pour récupérer les Energies
 function getEnergies() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -239,6 +264,7 @@ function getEnergies() {
         }
     });
 }
+// Fonction pour récupérer les Pompes
 function getPumps() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -251,11 +277,13 @@ function getPumps() {
         }
     });
 }
+// Fonction pour afficher les pompes
 function displayPumps() {
     return __awaiter(this, void 0, void 0, function* () {
         const articles = yield getArticles();
         const energies = yield getEnergies();
         const pumps = yield getPumps();
+        // Afficher les pompes
         if (pumpScrollable) {
             for (const pump of pumps) {
                 const pumpDiv = document.createElement('div');
@@ -275,7 +303,6 @@ function displayPumps() {
                         pumpStatut.textContent = 'Statut : Indisponible';
                         pumpDiv.style.backgroundColor = 'red';
                         pumpName.style.backgroundColor = 'red';
-                        // Fonction asynchrone pour mettre à jour l'état dans la base de données
                         const updateState = () => __awaiter(this, void 0, void 0, function* () {
                             try {
                                 const response = yield fetch('/changerEtatPompe', {
@@ -295,7 +322,7 @@ function displayPumps() {
                                 console.error('Une erreur est survenue lors de la mise à jour de l\'état de la pompe:', error);
                             }
                         });
-                        yield updateState(); // Appel de la fonction pour mettre à jour l'état dans la base de données
+                        yield updateState();
                     }
                     else {
                         pumpStatut.textContent = 'Statut : ' + pump.statut;
@@ -305,6 +332,7 @@ function displayPumps() {
                     pumpDiv.appendChild(pumpQuantity);
                     pumpDiv.appendChild(pumpStatut);
                     pumpDiv.className = 'pump-div';
+                    // Ajouter un écouteur d'événement sur la pompe pour changer son état et la dévérouiller pour le client
                     pumpDiv.addEventListener('click', () => {
                         document.querySelectorAll('.pump-div').forEach((element) => {
                             element.classList.remove('selected');
@@ -370,9 +398,8 @@ function displayPumps() {
     });
 }
 displayPumps();
-(_a = document.querySelector('#member-card-client-search')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', getMemberCard);
-(_b = document.querySelector('#cce-card-client-search')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', getCardCCE);
-(_c = document.getElementById('validate')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+// Ajouter un écouteur d'événement sur le bouton de validation pour encaisser
+(_e = document.getElementById('validate')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const date = Date.now();
         const totalHT = total.textContent ? parseFloat(total.textContent) : 0;
@@ -401,6 +428,7 @@ displayPumps();
         console.error('Une erreur est survenue:', error);
     }
 }));
+// Fonction pour ajouter un paiement dans la base de données
 /*
 async function addPaymentDb() {
     try {

@@ -17,7 +17,7 @@ function createIncidents() {
     incidentDiv.appendChild(iframeIncident);
     erpElementI === null || erpElementI === void 0 ? void 0 : erpElementI.insertBefore(incidentDiv, erpElementI.firstChild);
     void iframeIncident.offsetHeight;
-    iframeIncident.style.top = '10vh';
+    iframeIncident.style.top = '8vh';
     iframeIncident.setAttribute('scrolling', 'no');
 }
 function openIncidents() {
@@ -28,9 +28,9 @@ function openIncidents() {
             incidentDiv.classList.add('slide-in');
         }
         if (iframeIncident) {
-            iframeIncident.width = '12.8%';
-            iframeIncident.height = '30%';
-            iframeIncident.style.left = '85%';
+            iframeIncident.width = '155vw';
+            iframeIncident.height = '200vh';
+            iframeIncident.style.left = '90%';
         }
         incidentsOpened = true;
     }

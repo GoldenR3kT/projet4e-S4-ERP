@@ -1,25 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const addPromotionButton = document.getElementById('add-promotion');
+    const addPromotionButton = document.getElementById('add-promotion') as HTMLButtonElement;
 
-    // @ts-ignore
 
     addPromotionButton.addEventListener('click', function() {
-        const idArticleInput = document.getElementById('id-article');
-        const dateStartInput = document.getElementById('date-start-promo');
-        const dateEndInput = document.getElementById('date-end-promo');
-        const promotionPercentageInput = document.getElementById('promotion-pourcentage');
+        const idArticleInput = document.getElementById('id-article') as HTMLInputElement;
+        const dateStartInput = document.getElementById('date-start-promo') as HTMLInputElement;
+        const dateEndInput = document.getElementById('date-end-promo') as HTMLInputElement;
+        const promotionPercentageInput = document.getElementById('promotion-pourcentage') as HTMLInputElement;
 
-        // @ts-ignore
 
         const idArticle = idArticleInput.value;
-        // @ts-ignore
-
         const dateStart = dateStartInput.value;
-        // @ts-ignore
-
         const dateEnd = dateEndInput.value;
-        // @ts-ignore
-
         const promotionPercentage = promotionPercentageInput.value;
 
         // Créer un nouvel élément ul avec les valeurs
@@ -37,25 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         // Ajouter le nouvel élément à la liste .promotion-list
-        const promotionList = document.querySelector('.promotion-list');
-        const newListItem = document.createElement('li');
+        const promotionList = document.querySelector('.promotion-list') as HTMLUListElement;
+        const newListItem = document.createElement('li') as HTMLLIElement;
         newListItem.appendChild(newPromotionItem);
         newListItem.appendChild(newPromotionMenu);
-        // @ts-ignore
-
         promotionList.appendChild(newListItem);
 
         // Réinitialiser les champs de formulaire
-        // @ts-ignore
         idArticleInput.value = '';
-        // @ts-ignore
-
         dateStartInput.value = '';
-        // @ts-ignore
-
         dateEndInput.value = '';
-        // @ts-ignore
-
         promotionPercentageInput.value = '';
 
         // Initialiser les menus après l'ajout de nouveaux éléments

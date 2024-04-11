@@ -10,6 +10,8 @@ const port = 3000;
 // chemin absolu vers le dossier 'html'
 const htmlPath = path.join(__dirname, 'src', 'html');
 const cssPath = path.join(__dirname, 'assets', 'css');
+const imgPath = path.join(__dirname, 'assets', 'img');
+
 
 // On indique à Express d'utiliser le moteur de vue ejs
 app.engine('html', require('ejs').renderFile);

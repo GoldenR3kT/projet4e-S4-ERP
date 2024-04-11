@@ -9,7 +9,9 @@
     <title>Planergy</title>
 </head>
 <body>
+<!-- barre du haut-->
     <div id="top-bar">
+
         <svg id="svg-topbar" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -25,6 +27,7 @@
         </div>
     </div>
 
+    <!-- script pour ouvrir le menu incident -->
     <script>
         var svgTopbar = document.getElementById('svg-topbar');
         var incidentDropdown = document.getElementById('button-incidents');
@@ -38,34 +41,21 @@
         });
     </script>
 
+
+    <!-- script pour ouvrir le menu aide -->
     <script>
         document.getElementById("button-help").addEventListener("click", function() {
             window.top.location.href = "/help";
         });
     </script>
 
+    <!-- script pour ouvrir le menu profil -->
     <script>
         document.getElementById("profile").addEventListener("click", function() {
             window.top.location.href = "/profile";
         });
     </script>
 
-   <!-- <script>
-        document.getElementById("button-incidents").addEventListener("click", function() {
-            // Affiche ou cache le menu déroulant des incidents
-            if (incidentDropdown.style.display === "block") {
-                incidentDropdown.style.display = "none";
-            } else {
-                incidentDropdown.style.display = "block";
-                document.getElementById("announce").addEventListener("click", function() {
-                    window.top.location.href = "/incidents/adjust";
-                });
-                document.getElementById("all").addEventListener("click", function() {
-                    window.top.location.href = "/incidents";
-                });
-            }
-        });
-    </script>-->
 
 
 
