@@ -480,15 +480,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     // Fonction pour envoyer les données du client au serveur
-    function addCustomerInServer(customerData) {
+    function addCustomerInServer(customer) {
         return __awaiter(this, void 0, void 0, function* () {
+            let parties = customer.adresse.split(', ');
             try {
                 const response = yield fetch('/creerClient', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(customerData)
+                    body: JSON.stringify({ id: customer.id, nom: customer.nom, prenom: customer.prenom, id_partenaire: customer.id, courriel: customer.email, tel: customer.tel, adresse: parties[0], codePostal: parties[1], pays: parties[2] })
                 });
                 if (!response.ok) {
                     throw new Error('Erreur lors de la création du client : ' + response.statusText);

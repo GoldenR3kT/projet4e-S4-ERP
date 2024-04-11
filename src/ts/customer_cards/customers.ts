@@ -295,38 +295,26 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     // Fonction pour supprimer un employé de la liste et du tableau
-    function removeCustomer(customerElement: HTMLDivElement, customer: Customer) {
-        // Retirer l'élément de la liste des employés
-        const index = customersData.findIndex(emp => emp.id === customer.id);
-        if (index !== -1) {
-            customersData.splice(index, 1);
-            listCustomers?.removeChild(customerElement);
-
-            /*
-            // Effectuer la requête DELETE
-            fetch(`/supprimerClient/${idClient}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Une erreur est survenue lors de la suppression du client');
-                }
-                // Supprimer l'élément du tableau
-                customersData.splice(index, 1);
-                // Supprimer l'élément de l'interface utilisateur
-                listCustomers?.removeChild(customerElement);
-                return response.json();
-            })
-            .then(data => {
-                console.log(data); // Afficher la réponse de l'API (optionnel)
-            })
-            .catch(error => {
-                console.error(error); // Gérer les erreurs de la requête (optionnel)
+    async function removeCustomer(employeeElement: HTMLDivElement, customer: Customer): Promise<void> {
+        try {
+            const response = await fetch(`/supprimerClient/${customer.id}`, {
+                method: 'DELETE'
             });
-            */
+
+            if (response.ok) {
+                // Retirer l'élément de la liste des employés
+                const index = customersData.findIndex(cust => cust.id === customer.id);
+                if (index !== -1) {
+                    customersData.splice(index, 1);
+                    listCustomers?.removeChild(employeeElement);
+                    
+                }
+                console.log('Customer deleted successfully');
+            } else {
+                console.error('Failed to delete customer:', response.status);
+            }
+        } catch (error) {
+            console.error('Error deleting customer:', error);
         }
     }
 
@@ -539,14 +527,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // Fonction pour envoyer les données du client au serveur
-    async function addCustomerInServer(customerData: Customer) {
+    async function addCustomerInServer(customer: Customer) {
+        let parties = customer.adresse.split(', ');
         try {
             const response = await fetch('/creerClient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(customerData)
+                body: JSON.stringify({ id: customer.id, nom: customer.nom, prenom: customer.prenom, id_partenaire: customer.id, courriel:customer.email, tel:customer.tel,adresse: parties[0], codePostal: parties[1], pays: parties[2]})
             });
 
             if (!response.ok) {

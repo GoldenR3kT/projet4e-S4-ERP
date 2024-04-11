@@ -72,7 +72,7 @@ if (adjustButton) {
             });
 
             if (response.ok) {
-                redirectionAnnounce2();
+                redirection2();
             } else {
                 console.error("Une erreur s'est produite lors de la gestion de l'incident :", response.status);
             }
@@ -96,5 +96,12 @@ function redirectionAnnounce2(): void {
     const w = window.top;
     if (w) {
         w.location.href = "/incidents/announce";
+    }
+}
+
+function redirection2(): void {
+    const w = window.top;
+    if (w) {
+        w.location.href = "/incidents";
     }
 }
