@@ -72,11 +72,20 @@ function ajouterReappro(id: string, dateCommande: string, produit: string, quant
     const btnAnnuler = document.createElement("button");
     btnAnnuler.className = "annuler-button";
     btnAnnuler.innerHTML = "Annuler";
+    btnAnnuler.addEventListener('click', function() {
+        annulerReappro(parseInt(id));
+        reappro.remove();
+    });
     reappro.appendChild(btnAnnuler);
 
     const btnEnregistrer = document.createElement("button");
     btnEnregistrer.className = "enregistrer-button";
     btnEnregistrer.innerHTML = "Enregistrer la reception";
+    btnEnregistrer.addEventListener('click', function() {
+        enregistrerReceptionReappro(parseInt(id));
+        btnEnregistrer.disabled = true;
+        btnEnregistrer.textContent = "Réception enregistrée";
+    });
     reappro.appendChild(btnEnregistrer);
 
     // Ajouter le nouvel élément li à l'ul
@@ -426,6 +435,37 @@ async function requeteReappro(idArticle :number, quantite :number, prixHT :numbe
     }
 }
 
+async function annulerReappro(idTransaction: number) {
+    try {
+        const response = await fetch('/annulerReappro/' + idTransaction, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData.message);
+        } else {
+            console.error('Erreur lors de la requête : ', response.status);
+        }
+    } catch (error) {
+        console.error('Une erreur est survenue : ', error);
+    }
+}
+
+async function enregistrerReceptionReappro(idTransaction: number) {
+    try {
+        const response = await fetch('/enregistrerReceptionReappro/' + idTransaction, {
+            method: 'PUT'
+        });
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData.message);
+        } else {
+            console.error('Erreur lors de la requête : ', response.status);
+        }
+    } catch (error) {
+        console.error('Une erreur est survenue : ', error);
+    }
+}
 
 // Écouter l'événement hashchange pour mettre à jour la vue lorsque le lien change
 window.addEventListener("hashchange", updateView);
