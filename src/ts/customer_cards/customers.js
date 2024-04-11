@@ -257,38 +257,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     // Fonction pour supprimer un employé de la liste et du tableau
-    function removeCustomer(customerElement, customer) {
-        // Retirer l'élément de la liste des employés
-        const index = customersData.findIndex(emp => emp.id === customer.id);
-        if (index !== -1) {
-            customersData.splice(index, 1);
-            listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(customerElement);
-            /*
-            // Effectuer la requête DELETE
-            fetch(`/supprimerClient/${idClient}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
+    function removeCustomer(employeeElement, customer) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch(`/supprimerClient/${customer.id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    // Retirer l'élément de la liste des employés
+                    const index = customersData.findIndex(cust => cust.id === customer.id);
+                    if (index !== -1) {
+                        customersData.splice(index, 1);
+                        listCustomers === null || listCustomers === void 0 ? void 0 : listCustomers.removeChild(employeeElement);
+                    }
+                    console.log('Customer deleted successfully');
                 }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Une erreur est survenue lors de la suppression du client');
+                else {
+                    console.error('Failed to delete customer:', response.status);
                 }
-                // Supprimer l'élément du tableau
-                customersData.splice(index, 1);
-                // Supprimer l'élément de l'interface utilisateur
-                listCustomers?.removeChild(customerElement);
-                return response.json();
-            })
-            .then(data => {
-                console.log(data); // Afficher la réponse de l'API (optionnel)
-            })
-            .catch(error => {
-                console.error(error); // Gérer les erreurs de la requête (optionnel)
-            });
-            */
-        }
+            }
+            catch (error) {
+                console.error('Error deleting customer:', error);
+            }
+        });
     }
     // Fonction pour gérer la soumission du formulaire de modification d'employé
     function handleModifyCustomerFormSubmit(event) {

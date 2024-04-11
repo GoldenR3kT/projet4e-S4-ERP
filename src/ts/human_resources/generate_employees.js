@@ -83,23 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    function ajouterPeriodesPourEmployes(employeesData, periodes) {
-        employeesData.forEach((employee, index) => {
-            const periode = {
-                employe_id: employee.id,
-                periode_id: periodes[index].periode_id,
-                intitule: periodes[index].intitule,
-                jour: new Date(periodes[index].periode.dateDebut).toLocaleDateString(),
-                heureDebut: new Date(periodes[index].periode.dateDebut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                heureFin: new Date(periodes[index].periode.dateFin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            };
-            // Ajouter la période à l'emploi du temps de l'employé
-            employee.emploiDuTemps.push(periode);
-        });
-    }
-    // Utilisation de la fonction avec les données existantes
-    const periodesData = [{ "employe_id": 1, "periode_id": 1, "intitule": "Activité 1", "periode": { "id": 1, "dateDebut": "2024-04-01T00:00:00.000Z", "dateFin": "2024-04-15T00:00:00.000Z" } }, { "employe_id": 2, "periode_id": 2, "intitule": "Activité 2", "periode": { "id": 2, "dateDebut": "2024-04-16T00:00:00.000Z", "dateFin": "2024-04-30T00:00:00.000Z" } }, { "employe_id": 3, "periode_id": 3, "intitule": "Activité 3", "periode": { "id": 3, "dateDebut": "2024-05-01T00:00:00.000Z", "dateFin": "2024-05-15T00:00:00.000Z" } }];
-    //ajouterPeriodesPourEmployes(employeesData, periodesData);
     getEmployeesFromServer();
     refreshEmployeeList();
     // Fonction pour supprimer et réafficher la liste des employés

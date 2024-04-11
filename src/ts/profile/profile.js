@@ -9,16 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 let emploiDuTemps = [];
-function getEmployeeSchedule() {
+// Fonction pour récupérer l'emploi du temps d'un employé
+function getEmployeeSchedule(employeeId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const employeeId = 2;
             const response = yield fetch(`/voirEdt/${employeeId}`);
-            if (!response.ok) {
-                throw new Error('Impossible de récupérer l\'emploi du temps de l\'employé');
-            }
-            const scheduleData = yield response.json(); // Typage temporaire, à remplacer par le type approprié
-            // Transformez scheduleData en PeriodeEDT
+            const scheduleData = yield response.json();
+            // Transform the received scheduleData into the format expected by the application
             emploiDuTemps = scheduleData.map((item) => {
                 return {
                     employe_id: item.employe_id,
@@ -29,19 +26,20 @@ function getEmployeeSchedule() {
                     heureFin: new Date(item.periode.dateFin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                 };
             });
+            return emploiDuTemps;
         }
         catch (error) {
-            console.error('Erreur lors de la récupération de l\'emploi du temps de l\'employé:', error);
-            throw error; // Propagez l'erreur pour qu'elle puisse être gérée en amont si nécessaire
+            console.error('Error fetching employee schedule:', error);
+            return [];
         }
     });
 }
 function voirinfos() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield getEmployeeSchedule(); // Récupérer l'emploi du temps au début
             // Utilisez l'ID de l'employé pour construire l'URL de la requête fetch
             const idEmploye = 2;
+            yield getEmployeeSchedule(idEmploye);
             const response = yield fetch(`/VoirInfosEmploye/${idEmploye}`);
             if (!response.ok) {
                 throw new Error('Erreur lors de la récupération des informations de l\'employé');
@@ -66,14 +64,13 @@ function voirinfos() {
                 // Afficher l'emploi du temps depuis la liste
                 if (edtElement) {
                     emploiDuTemps.forEach(periode => {
-                        edtElement.innerHTML += `
-                        <div>
+                        edtElement.innerHTML += `   
+                        <div class="edt-item">
                             <p>Intitulé: ${periode.intitule}</p>
                             <p>Jour: ${periode.jour}</p>
                             <p>Heure de début: ${periode.heureDebut}</p>
                             <p>Heure de fin: ${periode.heureFin}</p>
-                        </div>
-                    `;
+                        </div>`;
                     });
                 }
                 else {
@@ -90,3 +87,71 @@ function voirinfos() {
     });
 }
 document.addEventListener("DOMContentLoaded", voirinfos);
+/*
+// Déclarez emploiDuTemps comme un tableau vide pour stocker les données de l'emploi du temps
+let emploiDuTemps: PeriodeEDT[] = [];
+
+// La fonction pour obtenir l'emploi du temps de l'employé
+async function getEmployeeSchedule(employeId: number): Promise<void> {
+    try {
+        const response = await fetch(`/voirEdt/${employeId}`);
+        
+        if (!response.ok) {
+            throw new Error('Impossible de récupérer l\'emploi du temps de l\'employé');
+        }
+        
+        const scheduleData = await response.json() as PeriodeEDT[];
+
+        // Assignez les données récupérées à la variable emploiDuTemps
+        emploiDuTemps = scheduleData;
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'emploi du temps de l\'employé:', error);
+        throw error;
+    }
+}
+
+// La fonction pour afficher les informations de l'employé
+async function voirinfos() {
+    try {
+        const idEmploye = 2;
+        await getEmployeeSchedule(idEmploye);
+
+        // Fetch les informations de l'employé
+        const response = await fetch(`/VoirInfosEmploye/${idEmploye}`);
+       
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des informations de l\'employé');
+        }
+ 
+        const infosEmploye = await response.json();
+
+        // Sélectionnez l'élément HTML où afficher l'emploi du temps
+        const edtElement = document.getElementById('edt');
+ 
+        // Mise à jour des champs avec les informations obtenues
+        if (edtElement) {
+            // Réinitialisez le contenu HTML de l'élément EDT
+            edtElement.innerHTML = '';
+
+            // Parcourez les périodes de l'emploi du temps et affichez-les
+            emploiDuTemps.forEach(periode => {
+                edtElement.innerHTML += `
+                    <div>
+                        <p>Intitulé: ${periode.intitule}</p>
+                        <p>Jour: ${periode.jour}</p>
+                        <p>Heure de début: ${periode.heureDebut}</p>
+                        <p>Heure de fin: ${periode.heureFin}</p>
+                    </div>
+                `;
+            });
+        } else {
+            console.error('Élément HTML pour l\'emploi du temps introuvable.');
+        }
+    } catch (error: any) {
+        console.error(error.message);
+    }
+}
+
+// Attachez l'événement DOMContentLoaded à la fonction voirinfos
+document.addEventListener("DOMContentLoaded", voirinfos);
+*/ 

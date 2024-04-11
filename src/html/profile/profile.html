@@ -2,16 +2,19 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/profile/profile.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/css/profile/profile.css">
         <title>Planergy</title>
         <header>    
-            <iframe src="/topbar" frameborder="0" width="100%" height="60vh"></iframe>
+            <iframe src="/topbar" frameborder="0" width="100%" height="65vh"></iframe>
         </header>
     </head>
     <body>
+
+        <!-- Div contenant les informations du Profil ainsi que les boutons de redirection. -->
         <div id="profil-superieur">
 
+            <!-- Div contenant les informations propres à l'employé. -->
             <div id="profil-informations">
                 <div id="informations-identite">
                     <div class="conteneur-photo-profil">
@@ -20,31 +23,32 @@
                             <circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
                         </svg>
                     </div>
-                    <p id="prenom" class="informations-utilisateur">John</p>
-                    <p id="nom" class="informations-utilisateur">Doe</p>
+                    <p id="prenom" class="informations-utilisateur">Prenom</p>
+                    <p id="nom" class="informations-utilisateur">Nom</p>
                     <div class="conteneur-rang">
                         <p id="rang">Rang</p>
                     </div>
                 </div>
     
                 <div id="informations-personnelles">
-                    <p id="email" class="informations-personnelles">john.doe@gmail.com</p>
-                    <p id="telephone" class="informations-personnelles">0606060606</p>
-                    <p id="adresse" class="informations-personnelles">Boulevard Napoléon III, IUT de Nice</p>
+                    <p id="email" class="informations-personnelles">Email</p>
+                    <p id="telephone" class="informations-personnelles">Telephone</p>
+                    <p id="adresse" class="informations-personnelles">Adresse postale</p>
                 </div>
             </div>
 
+            <!-- Div contenant les boutons de modification et déconnexion du profil. -->
             <div class="profil-boutons-options">   
                 <button id="bouton-modifier" class="bouton-profil" onclick="window.location.href='/profile-modification'">
                     Modifier
                 </button>
-                <button id="bouton-deconnexion" class="bouton-profil">
+                <button id="bouton-deconnexion" class="bouton-profil" onclick="window.location.href='/'">
                     Déconnexion
                 </button>
             </div>
-
         </div>
 
+        <!-- Div contenant les information en rapport avec l'emploi du temps -->
         <div class="emploi-du-temps">
             
             <p id="mon-edt">Mon emploi du temps</p>
@@ -55,8 +59,7 @@
                     </svg>
                 </button>
 
-                <div class="edt">
-                    Emploi du temps de la semaine
+                <div id="edt">
                 </div>
 
                 <button class="boutons-edt">
@@ -65,7 +68,6 @@
                     </svg>
                 </button>
             </div>
-
         </div>
 
         <script src="/ts/nav/nav-call.js"></script>
